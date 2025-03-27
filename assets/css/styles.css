@@ -1208,6 +1208,11 @@ footer {
     color: var(--primary-color) !important;
     transition: all 0.3s ease;
     font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.social-icon i {
+    font-size: 1.2rem;
 }
 
 .social-icon:hover {
@@ -2083,4 +2088,35 @@ blockquote cite {
     .team-member {
         margin-bottom: 1.5rem;
     }
+}
+
+/* Override any old social links styling */
+.social-links {
+    display: none;
+}
+
+.footer-contact .social-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.footer-contact .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.footer-contact .social-icon:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--secondary-color) !important;
+    transform: translateY(-3px);
 }
