@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Strategy Assessment - CAAKE</title>
+    <meta name="description" content="Evaluate your company's AI readiness with CAAKE's comprehensive AI Strategy Assessment.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">CAAKE</a>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html">Services</a>
+                        <ul class="dropdown">
+                            <li><a href="services/consulting.html">AI Consulting</a></li>
+                            <li><a href="services/automations.html">Automations</a></li>
+                            <li><a href="services/solutions.html">AI Solutions</a></li>
+                            <li><a href="services/agents.html">AI Agents</a></li>
+                            <li><a href="services/assistants.html">AI Assistants</a></li>
+                            <li><a href="services/chatbots.html">Chatbots</a></li>
+                            <li><a href="services/apps.html">AI Apps</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="assessment.html" class="active">Assessment</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-header">
+            <div class="container">
+                <h1>AI Strategy Assessment</h1>
+                <p>Evaluate your company's AI readiness and discover opportunities for transformation</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="assessment-intro">
+            <div class="container">
+                <h2>Is Your Company Ready for AI?</h2>
+                <p>This comprehensive assessment will help you evaluate your organization's AI readiness while identifying key challenges and opportunities. By completing this assessment, you'll gain valuable insights into how AI can transform your business operations.</p>
+                <p>Upon completion, you'll receive a summary of your results and recommendations for next steps. Our team at CAAKE can then provide targeted solutions based on your specific needs.</p>
+                <div class="cta-buttons">
+                    <a href="#assessment-form" class="btn btn-primary">Start Assessment</a>
+                    <a href="contact.html" class="btn btn-secondary">Contact Us for Help</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="assessment-form" id="assessment-form">
+            <div class="container">
+                <div class="assessment-container">
+                    <div class="assessment-progress">
+                        <div class="progress-bar">
+                            <div class="progress-step active" data-step="1">1</div>
+                            <div class="progress-step" data-step="2">2</div>
+                            <div class="progress-step" data-step="3">3</div>
+                            <div class="progress-step" data-step="4">4</div>
+                            <div class="progress-step" data-step="5">5</div>
+                            <div class="progress-step" data-step="6">6</div>
+                            <div class="progress-step" data-step="7">7</div>
+                        </div>
+                        <div class="progress-text">Step <span id="current-step">1</span> of 7</div>
+                    </div>
+
+                    <form id="ai-assessment-form">
+                        <!-- Step 1: Current Company Roles -->
+                        <div class="question-slide active" id="question-1">
+                            <h3>What roles currently exist in your company that could benefit from AI support?</h3>
+                            <p>Select all that apply. This helps us identify potential areas for AI agents, assistants, or chatbots.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="checkbox" id="role-customer-service" name="roles" value="Customer Service Representatives">
+                                    <label for="role-customer-service">Customer Service Representatives</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="role-data-analysts" name="roles" value="Data Analysts">
+                                    <label for="role-data-analysts">Data Analysts</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="role-marketing" name="roles" value="Marketing Specialists">
+                                    <label for="role-marketing">Marketing Specialists</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="role-operations" name="roles" value="Operations Managers">
+                                    <label for="role-operations">Operations Managers</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="role-it" name="roles" value="IT Administrators">
+                                    <label for="role-it">IT Administrators</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="role-other" name="roles" value="Other">
+                                    <label for="role-other">Other:</label>
+                                    <input type="text" id="role-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Pain Points in Processes -->
+                        <div class="question-slide" id="question-2">
+                            <h3>Which business processes are currently causing the most frustration for your team?</h3>
+                            <p>Select all that apply. This helps us identify areas for automation and AI solutions.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="checkbox" id="pain-data-entry" name="pain-points" value="Manual data entry">
+                                    <label for="pain-data-entry">Manual data entry</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="pain-customer-support" name="pain-points" value="Customer support response times">
+                                    <label for="pain-customer-support">Customer support response times</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="pain-workflow" name="pain-points" value="Workflow bottlenecks">
+                                    <label for="pain-workflow">Workflow bottlenecks</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="pain-reporting" name="pain-points" value="Reporting and analytics">
+                                    <label for="pain-reporting">Reporting and analytics</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="pain-other" name="pain-points" value="Other">
+                                    <label for="pain-other">Other:</label>
+                                    <input type="text" id="pain-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Scaling Challenges -->
+                        <div class="question-slide" id="question-3">
+                            <h3>Which departments have recently been struggling to scale their operations?</h3>
+                            <p>Select all that apply. This helps us identify departments needing AI-driven scaling solutions.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="checkbox" id="scale-sales" name="scaling-challenges" value="Sales">
+                                    <label for="scale-sales">Sales</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="scale-customer-support" name="scaling-challenges" value="Customer Support">
+                                    <label for="scale-customer-support">Customer Support</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="scale-hr" name="scaling-challenges" value="Human Resources">
+                                    <label for="scale-hr">Human Resources</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="scale-operations" name="scaling-challenges" value="Production/Operations">
+                                    <label for="scale-operations">Production/Operations</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="scale-other" name="scaling-challenges" value="Other">
+                                    <label for="scale-other">Other:</label>
+                                    <input type="text" id="scale-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Repetitive Tasks -->
+                        <div class="question-slide" id="question-4">
+                            <h3>Which tasks do your employees find themselves doing repeatedly on a weekly or daily basis?</h3>
+                            <p>Select all that apply. This helps us identify opportunities for automation and AI assistants.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="checkbox" id="task-scheduling" name="repetitive-tasks" value="Scheduling and calendar management">
+                                    <label for="task-scheduling">Scheduling and calendar management</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="task-email" name="repetitive-tasks" value="Email sorting and responses">
+                                    <label for="task-email">Email sorting and responses</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="task-data" name="repetitive-tasks" value="Data collection and organization">
+                                    <label for="task-data">Data collection and organization</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="task-inventory" name="repetitive-tasks" value="Inventory tracking">
+                                    <label for="task-inventory">Inventory tracking</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="task-other" name="repetitive-tasks" value="Other">
+                                    <label for="task-other">Other:</label>
+                                    <input type="text" id="task-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: AI Readiness -->
+                        <div class="question-slide" id="question-5">
+                            <h3>How ready do you feel your company is to adopt AI technologies?</h3>
+                            <p>Select one option that best describes your organization's current AI maturity level.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="radio" id="readiness-not" name="ai-readiness" value="Not ready – Need basic guidance">
+                                    <label for="readiness-not">Not ready – Need basic guidance</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="readiness-somewhat" name="ai-readiness" value="Somewhat ready – Exploring options">
+                                    <label for="readiness-somewhat">Somewhat ready – Exploring options</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="readiness-ready" name="ai-readiness" value="Ready – Planning implementation">
+                                    <label for="readiness-ready">Ready – Planning implementation</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="readiness-using" name="ai-readiness" value="Already using AI – Seeking optimization">
+                                    <label for="readiness-using">Already using AI – Seeking optimization</label>
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Business Goals -->
+                        <div class="question-slide" id="question-6">
+                            <h3>What are your primary business goals for adopting AI?</h3>
+                            <p>Select all that apply. This helps us align our offerings with your strategic objectives.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="checkbox" id="goal-cost" name="business-goals" value="Cost reduction">
+                                    <label for="goal-cost">Cost reduction</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="goal-customer" name="business-goals" value="Improved customer experience">
+                                    <label for="goal-customer">Improved customer experience</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="goal-efficiency" name="business-goals" value="Increased efficiency">
+                                    <label for="goal-efficiency">Increased efficiency</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="goal-scalability" name="business-goals" value="Scalability">
+                                    <label for="goal-scalability">Scalability</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="goal-innovation" name="business-goals" value="Innovation and competitiveness">
+                                    <label for="goal-innovation">Innovation and competitiveness</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="goal-other" name="business-goals" value="Other">
+                                    <label for="goal-other">Other:</label>
+                                    <input type="text" id="goal-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" class="btn btn-primary next-btn">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: Biggest Issue -->
+                        <div class="question-slide" id="question-7">
+                            <h3>What is the biggest issue facing your company right now?</h3>
+                            <p>Tell us about your most pressing challenge so we can help address it with AI.</p>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="radio" id="issue-costs" name="biggest-issue" value="High operational costs">
+                                    <label for="issue-costs">High operational costs</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="issue-scalability" name="biggest-issue" value="Lack of scalability">
+                                    <label for="issue-scalability">Lack of scalability</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="issue-inefficient" name="biggest-issue" value="Inefficient processes">
+                                    <label for="issue-inefficient">Inefficient processes</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="issue-customer" name="biggest-issue" value="Poor customer satisfaction">
+                                    <label for="issue-customer">Poor customer satisfaction</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="issue-talent" name="biggest-issue" value="Difficulty retaining talent">
+                                    <label for="issue-talent">Difficulty retaining talent</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="issue-other" name="biggest-issue" value="Other">
+                                    <label for="issue-other">Other:</label>
+                                    <input type="text" id="issue-other-text" class="other-input" placeholder="Please specify">
+                                </div>
+                            </div>
+                            <div class="navigation-buttons">
+                                <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                <button type="button" id="submit-assessment" class="btn btn-accent">Submit Assessment</button>
+                            </div>
+                        </div>
+
+                        <!-- Results Screen -->
+                        <div class="question-slide result-slide" id="assessment-results">
+                            <h2>Your AI Readiness Assessment Results</h2>
+                            <div class="results-summary">
+                                <p>Thank you for completing CAAKE's AI Strategy Assessment! Based on your responses, we have prepared a summary of your company's AI readiness and opportunities.</p>
+                                
+                                <div class="result-section">
+                                    <h3>Key Findings:</h3>
+                                    <ul id="key-findings">
+                                        <!-- Dynamically populated -->
+                                    </ul>
+                                </div>
+                                
+                                <div class="result-section">
+                                    <h3>Recommended Next Steps:</h3>
+                                    <ul id="recommendations">
+                                        <!-- Dynamically populated -->
+                                    </ul>
+                                </div>
+                                
+                                <div class="result-cta">
+                                    <p>Would you like to discuss these results with our AI experts? We can provide a more detailed analysis and personalized recommendations for your business.</p>
+                                    <div class="cta-buttons">
+                                        <a href="contact.html" class="btn btn-primary unlock-btn">
+                                            <span class="unlock-icon">🔓</span> Unlock Full Results & Schedule a Consultation
+                                        </a>
+                                        <button type="button" class="btn btn-secondary" id="email-results">Email My Results</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="assessment-benefits">
+            <div class="container">
+                <h2>Benefits of Our AI Strategy Assessment</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔍</div>
+                        <h3>Identify Opportunities</h3>
+                        <p>Discover specific areas where AI can create the most value for your business, from streamlining operations to enhancing customer experiences.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📊</div>
+                        <h3>Gauge AI Readiness</h3>
+                        <p>Understand your organization's current AI maturity level and what steps are needed to advance your capabilities.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎯</div>
+                        <h3>Prioritize Initiatives</h3>
+                        <p>Receive recommendations on which AI initiatives to pursue first, based on your specific business needs and readiness.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💰</div>
+                        <h3>Maximize ROI</h3>
+                        <p>Focus your investment on AI solutions that will deliver the greatest return for your organization's unique challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <h2>What Our Clients Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial">
+                        <blockquote>
+                            <p>"Taking CAAKE's AI assessment was eye-opening. It helped us identify opportunities for automation we hadn't considered before. Within six months of implementing their recommendations, we've seen a 30% increase in operational efficiency."</p>
+                            <cite>- Sarah Johnson, CTO at Global Retail Inc.</cite>
+                        </blockquote>
+                    </div>
+                    <div class="testimonial">
+                        <blockquote>
+                            <p>"The assessment process was straightforward yet comprehensive. It gave us a clear roadmap for our AI journey, and CAAKE's team provided expert guidance every step of the way."</p>
+                            <cite>- Michael Chen, VP of Innovation at TechManufacturing Corp.</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to transform your business with AI?</h2>
+                <p>Complete our assessment to discover how AI can address your specific challenges and opportunities.</p>
+                <a href="#assessment-form" class="btn btn-accent">Start Assessment Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>CAAKE</h3>
+                    <p>Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="assessment.html">Assessment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services/consulting.html">AI Consulting</a></li>
+                        <li><a href="services/automations.html">Automations</a></li>
+                        <li><a href="services/solutions.html">AI Solutions</a></li>
+                        <li><a href="services/agents.html">AI Agents</a></li>
+                        <li><a href="services/assistants.html">AI Assistants</a></li>
+                        <li><a href="services/chatbots.html">Chatbots</a></li>
+                        <li><a href="services/apps.html">AI Apps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>123 Main Street, City, Country</p>
+                    <p>Phone: +1 123 456 7890</p>
+                    <p>Email: info@caake.ai</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">LinkedIn</a>
+                        <a href="#" class="social-icon">Twitter</a>
+                        <a href="#" class="social-icon">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/assessment.js"></script>
+</body>
+</html>
