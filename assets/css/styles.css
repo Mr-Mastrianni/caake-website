@@ -12,15 +12,19 @@
     --primary-color-light: #80bdff;
     --secondary-color: #ffffff;
     --secondary-color-rgb: 255, 255, 255;
-    --accent-color: #007bff; /* Changed from purple to match primary blue */
-    --accent-color-rgb: 0, 123, 255; /* Changed to match primary blue RGB */
-    --accent-color-dark: #0056b3; /* Changed to match primary dark blue */
-    --accent-color-light: #80bdff; /* Changed to match primary light blue */
+    --accent-color: #007bff;
+    --accent-color-rgb: 0, 123, 255;
+    --accent-color-dark: #0056b3;
+    --accent-color-light: #80bdff;
     --text-color: #333333;
     --text-color-rgb: 51, 51, 51;
     --light-gray: #f8f9fa;
     --dark-gray: #6c757d;
     --border-color: #dee2e6;
+    --footer-bg: #1f2937;
+    --footer-text: #007bff;
+    --footer-link: #007bff;
+    --footer-link-hover: #0056b3;
     --card-bg: rgba(255, 255, 255, 0.7);
     --card-border: rgba(255, 255, 255, 0.25);
     --glass-bg: rgba(255, 255, 255, 0.1);
@@ -58,10 +62,10 @@
     --primary-color-light: #60a5fa;
     --secondary-color: #1f2937;
     --secondary-color-rgb: 31, 41, 55;
-    --accent-color: #3b82f6; /* Changed to match dark mode primary blue */
-    --accent-color-rgb: 59, 130, 246; /* Changed to match dark mode primary blue RGB */
-    --accent-color-dark: #2563eb; /* Changed to match dark mode primary dark blue */
-    --accent-color-light: #60a5fa; /* Changed to match dark mode primary light blue */
+    --accent-color: #3b82f6;
+    --accent-color-rgb: 59, 130, 246;
+    --accent-color-dark: #2563eb;
+    --accent-color-light: #60a5fa;
     --text-color: #e5e7eb;
     --text-color-rgb: 229, 231, 235;
     --light-gray: #374151;
@@ -74,6 +78,10 @@
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     --bg-light: #111827;
     --bg-light-rgb: 17, 24, 39;
+    --footer-bg: #1f2937;
+    --footer-text: #3b82f6;
+    --footer-link: #3b82f6;
+    --footer-link-hover: #2563eb;
 }
 
 /* Dark Mode Toggle Effects */
@@ -1100,52 +1108,49 @@ section {
 
 /* CTA Section */
 .cta-section {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    background-color: var(--primary-color) !important;
+    color: var(--secondary-color) !important;
     text-align: center;
     padding: 4rem 0;
 }
 
 .cta-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    color: var(--secondary-color) !important;
 }
 
 .cta-section p {
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: 0 auto 2rem;
+    color: var(--secondary-color) !important;
 }
 
-/* Footer */
+.cta-section .btn-accent {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark)) !important;
+    color: var(--secondary-color) !important;
+}
+
+/* Footer Styles - Complete Override */
 footer {
-    background-color: #1a1a1a;
+    background-color: var(--footer-bg) !important;
     padding: 4rem 0 2rem;
+    color: var(--footer-text) !important;
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-bottom: 2rem;
 }
 
 .footer-logo h3,
-.footer-logo p,
 .footer-links h4,
-.footer-links a,
 .footer-services h4,
-.footer-services a,
-.footer-contact h4,
-.footer-contact p,
-.footer-contact a,
-.footer-bottom p,
-.footer-bottom {
-    color: var(--primary-color) !important;
+.footer-contact h4 {
+    color: var(--footer-text) !important;
+    margin-bottom: 1rem;
 }
 
 .footer-logo p {
-    margin-top: 1rem;
+    color: var(--footer-text) !important;
 }
 
 .footer-links ul,
@@ -1155,77 +1160,60 @@ footer {
 }
 
 .footer-links a,
-.footer-services a {
+.footer-services a,
+.footer-contact a {
+    color: var(--footer-link) !important;
     text-decoration: none;
     transition: color 0.3s ease;
-    color: var(--primary-color) !important;
 }
 
 .footer-links a:hover,
 .footer-services a:hover,
 .footer-contact a:hover {
-    color: var(--primary-color-light) !important;
-}
-
-.footer-logo h3 {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-}
-
-.footer-links h4,
-.footer-services h4,
-.footer-contact h4 {
-    font-size: 1.2rem;
-    margin-bottom: 1.25rem;
-    color: var(--primary-color) !important;
-}
-
-.footer-links ul,
-.footer-services ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    color: var(--footer-link-hover) !important;
+    text-decoration: underline;
 }
 
 .footer-contact p {
-    margin-bottom: 0.75rem;
+    color: var(--footer-text) !important;
+    margin-bottom: 0.5rem;
 }
 
 .social-icons {
-    display: flex;
+    display: flex !important;
     gap: 1.5rem;
     margin-top: 1rem;
 }
 
 .social-icon {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--light-gray);
-    color: var(--primary-color) !important;
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    color: var(--footer-link) !important;
     transition: all 0.3s ease;
     font-size: 1.2rem;
     text-decoration: none;
 }
 
-.social-icon i {
-    font-size: 1.2rem;
-}
-
 .social-icon:hover {
-    background-color: var(--primary-color) !important;
+    background-color: var(--footer-link) !important;
     color: var(--secondary-color) !important;
     transform: translateY(-3px);
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1.5rem 0;
     text-align: center;
-    font-size: 0.9rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 123, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: var(--footer-text) !important;
+    margin: 0;
 }
 
 /* Services Page Styles */
