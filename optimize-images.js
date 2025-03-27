@@ -48,25 +48,6 @@ async function generatePlaceholderImages() {
     }
 }
 
-// Optimize hero images
-async function optimizeHeroImages() {
-    const heroImages = ['hero-bg.jpg'];
-    for (const image of heroImages) {
-        const inputPath = path.join(imageDir, image);
-        const outputPath = path.join(imageDir, `optimized-${image}`);
-        
-        if (fs.existsSync(inputPath)) {
-            await sharp(inputPath)
-                .resize(1920, 1080, { fit: 'cover' })
-                .jpeg({ quality: 80, progressive: true })
-                .toFile(outputPath);
-            console.log(`Optimized ${image}`);
-        } else {
-            console.log(`Skipping ${image} - file not found`);
-        }
-    }
-}
-
 // Generate social media images
 async function generateSocialImages() {
     const sourceImage = path.join(imageDir, 'logo.png');
@@ -94,7 +75,6 @@ async function generateSocialImages() {
 async function optimizeAllImages() {
     try {
         await generatePlaceholderImages();
-        await optimizeHeroImages();
         await generateSocialImages();
         console.log('All images optimized successfully!');
     } catch (error) {
