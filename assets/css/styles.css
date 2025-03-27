@@ -312,6 +312,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
     line-height: 1.2;
     transition: color 0.3s ease;
+    color: var(--primary-color);
 }
 
 p {
@@ -822,6 +823,7 @@ section {
 .page-header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: var(--primary-color);
 }
 
 .page-header p {
@@ -1140,7 +1142,7 @@ footer {
 .footer-contact a,
 .footer-bottom p,
 .footer-bottom {
-    color: var(--primary-color);  /* Changed to match CAAKE blue */
+    color: var(--primary-color);
 }
 
 .footer-logo p {
@@ -1162,7 +1164,7 @@ footer {
 .footer-links a:hover,
 .footer-services a:hover,
 .footer-contact a:hover {
-    color: var(--primary-color-light);  /* Updated hover color to be consistent */
+    color: var(--primary-color-light);
 }
 
 .footer-logo h3 {
@@ -1175,7 +1177,7 @@ footer {
 .footer-contact h4 {
     font-size: 1.2rem;
     margin-bottom: 1.25rem;
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 .footer-links ul,
