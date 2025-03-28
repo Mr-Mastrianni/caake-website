@@ -32,7 +32,91 @@
     <link rel="manifest" href="site.webmanifest">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/style-fixes.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script type="module" src="assets/js/three-animations/main.js"></script>
+    <style>
+        .hero-animation-container {
+            position: relative;
+            height: 70vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        .hero-button:hover {
+            background-color: #0052a3;
+        }
+        
+        .animation-section {
+            position: relative;
+            height: 500px;
+            margin: 50px 0;
+            background-color: #0f0f1f;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .animation-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 50px;
+            max-width: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .animation-content {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -63,17 +147,17 @@
                     <li><a href="pages/contact.html">Contact</a></li>
                     <li><a href="pages/blog.html">Blog</a></li>
                     <li><a href="pages/assessment.html">Assessment</a></li>
+                    <li><a href="pages/pricing.html">Pricing</a></li>
                 </ul>
             </div>
         </nav>
-        <div class="hero">
-            <div class="container">
-                <h1 class="animate-fade-in animate-delay-100">Welcome to CAAKE</h1>
-                <p class="tagline animate-fade-in animate-delay-200" data-typing="true" data-typing-speed="50">Leading the way in AI innovation</p>
-                <p class="animate-fade-in animate-delay-300">CAAKE is your partner in harnessing the power of artificial intelligence. Our suite of services helps businesses thrive in the digital age.</p>
-                <div class="cta-buttons animate-fade-in animate-delay-400">
-                    <a href="pages/services.html" class="btn btn-primary">Explore our services</a>
-                    <a href="pages/contact.html" class="btn btn-secondary">Contact us today</a>
+        <div class="hero-animation-container" data-animation="neural-network" data-option-layers="[6,10,14,10,6]">
+            <div class="hero-content">
+                <h1 class="hero-title">Revolutionize Your Business with AI Automation</h1>
+                <p class="hero-subtitle">Leverage cutting-edge AI technology to streamline operations, increase efficiency, and drive growth.</p>
+                <div>
+                    <a href="pages/assessment.html" class="hero-button">Get Free Assessment</a>
+                    <a href="pages/services.html" class="hero-button">Explore Solutions</a>
                 </div>
             </div>
         </div>
@@ -129,7 +213,7 @@
                 <h2 class="animate-on-scroll" data-animation="slide-up">Success Stories</h2>
                 <div class="stories-grid">
                     <div class="story-card animate-on-scroll" data-animation="slide-left" data-reveal="true">
-                        <img src="assets/images/story1.jpg" alt="Success story 1" class="story-image" loading="lazy" width="400" height="300" data-zoom="true">
+                        <img src="assets/images/people.png" alt="Retail Transformation illustration" class="story-image" loading="lazy" width="400" height="300" data-zoom="true">
                         <h3>Retail Transformation</h3>
                         <p>How we helped a retail chain increase efficiency by <span data-counter="true" data-counter-target="40">0</span>% with custom AI solutions.</p>
                         <a href="#" class="read-more">Read case study</a>
@@ -160,7 +244,7 @@
                         <a href="pages/about.html" class="btn btn-primary">Learn more about us</a>
                     </div>
                     <div class="about-image animate-on-scroll" data-animation="slide-right" data-parallax="true" data-parallax-speed="0.1">
-                        <img src="assets/images/team.jpg" alt="CAAKE team" loading="lazy" width="600" height="400" data-zoom="true" data-zoom-follow="true">
+                        <img src="assets/images/bots.png" alt="AI bots illustration" loading="lazy" width="600" height="400" data-zoom="true" data-zoom-follow="true">
                     </div>
                 </div>
             </div>
@@ -170,7 +254,37 @@
             <div class="container">
                 <h2 class="animate-on-scroll" data-animation="scale">Ready to transform your business with AI?</h2>
                 <p class="animate-on-scroll" data-animation="fade" data-delay="0.2s">Let's discuss how CAAKE can help you harness the power of artificial intelligence.</p>
-                <a href="pages/contact.html" class="btn btn-accent animate-on-scroll" data-animation="slide-up" data-delay="0.4s">Contact us today</a>
+                <div class="cta-buttons">
+                    <a href="pages/pricing.html" class="btn btn-primary animate-on-scroll" data-animation="slide-up" data-delay="0.3s">View Pricing</a>
+                    <a href="pages/contact.html" class="btn btn-accent animate-on-scroll" data-animation="slide-up" data-delay="0.4s">Contact us today</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="animation-section" data-animation="data-visualization" data-option-autoMorph="true">
+            <div class="animation-content">
+                <h2>Advanced Data Analytics</h2>
+                <p>Our AI systems analyze complex data patterns to extract valuable insights, helping you make data-driven decisions that keep you ahead of the competition.</p>
+                <p>Transform your raw data into actionable intelligence with our cutting-edge visualization and analytics solutions.</p>
+                <a href="pages/services.html" class="button">Learn More</a>
+            </div>
+        </section>
+
+        <section class="animation-section" data-animation="workflow-automation">
+            <div class="animation-content" style="margin-left: auto;">
+                <h2>Streamlined Workflow Automation</h2>
+                <p>Eliminate repetitive tasks and optimize business processes with our intelligent automation solutions. Our systems learn and adapt to your specific needs.</p>
+                <p>Reduce operational costs while improving accuracy and consistency across your organization.</p>
+                <a href="pages/services.html" class="button">Discover How</a>
+            </div>
+        </section>
+
+        <section class="animation-section" data-animation="digital-twin">
+            <div class="animation-content">
+                <h2>Digital Twin Technology</h2>
+                <p>Create virtual replicas of your business systems to simulate, analyze, and optimize performance before implementing changes in the real world.</p>
+                <p>Minimize risk and maximize efficiency with powerful predictive modeling capabilities.</p>
+                <a href="pages/services.html" class="button">Explore Technology</a>
             </div>
         </section>
     </main>
@@ -191,6 +305,7 @@
                         <li><a href="pages/contact.html" class="animate-on-scroll" data-animation="slide-right" data-delay="0.25s">Contact</a></li>
                         <li><a href="pages/blog.html" class="animate-on-scroll" data-animation="slide-right" data-delay="0.3s">Blog</a></li>
                         <li><a href="pages/assessment.html" class="animate-on-scroll" data-animation="slide-right" data-delay="0.35s">Assessment</a></li>
+                        <li><a href="pages/pricing.html" class="animate-on-scroll" data-animation="slide-right" data-delay="0.4s">Pricing</a></li>
                     </ul>
                 </div>
                 <div class="footer-services animate-on-scroll" data-animation="slide-up" data-delay="0.2s">
@@ -206,13 +321,12 @@
                 </div>
                 <div class="footer-contact animate-on-scroll" data-animation="slide-up" data-delay="0.3s">
                     <h4>Contact Us</h4>
-                    <p>123 Main Street, City, Country</p>
-                    <p>Phone: +1 123 456 7890</p>
-                    <p>Email: info@caake.ai</p>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
                     <div class="social-links">
-                        <a href="https://linkedin.com/company/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.4s">LinkedIn</a>
-                        <a href="https://twitter.com/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.5s">Twitter</a>
-                        <a href="https://facebook.com/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.6s">Facebook</a>
+                        <a href="https://linkedin.com/company/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.4s"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.5s"><i class="fab fa-twitter"></i></a>
+                        <a href="https://facebook.com/caake" class="social-icon animate-on-scroll" data-animation="fade" data-delay="0.6s"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </div>

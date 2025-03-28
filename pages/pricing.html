@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - CAAKE</title>
+    <meta name="description" content="Explore CAAKE's flexible pricing plans for AI consulting, automation solutions, AI assistants, and chatbots. Find the right package for your business needs.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    <style>
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+        
+        .pricing-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid #4a90e2;
+            position: relative;
+        }
+        
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: #4a90e2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+        
+        .price span {
+            font-size: 16px;
+            color: #777;
+        }
+        
+        .features {
+            margin-bottom: 30px;
+        }
+        
+        .features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li::before {
+            content: "✓";
+            color: #4a90e2;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .addons {
+            margin-top: 60px;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .addon-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .addon-item:last-child {
+            border-bottom: none;
+        }
+        
+        .projects {
+            margin-top: 60px;
+        }
+        
+        .project-item {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .project-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a90e2;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">CAAKE</a>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html">Services</a>
+                        <ul class="dropdown">
+                            <li><a href="services/consulting.html">AI Consulting</a></li>
+                            <li><a href="services/automations.html">Automations</a></li>
+                            <li><a href="services/solutions.html">AI Solutions</a></li>
+                            <li><a href="services/agents.html">AI Agents</a></li>
+                            <li><a href="services/assistants.html">AI Assistants</a></li>
+                            <li><a href="services/chatbots.html">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="assessment.html">Assessment</a></li>
+                    <li><a href="pricing.html" class="active">Pricing</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-header">
+            <div class="container">
+                <h1>Pricing Plans</h1>
+                <p>Flexible options tailored to your AI transformation journey</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="pricing-intro">
+            <div class="container">
+                <h2>Find the Perfect Plan for Your Business</h2>
+                <p>At CAAKE, we believe that AI should be accessible to businesses of all sizes. Our pricing structure is designed to provide maximum value while scaling with your needs. Whether you're just starting your AI journey or looking to expand your capabilities, we have options that work for you.</p>
+                <p>All plans include our commitment to excellence, cutting-edge technology, and expert support to ensure your success with AI.</p>
+            </div>
+        </section>
+
+        <section class="subscription-plans">
+            <div class="container">
+                <h2>Subscription Plans</h2>
+                <div class="pricing-table">
+                    <div class="pricing-card">
+                        <h3>Basic</h3>
+                        <div class="price">$99 <span>/ month</span></div>
+                        <p>Perfect for small businesses starting their AI journey</p>
+                        <ul class="features">
+                            <li>2 hours of AI consulting per month</li>
+                            <li>1 automation workflow</li>
+                            <li>Basic chatbot (up to 500 conversations)</li>
+                            <li>Email support</li>
+                            <li>Monthly performance reports</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Get Started</a>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <h3>Professional</h3>
+                        <div class="price">$499 <span>/ month</span></div>
+                        <p>Ideal for growing businesses looking to expand AI capabilities</p>
+                        <ul class="features">
+                            <li>5 hours of AI consulting per month</li>
+                            <li>3 automation workflows</li>
+                            <li>Advanced chatbot (up to 2,000 conversations)</li>
+                            <li>1 custom AI assistant</li>
+                            <li>Priority support</li>
+                            <li>Detailed analytics dashboard</li>
+                            <li>Bi-weekly performance reports</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-accent">Get Started</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">Custom</div>
+                        <p>For organizations with complex AI needs and enterprise-scale requirements</p>
+                        <ul class="features">
+                            <li>Custom AI consulting package</li>
+                            <li>Unlimited automation workflows</li>
+                            <li>Enterprise-grade chatbots</li>
+                            <li>Multiple AI assistants and agents</li>
+                            <li>Dedicated account manager</li>
+                            <li>Integration with existing systems</li>
+                            <li>Custom reporting and analytics</li>
+                            <li>Service level agreements (SLAs)</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="addons">
+            <div class="container">
+                <h2>Value-Based Add-Ons</h2>
+                <p>Enhance your plan with additional services based on your specific needs.</p>
+                
+                <div class="addon-list">
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>Performance-based Fee</h3>
+                            <p>Pay based on the measurable results and cost savings we help you achieve.</p>
+                        </div>
+                        <div class="addon-price">10-15% of documented cost savings</div>
+                    </div>
+                    
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>Additional Automation Workflow</h3>
+                            <p>Expand your automation capabilities with additional workflows.</p>
+                        </div>
+                        <div class="addon-price">$99/workflow/month</div>
+                    </div>
+                    
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>Additional AI Assistant</h3>
+                            <p>Deploy more AI assistants to handle specific business functions.</p>
+                        </div>
+                        <div class="addon-price">$199/assistant/month</div>
+                    </div>
+                    
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>Additional Consulting Hours</h3>
+                            <p>Get more time with our AI experts for guidance and strategy.</p>
+                        </div>
+                        <div class="addon-price">$150-250/hour</div>
+                    </div>
+                    
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>Additional Chatbot Conversations</h3>
+                            <p>Extend your chatbot capabilities beyond your plan's limits.</p>
+                        </div>
+                        <div class="addon-price">$0.50-$1.00/conversation</div>
+                    </div>
+                    
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <h3>AI Agent Usage</h3>
+                            <p>Specialized AI agents for specific tasks and operations.</p>
+                        </div>
+                        <div class="addon-price">$2-4/hour of operation</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects">
+            <div class="container">
+                <h2>Project-Based Pricing</h2>
+                <p>For one-time implementation projects and custom solutions.</p>
+                
+                <div class="project-list">
+                    <div class="project-item">
+                        <h3>Initial AI Assessment and Strategy</h3>
+                        <p>Comprehensive evaluation of your business's AI readiness and development of strategic recommendations.</p>
+                        <div class="project-price">$5,000-$15,000</div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h3>Custom AI Solution Development</h3>
+                        <p>End-to-end development of tailored AI solutions for your specific business challenges.</p>
+                        <div class="project-price">$10,000-$100,000</div>
+                        <p class="note">Pricing varies based on complexity and scope.</p>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h3>Implementation Services</h3>
+                        <p>Expert deployment and integration of AI solutions into your existing business systems.</p>
+                        <div class="project-price">$150-$200/hour</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="faq-section">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3>How do I know which plan is right for my business?</h3>
+                        <p>We offer a complimentary AI readiness assessment to help determine the best fit for your needs. Our experts will evaluate your business goals, current systems, and budget to recommend the optimal plan.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Can I upgrade or downgrade my plan later?</h3>
+                        <p>Yes, you can easily upgrade your plan at any time as your needs grow. Downgrades can be processed at the end of your billing cycle.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>What is your contract length?</h3>
+                        <p>Our Basic and Professional plans require a 6-month minimum commitment, while Enterprise plans typically have a 12-month term. We offer discounts for annual payments.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>How do you measure performance for the value-based pricing?</h3>
+                        <p>We establish clear KPIs at the beginning of our engagement, tailored to your business objectives. These may include cost savings, efficiency improvements, revenue increases, or other measurable metrics.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Do you offer implementation support?</h3>
+                        <p>Yes, all our plans include implementation support to ensure a smooth onboarding process and successful adoption of our AI solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to transform your business with AI?</h2>
+                <p>Contact us today for a free consultation and discover how our AI solutions can drive growth and efficiency.</p>
+                <a href="contact.html" class="btn btn-accent">Get in Touch</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>CAAKE</h3>
+                    <p>Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="assessment.html">Assessment</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services/consulting.html">AI Consulting</a></li>
+                        <li><a href="services/automations.html">Automations</a></li>
+                        <li><a href="services/solutions.html">AI Solutions</a></li>
+                        <li><a href="services/agents.html">AI Agents</a></li>
+                        <li><a href="services/assistants.html">AI Assistants</a></li>
+                        <li><a href="services/chatbots.html">Chatbots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html> 
