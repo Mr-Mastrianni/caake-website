@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>AI Automation Pricing Calculator | CAAKE</title>
+    <meta name="description" content="Use our interactive calculator to estimate the cost of implementing AI automation solutions for your business. Get customized pricing based on your specific needs.">
+    <meta name="keywords" content="AI pricing, automation cost calculator, AI implementation cost, AI solutions pricing, business automation cost">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../assets/css/styles.css" as="style">
+    <link rel="preload" href="../assets/css/style-fixes.css" as="style">
+    <link rel="preload" href="../assets/js/main.js" as="script">
+    <link rel="preload" href="../assets/js/pricing-calculator.js" as="script">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://caake.org/pages/pricing-calculator.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://caake.org/pages/pricing-calculator.html">
+    <meta property="og:title" content="AI Automation Pricing Calculator | CAAKE">
+    <meta property="og:description" content="Use our interactive calculator to estimate the cost of implementing AI automation solutions for your business. Get customized pricing based on your specific needs.">
+    <meta property="og:image" content="https://caake.org/assets/images/pricing-calculator-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://caake.org/pages/pricing-calculator.html">
+    <meta property="twitter:title" content="AI Automation Pricing Calculator | CAAKE">
+    <meta property="twitter:description" content="Use our interactive calculator to estimate the cost of implementing AI automation solutions for your business. Get customized pricing based on your specific needs.">
+    <meta property="twitter:image" content="https://caake.org/assets/images/pricing-calculator-og.jpg">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    
+    <style>
+        .calculator-section {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .calculator-header h1 {
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        
+        .calculator-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group select,
+        .form-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .slider-with-labels {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .slider-with-labels input[type="range"] {
+            flex: 1;
+        }
+        
+        .slider-value {
+            min-width: 50px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .calculator-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .option-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            border-color: #0066cc;
+            background-color: #f0f7ff;
+        }
+        
+        .option-card.selected {
+            border-color: #0066cc;
+            background-color: #f0f7ff;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+        }
+        
+        .option-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .option-card-header i {
+            color: #0066cc;
+            font-size: 1.2rem;
+        }
+        
+        .option-card-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .option-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .option-card input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .results-container {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .results-header h2 {
+            color: #0066cc;
+            margin: 0;
+        }
+        
+        .total-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .price-breakdown {
+            margin-top: 20px;
+        }
+        
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .price-item:last-child {
+            border-bottom: none;
+        }
+        
+        .calculator-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .calculator-actions button,
+        .calculator-actions a {
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn {
+            background-color: #0066cc;
+            color: white;
+        }
+        
+        .reset-btn {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #0052a3;
+        }
+        
+        .reset-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .contact-cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+        }
+        
+        .contact-cta h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .contact-cta p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .calculator-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <a href="../index.html" class="logo" aria-label="CAAKE Homepage">CAAKE</a>
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu" role="menu">
+                    <li role="none"><a href="../index.html" role="menuitem">Home</a></li>
+                    <li class="has-dropdown" role="none">
+                        <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false">Services</a>
+                        <ul class="dropdown" role="menu" aria-label="Services submenu">
+                            <li role="none"><a href="services/consulting.html" role="menuitem">AI Consulting</a></li>
+                            <li role="none"><a href="services/automations.html" role="menuitem">Automations</a></li>
+                            <li role="none"><a href="services/solutions.html" role="menuitem">AI Solutions</a></li>
+                            <li role="none"><a href="services/agents.html" role="menuitem">AI Agents</a></li>
+                            <li role="none"><a href="services/assistants.html" role="menuitem">AI Assistants</a></li>
+                            <li role="none"><a href="services/chatbots.html" role="menuitem">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li role="none"><a href="about.html" role="menuitem">About Us</a></li>
+                    <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+                    <li role="none"><a href="blog.html" role="menuitem">Blog</a></li>
+                    <li role="none"><a href="assessment.html" role="menuitem">Assessment</a></li>
+                    <li role="none"><a href="pricing-calculator.html" role="menuitem" aria-current="page">Pricing</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumbs" aria-label="Breadcrumb" role="navigation">
+        <div class="container">
+            <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="../index.html" itemprop="item">
+                        <span itemprop="name">Home</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name" aria-current="page">Pricing Calculator</span>
+                    <meta itemprop="position" content="2" />
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h1>AI Automation Pricing Calculator</h1>
+                    <p>Estimate the cost of implementing AI solutions tailored to your specific business needs. Adjust the parameters below to see how different choices impact your investment.</p>
+                </div>
+                
+                <form id="calculator-form" class="calculator-form">
+                    <div class="form-group">
+                        <label for="business-size">Business Size</label>
+                        <select id="business-size" name="business-size">
+                            <option value="small">Small (1-50 employees)</option>
+                            <option value="medium">Medium (51-200 employees)</option>
+                            <option value="large">Large (201-1000 employees)</option>
+                            <option value="enterprise">Enterprise (1000+ employees)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="industry">Industry</label>
+                        <select id="industry" name="industry">
+                            <option value="retail">Retail & E-commerce</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="finance">Finance & Banking</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="technology">Technology & Software</option>
+                            <option value="education">Education</option>
+                            <option value="logistics">Logistics & Transportation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Solution Type (Select all that apply)</label>
+                        <div class="calculator-options">
+                            <div class="option-card" data-value="automation">
+                                <div class="option-card-header">
+                                    <i class="fas fa-robot"></i>
+                                    <h3>Workflow Automation</h3>
+                                </div>
+                                <p>Automate repetitive tasks and streamline business processes</p>
+                                <input type="checkbox" name="solution-type" value="automation" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="chatbot">
+                                <div class="option-card-header">
+                                    <i class="fas fa-comments"></i>
+                                    <h3>Chatbot / Virtual Assistant</h3>
+                                </div>
+                                <p>AI-powered customer service and support solutions</p>
+                                <input type="checkbox" name="solution-type" value="chatbot" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="analytics">
+                                <div class="option-card-header">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h3>Data Analytics & BI</h3>
+                                </div>
+                                <p>Intelligent data analysis and business insights</p>
+                                <input type="checkbox" name="solution-type" value="analytics" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="custom">
+                                <div class="option-card-header">
+                                    <i class="fas fa-cogs"></i>
+                                    <h3>Custom AI Solution</h3>
+                                </div>
+                                <p>Tailor-made AI solutions for specific business needs</p>
+                                <input type="checkbox" name="solution-type" value="custom" class="visually-hidden">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="integration-complexity">Integration Complexity</label>
+                        <div class="slider-container">
+                            <div class="slider-with-labels">
+                                <input type="range" id="integration-complexity" name="integration-complexity" min="1" max="5" value="3">
+                                <span id="complexity-value" class="slider-value">Medium</span>
+                            </div>
+                            <div class="slider-labels">
+                                <span>Simple</span>
+                                <span>Medium</span>
+                                <span>Complex</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="automation-scale">Scale of Automation (# of processes)</label>
+                        <div class="slider-container">
+                            <div class="slider-with-labels">
+                                <input type="range" id="automation-scale" name="automation-scale" min="1" max="20" value="5">
+                                <span id="scale-value" class="slider-value">5</span>
+                            </div>
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span>10</span>
+                                <span>20+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Additional Services</label>
+                        <div class="calculator-options">
+                            <div class="option-card" data-value="consulting">
+                                <div class="option-card-header">
+                                    <i class="fas fa-brain"></i>
+                                    <h3>AI Strategy Consulting</h3>
+                                </div>
+                                <p>Expert guidance on AI implementation and roadmap</p>
+                                <input type="checkbox" name="additional-services" value="consulting" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="training">
+                                <div class="option-card-header">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <h3>Staff Training</h3>
+                                </div>
+                                <p>Training for your team to effectively use AI systems</p>
+                                <input type="checkbox" name="additional-services" value="training" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="maintenance">
+                                <div class="option-card-header">
+                                    <i class="fas fa-tools"></i>
+                                    <h3>Ongoing Maintenance</h3>
+                                </div>
+                                <p>Regular updates, maintenance, and performance optimization</p>
+                                <input type="checkbox" name="additional-services" value="maintenance" class="visually-hidden">
+                            </div>
+                            
+                            <div class="option-card" data-value="support">
+                                <div class="option-card-header">
+                                    <i class="fas fa-headset"></i>
+                                    <h3>24/7 Premium Support</h3>
+                                </div>
+                                <p>Round-the-clock support for critical AI systems</p>
+                                <input type="checkbox" name="additional-services" value="support" class="visually-hidden">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-container" id="results-container" style="display: none;">
+                        <div class="results-header">
+                            <h2>Estimated Investment</h2>
+                            <div class="total-price" id="total-price">$0</div>
+                        </div>
+                        
+                        <div class="price-breakdown" id="price-breakdown">
+                            <!-- Price breakdown will be populated by JavaScript -->
+                        </div>
+                        
+                        <p class="price-disclaimer">This is an estimate based on the information provided. Actual pricing may vary based on specific requirements and customizations. Contact us for a detailed quote.</p>
+                    </div>
+                    
+                    <div class="calculator-actions">
+                        <button type="button" id="reset-btn" class="reset-btn">Reset Calculator</button>
+                        <button type="button" id="calculate-btn" class="calculate-btn">Calculate Estimate</button>
+                    </div>
+                </form>
+                
+                <div class="contact-cta">
+                    <h3>Need a Personalized Quote?</h3>
+                    <p>Our AI specialists can provide a detailed analysis and tailored quote based on your specific business requirements.</p>
+                    <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>CAAKE</h3>
+                    <p>Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="assessment.html">Assessment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services/consulting.html">AI Consulting</a></li>
+                        <li><a href="services/automations.html">Automations</a></li>
+                        <li><a href="services/solutions.html">AI Solutions</a></li>
+                        <li><a href="services/agents.html">AI Agents</a></li>
+                        <li><a href="services/assistants.html">AI Assistants</a></li>
+                        <li><a href="services/chatbots.html">Chatbots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Option card selection
+            const optionCards = document.querySelectorAll('.option-card');
+            
+            optionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    this.classList.toggle('selected');
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+            
+            // Slider value updates
+            const complexitySlider = document.getElementById('integration-complexity');
+            const complexityValue = document.getElementById('complexity-value');
+            const complexityLabels = ['Very Simple', 'Simple', 'Medium', 'Complex', 'Very Complex'];
+            
+            complexitySlider.addEventListener('input', function() {
+                complexityValue.textContent = complexityLabels[this.value - 1];
+            });
+            
+            const scaleSlider = document.getElementById('automation-scale');
+            const scaleValue = document.getElementById('scale-value');
+            
+            scaleSlider.addEventListener('input', function() {
+                scaleValue.textContent = this.value;
+            });
+            
+            // Calculate button
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const totalPrice = document.getElementById('total-price');
+            const priceBreakdown = document.getElementById('price-breakdown');
+            
+            calculateBtn.addEventListener('click', function() {
+                // Base prices
+                const basePrices = {
+                    small: 5000,
+                    medium: 15000,
+                    large: 35000,
+                    enterprise: 75000
+                };
+                
+                // Industry multipliers
+                const industryMultipliers = {
+                    retail: 1,
+                    healthcare: 1.2,
+                    finance: 1.3,
+                    manufacturing: 1.1,
+                    technology: 1,
+                    education: 0.9,
+                    logistics: 1.1,
+                    other: 1
+                };
+                
+                // Solution type prices
+                const solutionPrices = {
+                    automation: 7500,
+                    chatbot: 8500,
+                    analytics: 12000,
+                    custom: 20000
+                };
+                
+                // Additional services prices
+                const additionalServicesPrices = {
+                    consulting: 5000,
+                    training: 3500,
+                    maintenance: 4500,
+                    support: 6000
+                };
+                
+                // Get form values
+                const businessSize = document.getElementById('business-size').value;
+                const industry = document.getElementById('industry').value;
+                const complexityLevel = parseInt(complexitySlider.value);
+                const automationScale = parseInt(scaleSlider.value);
+                
+                // Get selected solution types
+                const selectedSolutions = [];
+                document.querySelectorAll('input[name="solution-type"]:checked').forEach(input => {
+                    selectedSolutions.push(input.value);
+                });
+                
+                // Get selected additional services
+                const selectedServices = [];
+                document.querySelectorAll('input[name="additional-services"]:checked').forEach(input => {
+                    selectedServices.push(input.value);
+                });
+                
+                // Calculate base price
+                let basePrice = basePrices[businessSize];
+                const industryMultiplier = industryMultipliers[industry];
+                basePrice = basePrice * industryMultiplier;
+                
+                // Calculate solution prices
+                let solutionsCost = 0;
+                selectedSolutions.forEach(solution => {
+                    solutionsCost += solutionPrices[solution];
+                });
+                
+                // Apply complexity multiplier
+                const complexityMultiplier = 0.8 + (complexityLevel * 0.2);
+                solutionsCost = solutionsCost * complexityMultiplier;
+                
+                // Apply automation scale factor
+                const scaleFactor = 1 + ((automationScale - 1) * 0.05);
+                solutionsCost = solutionsCost * scaleFactor;
+                
+                // Calculate additional services cost
+                let servicesCost = 0;
+                selectedServices.forEach(service => {
+                    servicesCost += additionalServicesPrices[service];
+                });
+                
+                // Calculate total
+                const total = basePrice + solutionsCost + servicesCost;
+                
+                // Update results
+                totalPrice.textContent = '$' + Math.round(total).toLocaleString();
+                
+                // Build price breakdown
+                let breakdownHTML = '';
+                
+                breakdownHTML += `<div class="price-item">
+                    <span>Base Price (${document.getElementById('business-size').options[document.getElementById('business-size').selectedIndex].text})</span>
+                    <span>$${Math.round(basePrice).toLocaleString()}</span>
+                </div>`;
+                
+                if (selectedSolutions.length > 0) {
+                    selectedSolutions.forEach(solution => {
+                        const solutionName = document.querySelector(`.option-card[data-value="${solution}"] h3`).textContent;
+                        breakdownHTML += `<div class="price-item">
+                            <span>${solutionName}</span>
+                            <span>$${Math.round(solutionPrices[solution] * complexityMultiplier * scaleFactor).toLocaleString()}</span>
+                        </div>`;
+                    });
+                }
+                
+                if (selectedServices.length > 0) {
+                    selectedServices.forEach(service => {
+                        const serviceName = document.querySelector(`.option-card[data-value="${service}"] h3`).textContent;
+                        breakdownHTML += `<div class="price-item">
+                            <span>${serviceName}</span>
+                            <span>$${additionalServicesPrices[service].toLocaleString()}</span>
+                        </div>`;
+                    });
+                }
+                
+                priceBreakdown.innerHTML = breakdownHTML;
+                
+                // Show results
+                resultsContainer.style.display = 'block';
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Reset button
+            const resetBtn = document.getElementById('reset-btn');
+            
+            resetBtn.addEventListener('click', function() {
+                document.getElementById('calculator-form').reset();
+                
+                // Reset option cards
+                optionCards.forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Reset sliders
+                complexityValue.textContent = complexityLabels[2]; // Medium
+                scaleValue.textContent = '5';
+                
+                // Hide results
+                resultsContainer.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 

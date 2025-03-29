@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloadable Resources - CAAKE</title>
+    <meta name="description" content="Download free whitepapers and guides from CAAKE on AI automation, efficiency, and business growth.">
+    
+    <!-- Link to main stylesheet and potential page-specific styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Include ARIA styles -->
+    <style>
+        :focus-visible {
+            outline: 3px solid var(--primary-color-light);
+            outline-offset: 2px;
+        }
+        :focus:not(:focus-visible) {
+            outline: none;
+        }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            z-index: 10000;
+        }
+        .skip-link:focus {
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            overflow: visible;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header role="banner">
+        <!-- Include the standard navigation from index.html here -->
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <a href="../index.html" class="logo" aria-label="CAAKE Homepage">CAAKE</a>
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu" role="menu">
+                    <li role="none"><a href="../index.html" role="menuitem">Home</a></li>
+                    <li class="has-dropdown" role="none">
+                        <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false" id="services-menu-button">Services</a>
+                        <ul class="dropdown" role="menu" aria-labelledby="services-menu-button">
+                            <li role="none"><a href="services/consulting.html" role="menuitem" tabindex="-1">AI Consulting</a></li>
+                            <li role="none"><a href="services/automations.html" role="menuitem" tabindex="-1">Automations</a></li>
+                            <li role="none"><a href="services/solutions.html" role="menuitem" tabindex="-1">AI Solutions</a></li>
+                            <li role="none"><a href="services/agents.html" role="menuitem" tabindex="-1">AI Agents</a></li>
+                            <li role="none"><a href="services/assistants.html" role="menuitem" tabindex="-1">AI Assistants</a></li>
+                            <li role="none"><a href="services/chatbots.html" role="menuitem" tabindex="-1">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li role="none"><a href="about.html" role="menuitem">About Us</a></li>
+                    <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+                    <li role="none"><a href="blog.html" role="menuitem">Blog</a></li>
+                    <li role="none"><a href="assessment.html" role="menuitem">Assessment</a></li>
+                    <li role="none"><a href="resources.html" role="menuitem" aria-current="page">Resources</a></li>
+                </ul>
+                <div class="search-toggle" aria-label="Open search" role="button" tabindex="0">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="page-header" style="background: var(--bg-light); padding: 60px 0;">
+            <div class="container">
+                <h1 class="animate-on-scroll" data-animation="fade-in">Downloadable Resources</h1>
+                <p class="animate-on-scroll" data-animation="fade-in" data-delay="0.2s">Access our collection of insightful whitepapers and guides.</p>
+            </div>
+        </section>
+
+        <section class="resources-list" style="padding: 60px 0;">
+            <div class="container">
+                <div class="resource-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    
+                    <div class="resource-item" style="border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 25px; background: var(--secondary-color); box-shadow: var(--box-shadow-sm);">
+                        <h3 style="margin-top: 0;">Whitepaper: 5 Ways AI Can Boost Your Business Efficiency</h3>
+                        <p>Discover practical strategies to leverage AI for significant operational improvements and cost savings.</p>
+                        <a href="../assets/downloads/whitepaper_ai_efficiency.pdf" download class="btn btn-primary" aria-label="Download Whitepaper: 5 Ways AI Can Boost Your Business Efficiency">
+                            Download PDF <i class="fas fa-download" aria-hidden="true"></i>
+                        </a>
+                        <!-- Add lead capture form here if desired -->
+                    </div>
+
+                    <div class="resource-item" style="border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 25px; background: var(--secondary-color); box-shadow: var(--box-shadow-sm);">
+                        <h3>Guide: Implementing AI in Your Workflow</h3>
+                        <p>A step-by-step guide to integrating AI tools and solutions into your existing business processes effectively.</p>
+                        <a href="../assets/downloads/guide_implementing_ai.pdf" download class="btn btn-primary" aria-label="Download Guide: Implementing AI in Your Workflow">
+                            Download PDF <i class="fas fa-download" aria-hidden="true"></i>
+                        </a>
+                        <!-- Add lead capture form here if desired -->
+                    </div>
+                    
+                    <!-- Add more resource items here -->
+
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer role="contentinfo">
+        <!-- Include the standard footer from index.html here -->
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h4>About CAAKE</h4>
+                    <p>Providing cutting-edge AI automation solutions to drive business growth and efficiency.</p>
+                </div>
+                <div class="footer-section links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
+                    <div class="social-links" aria-label="Social media links">
+                        <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> CAAKE. All rights reserved. | <a href="pages/privacy.html">Privacy Policy</a> | <a href="pages/terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include main JS file -->
+    <script src="../assets/js/main.js" defer></script>
+    
+</body>
+</html> 

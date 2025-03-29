@@ -9,30 +9,55 @@ import { ShaderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/
 class ThreeJSSetup {
     constructor(containerId, options = {}) {
         this.container = document.getElementById(containerId);
-        this.width = this.container.clientWidth;
-        this.height = this.container.clientHeight;
-        this.options = options;
         
-        // Initialize core components
-        this.initScene();
-        this.initCamera();
-        this.initRenderer();
-        this.initControls();
-        
-        // Set up post-processing if needed
-        if (options.postprocessing) {
-            this.initPostprocessing();
+        if (!this.container) {
+            console.error(`Container element with ID ${containerId} not found.`);
+            return;
         }
         
-        // Set up event listeners
+        // Default options
+        this.options = {
+            backgroundColor: options.backgroundColor || 0x000000,
+            transparent: options.transparent !== undefined ? options.transparent : true,
+            orbitControls: options.orbitControls !== undefined ? options.orbitControls : true,
+            postprocessing: options.postprocessing !== undefined ? options.postprocessing : false,
+            bloom: options.bloom !== undefined ? options.bloom : false,
+            bloomStrength: options.bloomStrength || 1.5,
+            bloomRadius: options.bloomRadius || 0.4,
+            bloomThreshold: options.bloomThreshold || 0.8,
+            cameraZ: options.cameraZ || 100,
+            controlsConfig: options.controlsConfig || {}
+        };
+        
+        // Setup
+        this.setupScene();
+        this.setupCamera();
+        this.setupRenderer();
+        
+        // Make sure animation container doesn't interfere with scroll
+        this.container.style.position = 'absolute';
+        this.container.style.pointerEvents = 'none';
+        
+        if (this.options.orbitControls) {
+            this.setupOrbitControls();
+        }
+        
+        if (this.options.postprocessing) {
+            this.setupPostprocessing();
+        }
+        
+        // Handle resize
         window.addEventListener('resize', this.onWindowResize.bind(this));
+        
+        // Initial resize
+        this.onWindowResize();
         
         // Animation loop
         this.animate = this.animate.bind(this);
         this.clock = new THREE.Clock();
     }
     
-    initScene() {
+    setupScene() {
         this.scene = new THREE.Scene();
         if (this.options.backgroundColor) {
             this.scene.background = new THREE.Color(this.options.backgroundColor);
@@ -44,27 +69,23 @@ class ThreeJSSetup {
         }
     }
     
-    initCamera() {
+    setupCamera() {
         this.camera = new THREE.PerspectiveCamera(
-            this.options.fov || 75,
-            this.width / this.height,
-            this.options.near || 0.1,
-            this.options.far || 1000
+            75,
+            this.container.clientWidth / this.container.clientHeight,
+            0.1,
+            1000
         );
-        this.camera.position.set(
-            this.options.cameraX || 0,
-            this.options.cameraY || 0,
-            this.options.cameraZ || 5
-        );
+        this.camera.position.set(0, 0, this.options.cameraZ);
     }
     
-    initRenderer() {
+    setupRenderer() {
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: this.options.transparent || false
         });
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setSize(this.width, this.height);
+        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         this.container.appendChild(this.renderer.domElement);
         
         // Enable shadows if needed
@@ -74,19 +95,17 @@ class ThreeJSSetup {
         }
     }
     
-    initControls() {
-        if (this.options.orbitControls) {
-            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-            this.controls.enableDamping = true;
-            this.controls.dampingFactor = 0.05;
-            
-            if (this.options.controlsConfig) {
-                Object.assign(this.controls, this.options.controlsConfig);
-            }
+    setupOrbitControls() {
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.05;
+        
+        if (this.options.controlsConfig) {
+            Object.assign(this.controls, this.options.controlsConfig);
         }
     }
     
-    initPostprocessing() {
+    setupPostprocessing() {
         this.composer = new EffectComposer(this.renderer);
         
         // Add render pass
@@ -96,10 +115,10 @@ class ThreeJSSetup {
         // Add bloom effect
         if (this.options.bloom) {
             const bloomPass = new UnrealBloomPass(
-                new THREE.Vector2(this.width, this.height),
-                this.options.bloomStrength || 1.5,
-                this.options.bloomRadius || 0.4,
-                this.options.bloomThreshold || 0.85
+                new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
+                this.options.bloomStrength,
+                this.options.bloomRadius,
+                this.options.bloomThreshold
             );
             this.composer.addPass(bloomPass);
         }
@@ -111,16 +130,16 @@ class ThreeJSSetup {
     }
     
     onWindowResize() {
-        this.width = this.container.clientWidth;
-        this.height = this.container.clientHeight;
+        this.container.style.width = this.container.clientWidth + 'px';
+        this.container.style.height = this.container.clientHeight + 'px';
         
-        this.camera.aspect = this.width / this.height;
+        this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
         
-        this.renderer.setSize(this.width, this.height);
+        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         
         if (this.composer) {
-            this.composer.setSize(this.width, this.height);
+            this.composer.setSize(this.container.clientWidth, this.container.clientHeight);
         }
     }
     

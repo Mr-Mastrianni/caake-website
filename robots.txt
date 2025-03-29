@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /assets/js/
+Disallow: /assets/css/
+Disallow: /assets/images/raw/
+
+# Allow Googlebot to access JS and CSS
+User-agent: Googlebot
+Allow: /assets/js/
+Allow: /assets/css/
+
+# Specify sitemap location
+Sitemap: https://caake.org/sitemap.xml 

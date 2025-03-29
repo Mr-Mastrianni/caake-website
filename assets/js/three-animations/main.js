@@ -3,22 +3,85 @@ import WorkflowAutomationAnimation from './workflow-automation.js';
 import DigitalTwinAnimation from './digital-twin.js';
 import DataVisualizationAnimation from './data-visualization.js';
 
-// Check if GSAP is loaded, if not load it
-if (typeof gsap === 'undefined') {
-    console.log('Loading GSAP...');
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js';
-    script.async = true;
-    document.head.appendChild(script);
-    
-    // Wait for GSAP to load
-    script.onload = () => {
-        console.log('GSAP loaded, initializing animations...');
+// Check if Three.js is loaded, if not attempt to load it
+try {
+    // Check if GSAP is loaded, if not load it
+    if (typeof gsap === 'undefined') {
+        console.log('Loading GSAP...');
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        // Wait for GSAP to load
+        script.onload = () => {
+            console.log('GSAP loaded, initializing animations...');
+            initAnimations();
+        };
+    } else {
+        console.log('GSAP already loaded, initializing animations...');
         initAnimations();
-    };
-} else {
-    console.log('GSAP already loaded, initializing animations...');
-    initAnimations();
+    }
+    
+    // Check for Three.js global object
+    if (typeof THREE === 'undefined') {
+        console.log('Three.js not found in global scope, loading from CDN...');
+        const threeScript = document.createElement('script');
+        threeScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
+        threeScript.async = true;
+        document.head.appendChild(threeScript);
+        
+        threeScript.onload = () => {
+            console.log('Three.js loaded from CDN');
+            loadAdditionalThreeModules();
+        };
+    }
+} catch (error) {
+    console.error('Error initializing animations:', error);
+    // Graceful fallback - hide animation containers and show static content
+    document.querySelectorAll('[data-animation]').forEach(element => {
+        element.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #000000 100%)';
+        const container = element.querySelector('.animation-container');
+        if (container) {
+            container.style.display = 'none';
+        }
+    });
+}
+
+function loadAdditionalThreeModules() {
+    // Load required Three.js modules
+    const moduleUrls = [
+        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js',
+        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
+        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js',
+        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js',
+        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/ShaderPass.js'
+    ];
+    
+    let loadedCount = 0;
+    moduleUrls.forEach(url => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true;
+        document.head.appendChild(script);
+        
+        script.onload = () => {
+            loadedCount++;
+            if (loadedCount === moduleUrls.length) {
+                console.log('All Three.js modules loaded');
+                initAnimations();
+            }
+        };
+        
+        script.onerror = () => {
+            console.error('Failed to load Three.js module:', url);
+            loadedCount++;
+            if (loadedCount === moduleUrls.length) {
+                // Try to initialize anyway
+                initAnimations();
+            }
+        };
+    });
 }
 
 // Animation instances
@@ -29,14 +92,18 @@ let dataVisualizationInstance = null;
 
 // Initialization function
 function initAnimations() {
-    // Initialize animations on elements with specific data attributes
-    initAnimationByType('neural-network');
-    initAnimationByType('workflow-automation');
-    initAnimationByType('digital-twin');
-    initAnimationByType('data-visualization');
-    
-    // Set up scroll-based animation visibility
-    setupScrollObserver();
+    try {
+        // Initialize animations on elements with specific data attributes
+        initAnimationByType('neural-network');
+        initAnimationByType('workflow-automation');
+        initAnimationByType('digital-twin');
+        initAnimationByType('data-visualization');
+        
+        // Set up scroll-based animation visibility
+        setupScrollObserver();
+    } catch (error) {
+        console.error('Error during animation initialization:', error);
+    }
 }
 
 // Initialize specific animation type
@@ -44,39 +111,53 @@ function initAnimationByType(type) {
     const elements = document.querySelectorAll(`[data-animation="${type}"]`);
     
     elements.forEach(element => {
-        // Get animation options from data attributes if any
-        const options = getOptionsFromDataAttributes(element);
-        
-        // Create animation container if it doesn't exist
-        if (!element.querySelector('.animation-container')) {
-            const container = document.createElement('div');
-            container.className = 'animation-container';
-            container.style.width = '100%';
-            container.style.height = '100%';
-            container.style.position = 'absolute';
-            container.style.top = '0';
-            container.style.left = '0';
-            container.style.zIndex = '-1';
-            container.id = `${type}-container-${Math.floor(Math.random() * 10000)}`;
-            element.appendChild(container);
+        try {
+            // Get animation options from data attributes if any
+            const options = getOptionsFromDataAttributes(element);
             
-            // Initialize animation based on type
-            switch (type) {
-                case 'neural-network':
-                    neuralNetworkInstance = new NeuralNetworkAnimation(container.id, options);
-                    break;
-                case 'workflow-automation':
-                    workflowAutomationInstance = new WorkflowAutomationAnimation(container.id, options);
-                    break;
-                case 'digital-twin':
-                    digitalTwinInstance = new DigitalTwinAnimation(container.id, options);
-                    break;
-                case 'data-visualization':
-                    dataVisualizationInstance = new DataVisualizationAnimation(container.id, options);
-                    break;
+            // Create animation container if it doesn't exist
+            if (!element.querySelector('.animation-container')) {
+                const container = document.createElement('div');
+                container.className = 'animation-container';
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.position = 'absolute';
+                container.style.top = '0';
+                container.style.left = '0';
+                container.style.zIndex = '-1';
+                // Ensure animation container doesn't block interaction
+                container.style.pointerEvents = 'none';
+                container.id = `${type}-container-${Math.floor(Math.random() * 10000)}`;
+                
+                // Ensure container is the first child to not interfere with content
+                if (element.firstChild) {
+                    element.insertBefore(container, element.firstChild);
+                } else {
+                    element.appendChild(container);
+                }
+                
+                // Initialize animation based on type
+                switch (type) {
+                    case 'neural-network':
+                        neuralNetworkInstance = new NeuralNetworkAnimation(container.id, options);
+                        break;
+                    case 'workflow-automation':
+                        workflowAutomationInstance = new WorkflowAutomationAnimation(container.id, options);
+                        break;
+                    case 'digital-twin':
+                        digitalTwinInstance = new DigitalTwinAnimation(container.id, options);
+                        break;
+                    case 'data-visualization':
+                        dataVisualizationInstance = new DataVisualizationAnimation(container.id, options);
+                        break;
+                }
+                
+                console.log(`Initialized ${type} animation`);
             }
-            
-            console.log(`Initialized ${type} animation`);
+        } catch (error) {
+            console.error(`Error initializing ${type} animation:`, error);
+            // Apply fallback styling
+            element.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #000000 100%)';
         }
     });
 }
