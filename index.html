@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     
@@ -16,16 +16,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     
     <!-- Critical CSS preload -->
     <link rel="preload" href="assets/css/styles.css" as="style">
     <link rel="preload" href="assets/css/style-fixes.css" as="style">
+    <link rel="preload" href="assets/css/cookie-consent.css" as="style">
     
     <!-- Critical font preload - remove unused preload -->
     <link rel="preload" href="https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVZ0b.woff2" as="font" type="font/woff2" crossorigin>
     
     <!-- Critical JS preload -->
     <link rel="preload" href="assets/js/main.js" as="script">
+    <link rel="preload" href="assets/js/analytics.js" as="script">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -115,10 +118,16 @@
     }
     </script>
 
+    <!-- Initialize dataLayer for GTM -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+    </script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/style-fixes.css">
+    <link rel="stylesheet" href="assets/css/cookie-consent.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" defer></script>
     
     <!-- Fixed THREE.js imports - moved from dynamic loading to preloaded static imports -->
@@ -285,6 +294,75 @@
     </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-consent-banner">
+        <div class="cookie-container">
+            <div class="cookie-text">
+                <h3>We Value Your Privacy</h3>
+                <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. Visit our Privacy Policy to learn more or manage your cookie preferences.</p>
+            </div>
+            <div class="cookie-actions">
+                <button id="accept-cookies" class="cookie-btn cookie-btn-accept">Accept All</button>
+                <button id="reject-cookies" class="cookie-btn cookie-btn-reject">Reject Non-Essential</button>
+                <a href="pages/privacy.html" id="learn-more-cookies" class="cookie-btn-more">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Preferences Modal -->
+    <div id="cookie-preferences" class="cookie-preferences">
+        <div class="cookie-preferences-content">
+            <div class="cookie-preferences-header">
+                <h4>Cookie Preferences</h4>
+                <button class="cookie-preferences-close">&times;</button>
+            </div>
+            <div class="cookie-preferences-body">
+                <div class="cookie-preference-item">
+                    <div class="cookie-preference-header">
+                        <h5 class="cookie-preference-title">Essential Cookies</h5>
+                        <label class="cookie-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                    <p class="cookie-preference-description">These cookies are necessary for the website to function and cannot be switched off in our systems.</p>
+                </div>
+                
+                <div class="cookie-preference-item">
+                    <div class="cookie-preference-header">
+                        <h5 class="cookie-preference-title">Analytics Cookies</h5>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="analytics-cookies" checked>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                    <p class="cookie-preference-description">These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site.</p>
+                </div>
+                
+                <div class="cookie-preference-item">
+                    <div class="cookie-preference-header">
+                        <h5 class="cookie-preference-title">Marketing Cookies</h5>
+                        <label class="cookie-switch">
+                            <input type="checkbox" id="marketing-cookies" checked>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                    <p class="cookie-preference-description">These cookies may be set through our site by our advertising partners to build a profile of your interests.</p>
+                </div>
+            </div>
+            <div class="cookie-preferences-footer">
+                <div class="cookie-preference-actions">
+                    <button id="save-preferences" class="cookie-btn cookie-btn-accept">Save Preferences</button>
+                    <button id="close-preferences" class="cookie-btn cookie-btn-reject">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header role="banner">
@@ -670,7 +748,9 @@
         -->
     </div>
 
+    <!-- Scripts -->
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/analytics.js" defer></script>
     <script src="assets/js/chatbot.js" defer></script>
     <script src="assets/js/exit-intent.js" defer></script>
     <script>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Automation Case Studies - CAAKE</title>
+    <meta name="description" content="Explore real-world examples of how CAAKE has helped businesses across industries implement AI automation to improve efficiency, reduce costs, and drive growth.">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .case-studies-section {
+            padding: 60px 0;
+        }
+        
+        .case-study-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        .case-study-intro h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        .case-study-intro p {
+            color: #64748b;
+        }
+        
+        .industry-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #4a90e2;
+            color: white;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: rgba(74, 144, 226, 0.1);
+        }
+        
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .case-study-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            position: relative;
+        }
+        
+        .case-study-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .case-study-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .industry-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4a90e2;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .case-study-content {
+            padding: 25px;
+        }
+        
+        .case-study-content h3 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .case-study-content p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .results-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            background: #f8fafc;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #1e293b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-item i {
+            color: #4a90e2;
+            margin-right: 8px;
+        }
+        
+        .case-study-link {
+            display: inline-flex;
+            align-items: center;
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .case-study-link:hover {
+            transform: translateX(5px);
+        }
+        
+        .case-study-link i {
+            margin-left: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .case-study-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .featured-case-study {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: #f8fafc;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+            background-size: cover;
+            background-position: center;
+            min-height: 350px;
+        }
+        
+        .featured-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+        }
+        
+        .featured-label {
+            display: inline-block;
+            background: #4a90e2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .featured-content h3 {
+            color: #1e293b;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .featured-content p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .key-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .metric {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border: 2px solid #4a90e2;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .cta-section {
+            background-color: #1e293b;
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .case-studies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">CAAKE</a>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html">Services</a>
+                        <ul class="dropdown">
+                            <li><a href="services/consulting.html">AI Consulting</a></li>
+                            <li><a href="services/automations.html">Automations</a></li>
+                            <li><a href="services/solutions.html">AI Solutions</a></li>
+                            <li><a href="services/agents.html">AI Agents</a></li>
+                            <li><a href="services/assistants.html">AI Assistants</a></li>
+                            <li><a href="services/chatbots.html">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="assessment.html">Assessment</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li><a href="../index.html">Home</a></li>
+                <li>Case Studies</li>
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>AI Automation Success Stories</h1>
+                <p>Explore how our solutions have helped businesses across industries transform their operations and achieve measurable results</p>
+            </div>
+        </section>
+
+        <section class="case-studies-section">
+            <div class="container">
+                <div class="case-study-intro">
+                    <h2>Real Results for Real Businesses</h2>
+                    <p>At CAAKE, we're proud of the measurable impact our AI automation solutions have delivered for our clients. Browse our case studies to see how organizations like yours have transformed their operations, reduced costs, and improved customer experiences with our help.</p>
+                </div>
+                
+                <div class="industry-filter">
+                    <button class="filter-btn active" data-industry="all">All Industries</button>
+                    <button class="filter-btn" data-industry="retail">Retail</button>
+                    <button class="filter-btn" data-industry="finance">Finance</button>
+                    <button class="filter-btn" data-industry="healthcare">Healthcare</button>
+                    <button class="filter-btn" data-industry="manufacturing">Manufacturing</button>
+                    <button class="filter-btn" data-industry="technology">Technology</button>
+                </div>
+                
+                <div class="featured-case-study">
+                    <div class="featured-image" style="background-image: url('../assets/images/case-studies/finance-automation.jpg');"></div>
+                    <div class="featured-content">
+                        <span class="featured-label">Featured Case Study</span>
+                        <h3>Financial Services Transformation</h3>
+                        <p>Learn how we helped a leading financial services firm implement AI automation to streamline operations, reduce compliance risks, and enhance customer service.</p>
+                        
+                        <div class="key-metrics">
+                            <div class="metric">
+                                <div class="metric-value">68%</div>
+                                <div class="metric-label">Faster Loan Processing</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">42%</div>
+                                <div class="metric-label">Cost Reduction</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">94%</div>
+                                <div class="metric-label">Customer Satisfaction</div>
+                            </div>
+                        </div>
+                        
+                        <a href="case-studies/finance-automation.html" class="btn btn-primary">Read Full Case Study</a>
+                    </div>
+                </div>
+                
+                <div class="case-studies-grid">
+                    <div class="case-study-card" data-industry="retail">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/retail-transformation.jpg');">
+                            <span class="industry-tag">Retail</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>Retail Chain Automation</h3>
+                            <p>How a nationwide retail chain transformed inventory management and customer experiences with AI-powered solutions.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-chart-line"></i> 35% Inventory Cost Reduction</div>
+                                <div class="result-item"><i class="fas fa-clock"></i> 54% Faster Restocking</div>
+                            </div>
+                            <a href="case-studies/retail-transformation.html" class="case-study-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card" data-industry="finance">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/finance-automation.jpg');">
+                            <span class="industry-tag">Finance</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>Financial Services Transformation</h3>
+                            <p>How we helped a financial services firm streamline operations and improve customer service with AI automation.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-bolt"></i> 68% Faster Loan Processing</div>
+                                <div class="result-item"><i class="fas fa-dollar-sign"></i> 42% Cost Reduction</div>
+                            </div>
+                            <a href="case-studies/finance-automation.html" class="case-study-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card" data-industry="healthcare">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/healthcare-ai.jpg');">
+                            <span class="industry-tag">Healthcare</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>Healthcare Provider AI Implementation</h3>
+                            <p>How a regional healthcare provider used AI to improve patient scheduling and administrative processes.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-user-md"></i> 45% More Patient Time</div>
+                                <div class="result-item"><i class="fas fa-calendar"></i> 72% Fewer No-shows</div>
+                            </div>
+                            <a href="#" class="case-study-link">Coming Soon <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card" data-industry="manufacturing">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/manufacturing-automation.jpg');">
+                            <span class="industry-tag">Manufacturing</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>Manufacturing Process Optimization</h3>
+                            <p>How AI-powered predictive maintenance and quality control transformed a manufacturing operation.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-cogs"></i> 63% Less Downtime</div>
+                                <div class="result-item"><i class="fas fa-check-circle"></i> 27% Quality Improvement</div>
+                            </div>
+                            <a href="#" class="case-study-link">Coming Soon <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card" data-industry="technology">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/tech-company-automation.jpg');">
+                            <span class="industry-tag">Technology</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>Tech Startup Customer Support Automation</h3>
+                            <p>How a growing tech company scaled their customer support with AI assistants and chatbots.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-headset"></i> 85% Automated Resolutions</div>
+                                <div class="result-item"><i class="fas fa-smile"></i> 92% Satisfaction Rate</div>
+                            </div>
+                            <a href="#" class="case-study-link">Coming Soon <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card" data-industry="retail">
+                        <div class="case-study-image" style="background-image: url('../assets/images/case-studies/ecommerce-personalization.jpg');">
+                            <span class="industry-tag">Retail</span>
+                        </div>
+                        <div class="case-study-content">
+                            <h3>E-commerce Personalization Engine</h3>
+                            <p>How an online retailer boosted conversion rates with AI-powered product recommendations.</p>
+                            <div class="results-preview">
+                                <div class="result-item"><i class="fas fa-shopping-cart"></i> 48% Higher AOV</div>
+                                <div class="result-item"><i class="fas fa-redo"></i> 35% More Repeat Purchases</div>
+                            </div>
+                            <a href="#" class="case-study-link">Coming Soon <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Achieve Similar Results?</h2>
+                <p>Let's discuss how AI automation can transform your business operations and drive measurable improvements in efficiency, cost, and customer satisfaction.</p>
+                <div class="cta-buttons">
+                    <a href="assessment.html" class="btn btn-primary">Get a Free Assessment</a>
+                    <a href="contact.html" class="btn btn-outline">Contact Our Team</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>CAAKE</h3>
+                    <p>Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="assessment.html">Assessment</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services/consulting.html">AI Consulting</a></li>
+                        <li><a href="services/automations.html">Automations</a></li>
+                        <li><a href="services/solutions.html">AI Solutions</a></li>
+                        <li><a href="services/agents.html">AI Agents</a></li>
+                        <li><a href="services/assistants.html">AI Assistants</a></li>
+                        <li><a href="services/chatbots.html">Chatbots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Industry filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const caseStudyCards = document.querySelectorAll('.case-study-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter case studies
+                    const industry = this.getAttribute('data-industry');
+                    
+                    caseStudyCards.forEach(card => {
+                        if (industry === 'all' || card.getAttribute('data-industry') === industry) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Animate elements on scroll
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.case-study-card, .featured-case-study');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Set initial styles for animation
+            const animatedElements = document.querySelectorAll('.case-study-card, .featured-case-study');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            // Run on page load
+            animateOnScroll();
+            
+            // Attach scroll event
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+</body>
+</html> 

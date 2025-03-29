@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - CAAKE</title>
+    <meta name="description" content="The page you were looking for could not be found.">
+    <meta name="robots" content="noindex, follow">
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/style-fixes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        .error-container {
+            padding: 100px 0;
+            text-align: center;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 0;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .error-code:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: #4a90e2;
+            bottom: 15px;
+            left: 0;
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .error-icon {
+            font-size: 3rem;
+            color: #4a90e2;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .suggestions {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .suggestions h3 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        .suggestion-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .suggestion-link {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .suggestion-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            color: #4a90e2;
+        }
+        
+        .suggestion-link i {
+            margin-right: 10px;
+            color: #4a90e2;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border: 2px solid #4a90e2;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #4a90e2;
+            border: 2px solid #4a90e2;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .error-container {
+                padding: 60px 20px;
+            }
+            
+            .suggestion-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .suggestion-link {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="/index.html" class="logo">CAAKE</a>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="/pages/services.html">Services</a>
+                        <ul class="dropdown">
+                            <li><a href="/pages/services/consulting.html">AI Consulting</a></li>
+                            <li><a href="/pages/services/automations.html">Automations</a></li>
+                            <li><a href="/pages/services/solutions.html">AI Solutions</a></li>
+                            <li><a href="/pages/services/agents.html">AI Agents</a></li>
+                            <li><a href="/pages/services/assistants.html">AI Assistants</a></li>
+                            <li><a href="/pages/services/chatbots.html">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/pages/about.html">About Us</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li><a href="/pages/blog.html">Blog</a></li>
+                    <li><a href="/pages/assessment.html">Assessment</a></li>
+                    <li><a href="/pages/pricing.html">Pricing</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <i class="fas fa-robot error-icon"></i>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">The page you're looking for doesn't exist or has been moved. Don't worry, even our AI sometimes gets lost in the digital world.</p>
+            
+            <div class="error-actions">
+                <a href="/index.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+                <a href="/pages/contact.html" class="btn btn-outline"><i class="fas fa-envelope"></i> Contact Us</a>
+            </div>
+            
+            <div class="suggestions">
+                <h3>You might be looking for:</h3>
+                <div class="suggestion-links">
+                    <a href="/pages/services.html" class="suggestion-link"><i class="fas fa-cogs"></i> Our Services</a>
+                    <a href="/pages/case-studies.html" class="suggestion-link"><i class="fas fa-chart-line"></i> Case Studies</a>
+                    <a href="/pages/assessment.html" class="suggestion-link"><i class="fas fa-clipboard-check"></i> AI Assessment</a>
+                    <a href="/pages/blog.html" class="suggestion-link"><i class="fas fa-rss"></i> Blog Articles</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>CAAKE</h3>
+                    <p>Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/pages/services.html">Services</a></li>
+                        <li><a href="/pages/about.html">About Us</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/assessment.html">Assessment</a></li>
+                        <li><a href="/pages/pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="/pages/services/consulting.html">AI Consulting</a></li>
+                        <li><a href="/pages/services/automations.html">Automations</a></li>
+                        <li><a href="/pages/services/solutions.html">AI Solutions</a></li>
+                        <li><a href="/pages/services/agents.html">AI Agents</a></li>
+                        <li><a href="/pages/services/assistants.html">AI Assistants</a></li>
+                        <li><a href="/pages/services/chatbots.html">Chatbots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 480-364-1164</p>
+                    <p>Email: automationkingz11@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2024</span> CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Update copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Navigation menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function() {
+                navToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+        
+        // Track 404 error in analytics (if implemented)
+        if (typeof gtag === 'function') {
+            gtag('event', 'page_view', {
+                'page_title': '404 - Page Not Found',
+                'page_location': window.location.href,
+                'page_path': window.location.pathname,
+                'event_category': 'error',
+                'event_label': document.referrer || 'direct'
+            });
+        }
+    </script>
+</body>
+</html> 

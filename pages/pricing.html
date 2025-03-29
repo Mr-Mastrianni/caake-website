@@ -363,6 +363,10 @@
             font-size: 20px;
             position: relative;
             padding-left: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .faq-item h3:before {
@@ -374,9 +378,31 @@
             left: 0;
         }
         
+        .faq-item h3:after {
+            content: "\f107";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #4a90e2;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item h3.active:after {
+            transform: rotate(180deg);
+        }
+        
         .faq-item p {
             color: #64748b;
             line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin: 0;
+        }
+        
+        .faq-item h3.active + p {
+            max-height: 1000px;
+            margin-top: 10px;
         }
         
         .cta-section {
@@ -433,11 +459,250 @@
             .addon-price {
                 margin-left: 0;
                 margin-top: 10px;
+                padding: 10px 15px;
+                width: 100%;
+                text-align: center;
             }
             
             .project-item {
                 max-width: none;
             }
+            
+            .calculator-link {
+                display: block;
+                margin: 20px auto 0;
+                max-width: 280px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .pricing-toggle {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .annual-discount {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            
+            .faq-item h3 {
+                font-size: 18px;
+                padding-right: 25px;
+            }
+            
+            .faq-item h3:after {
+                position: absolute;
+                right: 0;
+            }
+        }
+        
+        .pricing-card h3 i {
+            margin-right: 10px;
+            color: #4a90e2;
+        }
+        
+        .pricing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-toggle-label {
+            font-weight: 600;
+            color: #64748b;
+            margin: 0 10px;
+        }
+        
+        .pricing-toggle-label.active {
+            color: #1e293b;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e2e8f0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #4a90e2;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(28px);
+        }
+        
+        .annual-discount {
+            background-color: #ebf5ff;
+            color: #4a90e2;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .feature-tooltip {
+            display: inline-block;
+            position: relative;
+            margin-left: 5px;
+            color: #a0aec0;
+            cursor: help;
+        }
+        
+        .feature-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+        
+        .pricing-intro {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+        
+        .calculator-link {
+            display: inline-flex;
+            align-items: center;
+            color: #4a90e2;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .calculator-link i {
+            margin-right: 10px;
+        }
+        
+        .calculator-link:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        .pricing-card, .project-item, .addon-item, .faq-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .pricing-card.animated, .project-item.animated, .addon-item.animated, .faq-item.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .pricing-card:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .pricing-card:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+        
+        .project-item:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .project-item:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+        
+        .addon-item:nth-child(odd) {
+            transition-delay: 0.05s;
+        }
+        
+        .faq-item:nth-child(2) {
+            transition-delay: 0.05s;
+        }
+        
+        .faq-item:nth-child(3) {
+            transition-delay: 0.1s;
+        }
+        
+        .faq-item:nth-child(4) {
+            transition-delay: 0.15s;
+        }
+        
+        .faq-item:nth-child(5) {
+            transition-delay: 0.2s;
         }
     </style>
 </head>
@@ -486,21 +751,34 @@
                 <h2>Find the Perfect Plan for Your Business</h2>
                 <p>At CAAKE, we believe that AI should be accessible to businesses of all sizes. Our pricing structure is designed to provide maximum value while scaling with your needs. Whether you're just starting your AI journey or looking to expand your capabilities, we have options that work for you.</p>
                 <p>All plans include our commitment to excellence, cutting-edge technology, and expert support to ensure your success with AI.</p>
+                <a href="pricing-calculator.html" class="calculator-link"><i class="fas fa-calculator"></i> Use our pricing calculator to estimate your needs</a>
             </div>
         </section>
 
         <section class="subscription-plans">
             <div class="container">
                 <h2>Subscription Plans</h2>
+                
+                <div class="pricing-toggle">
+                    <span class="pricing-toggle-label active" id="monthly-label">Monthly</span>
+                    <label class="toggle-switch" for="pricing-toggle-input">
+                        <input type="checkbox" id="pricing-toggle-input" aria-labelledby="monthly-label annual-label" aria-describedby="toggle-description">
+                        <span class="toggle-slider" role="switch" aria-checked="false"></span>
+                        <span id="toggle-description" class="sr-only">Toggle between monthly and annual billing</span>
+                    </label>
+                    <span class="pricing-toggle-label" id="annual-label">Annual</span>
+                    <span class="annual-discount">Save 20%</span>
+                </div>
+                
                 <div class="pricing-table">
                     <div class="pricing-card">
-                        <h3>Basic</h3>
+                        <h3><i class="fas fa-rocket"></i> Basic</h3>
                         <div class="price">$99 <span>/ month</span></div>
                         <p>Perfect for small businesses starting their AI journey</p>
                         <ul class="features">
                             <li>2 hours of AI consulting per month</li>
-                            <li>1 automation workflow</li>
-                            <li>Basic chatbot (up to 500 conversations)</li>
+                            <li>1 automation workflow <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Automate a single business process with AI to increase efficiency and reduce manual tasks.</span></span></li>
+                            <li>Basic chatbot (up to 500 conversations) <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Simple AI chatbot that can answer frequently asked questions and handle basic customer inquiries.</span></span></li>
                             <li>Email support</li>
                             <li>Monthly performance reports</li>
                         </ul>
@@ -509,14 +787,14 @@
                     
                     <div class="pricing-card featured">
                         <div class="featured-tag">Most Popular</div>
-                        <h3>Professional</h3>
+                        <h3><i class="fas fa-crown"></i> Professional</h3>
                         <div class="price">$499 <span>/ month</span></div>
                         <p>Ideal for growing businesses looking to expand AI capabilities</p>
                         <ul class="features">
                             <li>5 hours of AI consulting per month</li>
-                            <li>3 automation workflows</li>
-                            <li>Advanced chatbot (up to 2,000 conversations)</li>
-                            <li>1 custom AI assistant</li>
+                            <li>3 automation workflows <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Automate multiple business processes with advanced integration capabilities and custom logic.</span></span></li>
+                            <li>Advanced chatbot (up to 2,000 conversations) <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Enhanced AI chatbot with natural language understanding, multi-turn conversations, and integration with your business systems.</span></span></li>
+                            <li>1 custom AI assistant <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Specialized AI assistant designed for a specific department or function within your organization.</span></span></li>
                             <li>Priority support</li>
                             <li>Detailed analytics dashboard</li>
                             <li>Bi-weekly performance reports</li>
@@ -525,14 +803,14 @@
                     </div>
                     
                     <div class="pricing-card">
-                        <h3>Enterprise</h3>
+                        <h3><i class="fas fa-building"></i> Enterprise</h3>
                         <div class="price">Custom</div>
                         <p>For organizations with complex AI needs and enterprise-scale requirements</p>
                         <ul class="features">
                             <li>Custom AI consulting package</li>
-                            <li>Unlimited automation workflows</li>
-                            <li>Enterprise-grade chatbots</li>
-                            <li>Multiple AI assistants and agents</li>
+                            <li>Unlimited automation workflows <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Implement automation across multiple departments with enterprise-grade scalability and reliability.</span></span></li>
+                            <li>Enterprise-grade chatbots <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">High-capacity, multi-channel chatbots with advanced security, compliance features, and omnichannel support.</span></span></li>
+                            <li>Multiple AI assistants and agents <span class="feature-tooltip"><i class="fas fa-info-circle" aria-hidden="true"></i><span class="tooltip-text" role="tooltip">Deploy specialized AI assistants and autonomous agents across your organization with centralized management.</span></span></li>
                             <li>Dedicated account manager</li>
                             <li>Integration with existing systems</li>
                             <li>Custom reporting and analytics</li>
@@ -608,20 +886,20 @@
                 
                 <div class="project-list">
                     <div class="project-item">
-                        <h3>Initial AI Assessment and Strategy</h3>
+                        <h3><i class="fas fa-clipboard-check"></i> Initial AI Assessment and Strategy</h3>
                         <p>Comprehensive evaluation of your business's AI readiness and development of strategic recommendations.</p>
                         <div class="project-price">$5,000-$15,000</div>
                     </div>
                     
                     <div class="project-item">
-                        <h3>Custom AI Solution Development</h3>
+                        <h3><i class="fas fa-cogs"></i> Custom AI Solution Development</h3>
                         <p>End-to-end development of tailored AI solutions for your specific business challenges.</p>
                         <div class="project-price">$10,000-$100,000</div>
                         <p class="note">Pricing varies based on complexity and scope.</p>
                     </div>
                     
                     <div class="project-item">
-                        <h3>Implementation Services</h3>
+                        <h3><i class="fas fa-tools"></i> Implementation Services</h3>
                         <p>Expert deployment and integration of AI solutions into your existing business systems.</p>
                         <div class="project-price">$150-$200/hour</div>
                     </div>
@@ -634,28 +912,28 @@
                 <h2>Frequently Asked Questions</h2>
                 <div class="faq-list">
                     <div class="faq-item">
-                        <h3>How do I know which plan is right for my business?</h3>
-                        <p>We offer a complimentary AI readiness assessment to help determine the best fit for your needs. Our experts will evaluate your business goals, current systems, and budget to recommend the optimal plan.</p>
+                        <h3 aria-expanded="true" role="button" tabindex="0">How do I know which plan is right for my business?</h3>
+                        <p aria-hidden="false">We offer a complimentary AI readiness assessment to help determine the best fit for your needs. Our experts will evaluate your business goals, current systems, and budget to recommend the optimal plan.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Can I upgrade or downgrade my plan later?</h3>
-                        <p>Yes, you can easily upgrade your plan at any time as your needs grow. Downgrades can be processed at the end of your billing cycle.</p>
+                        <h3 aria-expanded="false" role="button" tabindex="0">Can I upgrade or downgrade my plan later?</h3>
+                        <p aria-hidden="true">Yes, you can easily upgrade your plan at any time as your needs grow. Downgrades can be processed at the end of your billing cycle.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>What is your contract length?</h3>
-                        <p>Our Basic and Professional plans require a 6-month minimum commitment, while Enterprise plans typically have a 12-month term. We offer discounts for annual payments.</p>
+                        <h3 aria-expanded="false" role="button" tabindex="0">What is your contract length?</h3>
+                        <p aria-hidden="true">Our Basic and Professional plans require a 6-month minimum commitment, while Enterprise plans typically have a 12-month term. We offer discounts for annual payments.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>How do you measure performance for the value-based pricing?</h3>
-                        <p>We establish clear KPIs at the beginning of our engagement, tailored to your business objectives. These may include cost savings, efficiency improvements, revenue increases, or other measurable metrics.</p>
+                        <h3 aria-expanded="false" role="button" tabindex="0">How do you measure performance for the value-based pricing?</h3>
+                        <p aria-hidden="true">We establish clear KPIs at the beginning of our engagement, tailored to your business objectives. These may include cost savings, efficiency improvements, revenue increases, or other measurable metrics.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Do you offer implementation support?</h3>
-                        <p>Yes, all our plans include implementation support to ensure a smooth onboarding process and successful adoption of our AI solutions.</p>
+                        <h3 aria-expanded="false" role="button" tabindex="0">Do you offer implementation support?</h3>
+                        <p aria-hidden="true">Yes, all our plans include implementation support to ensure a smooth onboarding process and successful adoption of our AI solutions.</p>
                     </div>
                 </div>
             </div>
@@ -718,5 +996,123 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+    <script>
+        // Pricing toggle functionality
+        const toggleInput = document.getElementById('pricing-toggle-input');
+        const toggleSlider = document.querySelector('.toggle-slider');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+        const priceElements = document.querySelectorAll('.price');
+        
+        // Store original prices
+        const originalPrices = [];
+        priceElements.forEach(element => {
+            if (element.textContent !== 'Custom') {
+                originalPrices.push(element.textContent);
+            } else {
+                originalPrices.push('Custom');
+            }
+        });
+        
+        toggleInput.addEventListener('change', function() {
+            if (this.checked) {
+                // Annual pricing (20% discount)
+                monthlyLabel.classList.remove('active');
+                annualLabel.classList.add('active');
+                toggleSlider.setAttribute('aria-checked', 'true');
+                
+                priceElements.forEach((element, index) => {
+                    if (originalPrices[index] !== 'Custom') {
+                        const priceValue = parseInt(originalPrices[index].replace(/[^0-9]/g, ''));
+                        const discountedPrice = Math.round(priceValue * 0.8); // 20% discount
+                        element.innerHTML = `$${discountedPrice} <span>/ year</span>`;
+                    }
+                });
+            } else {
+                // Monthly pricing
+                monthlyLabel.classList.add('active');
+                annualLabel.classList.remove('active');
+                toggleSlider.setAttribute('aria-checked', 'false');
+                
+                priceElements.forEach((element, index) => {
+                    element.innerHTML = originalPrices[index];
+                });
+            }
+        });
+        
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item h3');
+        
+        faqItems.forEach(item => {
+            // Set the first FAQ item as active by default
+            if (item === faqItems[0]) {
+                item.classList.add('active');
+                const content = item.nextElementSibling;
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+            
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                
+                // Toggle ARIA attributes
+                const expanded = this.classList.contains('active');
+                this.setAttribute('aria-expanded', expanded);
+                content.setAttribute('aria-hidden', !expanded);
+                
+                // Set the content max-height
+                if (expanded) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0';
+                }
+                
+                // Optional: Close other FAQ items when opening a new one
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.setAttribute('aria-expanded', 'false');
+                        const otherContent = otherItem.nextElementSibling;
+                        otherContent.setAttribute('aria-hidden', 'true');
+                        otherContent.style.maxHeight = '0';
+                    }
+                });
+            });
+            
+            // Add keyboard accessibility
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+        
+        // Scroll animations
+        function handleScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.pricing-card, .project-item, .addon-item, .faq-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1, // Trigger when at least 10% of the element is visible
+                rootMargin: '0px 0px -50px 0px' // Negative margin to trigger animation before element is fully in view
+            });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Initialize scroll animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            handleScrollAnimations();
+        });
+    </script>
 </body>
 </html> 

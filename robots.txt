@@ -1,8 +1,47 @@
 User-agent: *
 Allow: /
-Disallow: /assets/js/
-Disallow: /assets/css/
-Disallow: /assets/images/raw/
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /backend/
+Disallow: /wp-admin/
+
+# Disallow duplicate content
+Disallow: */trackback/
+Disallow: */feed/
+Disallow: */embed/
+
+# Prevent crawling of non-public pages
+Disallow: /thankyou.html
+Disallow: /success.html
+Disallow: /error.html
+Disallow: /login.html
+
+# Allow main sitemap
+Sitemap: https://caake.org/sitemap.xml
+
+# Crawl delay to prevent server overload (in seconds)
+Crawl-delay: 1
+
+# Don't index image search
+User-agent: Googlebot-Image
+Disallow: /assets/images/backgrounds/
+Disallow: /assets/images/icons/
+
+# Don't index resource files
+User-agent: *
+Disallow: *.pdf$
+Disallow: *.doc$
+Disallow: *.docx$
+Disallow: *.xls$
+Disallow: *.xlsx$
+Disallow: *.ppt$
+Disallow: *.pptx$
+
+# Allow Googlebot to access JS and CSS
+User-agent: Googlebot
+Allow: /assets/js/
+Allow: /assets/css/
 
 # Allow Googlebot to access JS and CSS
 User-agent: Googlebot

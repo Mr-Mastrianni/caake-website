@@ -40,37 +40,39 @@
     <style>
         .calculator-section {
             padding: 60px 0;
-            background-color: #f8f9fa;
+            background-color: #f8fafc;
         }
         
         .calculator-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
         }
         
-        .calculator-header {
+        .calculator-intro {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
-        .calculator-header h1 {
+        .calculator-intro h2 {
+            color: #1e293b;
             margin-bottom: 15px;
-            color: #0066cc;
+            font-size: 1.8rem;
         }
         
-        .calculator-header p {
-            color: #666;
-            font-size: 1.1rem;
+        .calculator-intro p {
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto 20px;
         }
         
         .calculator-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
         
         .form-group {
@@ -80,205 +82,208 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #1e293b;
         }
         
         .form-group select,
+        .form-group input[type="number"],
         .form-group input[type="range"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
             font-size: 1rem;
+            color: #1e293b;
+            background-color: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         
-        .slider-container {
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .range-container {
+            position: relative;
+        }
+        
+        .range-labels {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .slider-with-labels {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .slider-with-labels input[type="range"] {
-            flex: 1;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #64748b;
         }
         
         .slider-value {
-            min-width: 50px;
-            font-weight: bold;
-            color: #0066cc;
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: 600;
+            color: #4a90e2;
         }
         
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #666;
-        }
-        
-        .calculator-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .option-card {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .option-card:hover {
-            border-color: #0066cc;
-            background-color: #f0f7ff;
-        }
-        
-        .option-card.selected {
-            border-color: #0066cc;
-            background-color: #f0f7ff;
-            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
-        }
-        
-        .option-card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .option-card-header i {
-            color: #0066cc;
+        .form-section-title {
+            grid-column: 1 / -1;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: #1e293b;
             font-size: 1.2rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
         }
         
-        .option-card-header h3 {
-            margin: 0;
-            font-size: 1.1rem;
+        .calculator-results {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
         }
         
-        .option-card p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .option-card input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        
-        .results-container {
+        .result-summary {
             background-color: #f0f7ff;
-            border-radius: 8px;
             padding: 20px;
-            margin-top: 30px;
-        }
-        
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
         
-        .results-header h2 {
-            color: #0066cc;
-            margin: 0;
+        .result-summary h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
         }
         
-        .total-price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #0066cc;
-        }
-        
-        .price-breakdown {
-            margin-top: 20px;
-        }
-        
-        .price-item {
+        .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e2e8f0;
         }
         
-        .price-item:last-child {
+        .result-item:last-child {
             border-bottom: none;
         }
         
-        .calculator-actions {
+        .result-label {
+            color: #64748b;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .total-cost {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.3rem;
+        }
+        
+        .total-cost span {
+            color: #4a90e2;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+        
+        .result-actions {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
         
-        .calculator-actions button,
-        .calculator-actions a {
-            padding: 12px 24px;
-            border-radius: 4px;
-            border: none;
+        .result-actions .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
             font-weight: bold;
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .calculate-btn {
-            background-color: #0066cc;
-            color: white;
-        }
-        
-        .reset-btn {
-            background-color: #f8f9fa;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-        
-        .calculate-btn:hover {
-            background-color: #0052a3;
-        }
-        
-        .reset-btn:hover {
-            background-color: #e9ecef;
-        }
-        
-        .contact-cta {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f0f7ff;
-            border-radius: 8px;
         }
         
-        .contact-cta h3 {
-            margin-bottom: 15px;
-            color: #333;
+        .btn-outline {
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            background-color: transparent;
         }
         
-        .contact-cta p {
-            margin-bottom: 20px;
-            color: #666;
+        .btn-outline:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border: 2px solid #4a90e2;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .tooltip {
+            display: inline-block;
+            margin-left: 5px;
+            color: #a0aec0;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
         }
         
         @media (max-width: 768px) {
-            .calculator-options {
+            .calculator-form {
                 grid-template-columns: 1fr;
             }
             
-            .calculator-actions {
+            .calculator-container {
+                padding: 25px;
+            }
+            
+            .result-actions {
                 flex-direction: column;
                 gap: 15px;
             }
             
-            .calculator-actions button {
+            .result-actions .btn {
                 width: 100%;
             }
         }
@@ -337,17 +342,19 @@
     <section class="calculator-section">
         <div class="container">
             <div class="calculator-container">
-                <div class="calculator-header">
-                    <h1>AI Automation Pricing Calculator</h1>
-                    <p>Estimate the cost of implementing AI solutions tailored to your specific business needs. Adjust the parameters below to see how different choices impact your investment.</p>
+                <div class="calculator-intro">
+                    <h2>Customize Your AI Solution</h2>
+                    <p>Use the form below to estimate the cost of our AI services based on your specific business requirements. Adjust the sliders to see how different options affect the total cost.</p>
                 </div>
                 
                 <form id="calculator-form" class="calculator-form">
+                    <h3 class="form-section-title">Business Information</h3>
+                    
                     <div class="form-group">
                         <label for="business-size">Business Size</label>
-                        <select id="business-size" name="business-size">
+                        <select id="business-size">
                             <option value="small">Small (1-50 employees)</option>
-                            <option value="medium">Medium (51-200 employees)</option>
+                            <option value="medium" selected>Medium (51-200 employees)</option>
                             <option value="large">Large (201-1000 employees)</option>
                             <option value="enterprise">Enterprise (1000+ employees)</option>
                         </select>
@@ -355,153 +362,164 @@
                     
                     <div class="form-group">
                         <label for="industry">Industry</label>
-                        <select id="industry" name="industry">
+                        <select id="industry">
                             <option value="retail">Retail & E-commerce</option>
-                            <option value="healthcare">Healthcare</option>
                             <option value="finance">Finance & Banking</option>
+                            <option value="healthcare">Healthcare</option>
                             <option value="manufacturing">Manufacturing</option>
-                            <option value="technology">Technology & Software</option>
-                            <option value="education">Education</option>
-                            <option value="logistics">Logistics & Transportation</option>
+                            <option value="technology" selected>Technology</option>
+                            <option value="services">Professional Services</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Solution Type (Select all that apply)</label>
-                        <div class="calculator-options">
-                            <div class="option-card" data-value="automation">
-                                <div class="option-card-header">
-                                    <i class="fas fa-robot"></i>
-                                    <h3>Workflow Automation</h3>
-                                </div>
-                                <p>Automate repetitive tasks and streamline business processes</p>
-                                <input type="checkbox" name="solution-type" value="automation" class="visually-hidden">
-                            </div>
-                            
-                            <div class="option-card" data-value="chatbot">
-                                <div class="option-card-header">
-                                    <i class="fas fa-comments"></i>
-                                    <h3>Chatbot / Virtual Assistant</h3>
-                                </div>
-                                <p>AI-powered customer service and support solutions</p>
-                                <input type="checkbox" name="solution-type" value="chatbot" class="visually-hidden">
-                            </div>
-                            
-                            <div class="option-card" data-value="analytics">
-                                <div class="option-card-header">
-                                    <i class="fas fa-chart-line"></i>
-                                    <h3>Data Analytics & BI</h3>
-                                </div>
-                                <p>Intelligent data analysis and business insights</p>
-                                <input type="checkbox" name="solution-type" value="analytics" class="visually-hidden">
-                            </div>
-                            
-                            <div class="option-card" data-value="custom">
-                                <div class="option-card-header">
-                                    <i class="fas fa-cogs"></i>
-                                    <h3>Custom AI Solution</h3>
-                                </div>
-                                <p>Tailor-made AI solutions for specific business needs</p>
-                                <input type="checkbox" name="solution-type" value="custom" class="visually-hidden">
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="form-section-title">Automation Needs</h3>
                     
                     <div class="form-group">
-                        <label for="integration-complexity">Integration Complexity</label>
-                        <div class="slider-container">
-                            <div class="slider-with-labels">
-                                <input type="range" id="integration-complexity" name="integration-complexity" min="1" max="5" value="3">
-                                <span id="complexity-value" class="slider-value">Medium</span>
-                            </div>
-                            <div class="slider-labels">
-                                <span>Simple</span>
-                                <span>Medium</span>
-                                <span>Complex</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="automation-scale">Scale of Automation (# of processes)</label>
-                        <div class="slider-container">
-                            <div class="slider-with-labels">
-                                <input type="range" id="automation-scale" name="automation-scale" min="1" max="20" value="5">
-                                <span id="scale-value" class="slider-value">5</span>
-                            </div>
-                            <div class="slider-labels">
-                                <span>1</span>
+                        <label for="automation-workflows">Number of Automation Workflows 
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">Each workflow automates a specific business process, such as data entry, reporting, or customer notifications.</span>
+                            </span>
+                        </label>
+                        <div class="range-container">
+                            <input type="range" id="automation-workflows" min="0" max="10" value="2" step="1">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span>5</span>
                                 <span>10</span>
-                                <span>20+</span>
                             </div>
+                            <div>Selected: <span id="automation-workflows-value" class="slider-value">2</span></div>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label>Additional Services</label>
-                        <div class="calculator-options">
-                            <div class="option-card" data-value="consulting">
-                                <div class="option-card-header">
-                                    <i class="fas fa-brain"></i>
-                                    <h3>AI Strategy Consulting</h3>
-                                </div>
-                                <p>Expert guidance on AI implementation and roadmap</p>
-                                <input type="checkbox" name="additional-services" value="consulting" class="visually-hidden">
+                        <label for="ai-assistants">Number of AI Assistants
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">Specialized AI assistants that handle specific functions such as customer support, HR inquiries, or sales assistance.</span>
+                            </span>
+                        </label>
+                        <div class="range-container">
+                            <input type="range" id="ai-assistants" min="0" max="5" value="1" step="1">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span>2</span>
+                                <span>5</span>
                             </div>
-                            
-                            <div class="option-card" data-value="training">
-                                <div class="option-card-header">
-                                    <i class="fas fa-user-graduate"></i>
-                                    <h3>Staff Training</h3>
-                                </div>
-                                <p>Training for your team to effectively use AI systems</p>
-                                <input type="checkbox" name="additional-services" value="training" class="visually-hidden">
-                            </div>
-                            
-                            <div class="option-card" data-value="maintenance">
-                                <div class="option-card-header">
-                                    <i class="fas fa-tools"></i>
-                                    <h3>Ongoing Maintenance</h3>
-                                </div>
-                                <p>Regular updates, maintenance, and performance optimization</p>
-                                <input type="checkbox" name="additional-services" value="maintenance" class="visually-hidden">
-                            </div>
-                            
-                            <div class="option-card" data-value="support">
-                                <div class="option-card-header">
-                                    <i class="fas fa-headset"></i>
-                                    <h3>24/7 Premium Support</h3>
-                                </div>
-                                <p>Round-the-clock support for critical AI systems</p>
-                                <input type="checkbox" name="additional-services" value="support" class="visually-hidden">
-                            </div>
+                            <div>Selected: <span id="ai-assistants-value" class="slider-value">1</span></div>
                         </div>
                     </div>
                     
-                    <div class="results-container" id="results-container" style="display: none;">
-                        <div class="results-header">
-                            <h2>Estimated Investment</h2>
-                            <div class="total-price" id="total-price">$0</div>
-                        </div>
-                        
-                        <div class="price-breakdown" id="price-breakdown">
-                            <!-- Price breakdown will be populated by JavaScript -->
-                        </div>
-                        
-                        <p class="price-disclaimer">This is an estimate based on the information provided. Actual pricing may vary based on specific requirements and customizations. Contact us for a detailed quote.</p>
+                    <div class="form-group">
+                        <label for="chatbot-conversations">Estimated Monthly Chatbot Conversations
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">The number of customer interactions your chatbot will handle each month.</span>
+                            </span>
+                        </label>
+                        <select id="chatbot-conversations">
+                            <option value="0">None</option>
+                            <option value="500" selected>Up to 500</option>
+                            <option value="2000">Up to 2,000</option>
+                            <option value="5000">Up to 5,000</option>
+                            <option value="10000">Up to 10,000</option>
+                            <option value="unlimited">Unlimited</option>
+                        </select>
                     </div>
                     
-                    <div class="calculator-actions">
-                        <button type="button" id="reset-btn" class="reset-btn">Reset Calculator</button>
-                        <button type="button" id="calculate-btn" class="calculate-btn">Calculate Estimate</button>
+                    <div class="form-group">
+                        <label for="ai-agents-hours">AI Agent Usage (Hours per month)
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">Estimated hours of specialized AI agent operation for specific tasks like data processing or monitoring.</span>
+                            </span>
+                        </label>
+                        <div class="range-container">
+                            <input type="range" id="ai-agents-hours" min="0" max="100" value="20" step="5">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span>50</span>
+                                <span>100</span>
+                            </div>
+                            <div>Selected: <span id="ai-agents-hours-value" class="slider-value">20</span></div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="form-section-title">Consulting & Support</h3>
+                    
+                    <div class="form-group">
+                        <label for="consulting-hours">Monthly Consulting Hours
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">Time with our AI experts for guidance, strategy, and optimization.</span>
+                            </span>
+                        </label>
+                        <div class="range-container">
+                            <input type="range" id="consulting-hours" min="0" max="20" value="2" step="1">
+                            <div class="range-labels">
+                                <span>0</span>
+                                <span>10</span>
+                                <span>20</span>
+                            </div>
+                            <div>Selected: <span id="consulting-hours-value" class="slider-value">2</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="support-level">Support Level</label>
+                        <select id="support-level">
+                            <option value="basic">Basic (Email support)</option>
+                            <option value="standard" selected>Standard (Email + Phone support)</option>
+                            <option value="priority">Priority (Dedicated support team)</option>
+                            <option value="enterprise">Enterprise (24/7 dedicated support)</option>
+                        </select>
                     </div>
                 </form>
                 
-                <div class="contact-cta">
-                    <h3>Need a Personalized Quote?</h3>
-                    <p>Our AI specialists can provide a detailed analysis and tailored quote based on your specific business requirements.</p>
-                    <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
+                <div class="calculator-results">
+                    <div class="result-summary">
+                        <h3>Estimated Monthly Cost</h3>
+                        
+                        <div class="result-item">
+                            <div class="result-label">Automation Workflows</div>
+                            <div class="result-value" id="automation-cost">$198</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">AI Assistants</div>
+                            <div class="result-value" id="assistants-cost">$199</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">Chatbot Service</div>
+                            <div class="result-value" id="chatbot-cost">$99</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">AI Agent Usage</div>
+                            <div class="result-value" id="agents-cost">$60</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">Consulting</div>
+                            <div class="result-value" id="consulting-cost">$400</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">Support</div>
+                            <div class="result-value" id="support-cost">$50</div>
+                        </div>
+                        
+                        <div class="total-cost">
+                            Total Estimated Monthly Cost: <span id="total-cost">$1,006</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button class="btn btn-outline" id="reset-calculator">Reset Calculator</button>
+                        <a href="contact.html" class="btn btn-primary">Get a Custom Quote</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -523,6 +541,7 @@
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="assessment.html">Assessment</a></li>
+                        <li><a href="pricing-calculator.html">Pricing</a></li>
                     </ul>
                 </div>
                 <div class="footer-services">
@@ -555,180 +574,116 @@
 
     <script src="../assets/js/main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Option card selection
-            const optionCards = document.querySelectorAll('.option-card');
-            
-            optionCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const checkbox = this.querySelector('input[type="checkbox"]');
-                    this.classList.toggle('selected');
-                    checkbox.checked = !checkbox.checked;
+        // Update range slider values
+        const rangeInputs = document.querySelectorAll('input[type="range"]');
+        rangeInputs.forEach(input => {
+            const valueElement = document.getElementById(`${input.id}-value`);
+            if (valueElement) {
+                input.addEventListener('input', () => {
+                    valueElement.textContent = input.value;
+                    calculateCosts();
                 });
-            });
-            
-            // Slider value updates
-            const complexitySlider = document.getElementById('integration-complexity');
-            const complexityValue = document.getElementById('complexity-value');
-            const complexityLabels = ['Very Simple', 'Simple', 'Medium', 'Complex', 'Very Complex'];
-            
-            complexitySlider.addEventListener('input', function() {
-                complexityValue.textContent = complexityLabels[this.value - 1];
-            });
-            
-            const scaleSlider = document.getElementById('automation-scale');
-            const scaleValue = document.getElementById('scale-value');
-            
-            scaleSlider.addEventListener('input', function() {
-                scaleValue.textContent = this.value;
-            });
-            
-            // Calculate button
-            const calculateBtn = document.getElementById('calculate-btn');
-            const resultsContainer = document.getElementById('results-container');
-            const totalPrice = document.getElementById('total-price');
-            const priceBreakdown = document.getElementById('price-breakdown');
-            
-            calculateBtn.addEventListener('click', function() {
-                // Base prices
-                const basePrices = {
-                    small: 5000,
-                    medium: 15000,
-                    large: 35000,
-                    enterprise: 75000
-                };
-                
-                // Industry multipliers
-                const industryMultipliers = {
-                    retail: 1,
-                    healthcare: 1.2,
-                    finance: 1.3,
-                    manufacturing: 1.1,
-                    technology: 1,
-                    education: 0.9,
-                    logistics: 1.1,
-                    other: 1
-                };
-                
-                // Solution type prices
-                const solutionPrices = {
-                    automation: 7500,
-                    chatbot: 8500,
-                    analytics: 12000,
-                    custom: 20000
-                };
-                
-                // Additional services prices
-                const additionalServicesPrices = {
-                    consulting: 5000,
-                    training: 3500,
-                    maintenance: 4500,
-                    support: 6000
-                };
-                
-                // Get form values
-                const businessSize = document.getElementById('business-size').value;
-                const industry = document.getElementById('industry').value;
-                const complexityLevel = parseInt(complexitySlider.value);
-                const automationScale = parseInt(scaleSlider.value);
-                
-                // Get selected solution types
-                const selectedSolutions = [];
-                document.querySelectorAll('input[name="solution-type"]:checked').forEach(input => {
-                    selectedSolutions.push(input.value);
-                });
-                
-                // Get selected additional services
-                const selectedServices = [];
-                document.querySelectorAll('input[name="additional-services"]:checked').forEach(input => {
-                    selectedServices.push(input.value);
-                });
-                
-                // Calculate base price
-                let basePrice = basePrices[businessSize];
-                const industryMultiplier = industryMultipliers[industry];
-                basePrice = basePrice * industryMultiplier;
-                
-                // Calculate solution prices
-                let solutionsCost = 0;
-                selectedSolutions.forEach(solution => {
-                    solutionsCost += solutionPrices[solution];
-                });
-                
-                // Apply complexity multiplier
-                const complexityMultiplier = 0.8 + (complexityLevel * 0.2);
-                solutionsCost = solutionsCost * complexityMultiplier;
-                
-                // Apply automation scale factor
-                const scaleFactor = 1 + ((automationScale - 1) * 0.05);
-                solutionsCost = solutionsCost * scaleFactor;
-                
-                // Calculate additional services cost
-                let servicesCost = 0;
-                selectedServices.forEach(service => {
-                    servicesCost += additionalServicesPrices[service];
-                });
-                
-                // Calculate total
-                const total = basePrice + solutionsCost + servicesCost;
-                
-                // Update results
-                totalPrice.textContent = '$' + Math.round(total).toLocaleString();
-                
-                // Build price breakdown
-                let breakdownHTML = '';
-                
-                breakdownHTML += `<div class="price-item">
-                    <span>Base Price (${document.getElementById('business-size').options[document.getElementById('business-size').selectedIndex].text})</span>
-                    <span>$${Math.round(basePrice).toLocaleString()}</span>
-                </div>`;
-                
-                if (selectedSolutions.length > 0) {
-                    selectedSolutions.forEach(solution => {
-                        const solutionName = document.querySelector(`.option-card[data-value="${solution}"] h3`).textContent;
-                        breakdownHTML += `<div class="price-item">
-                            <span>${solutionName}</span>
-                            <span>$${Math.round(solutionPrices[solution] * complexityMultiplier * scaleFactor).toLocaleString()}</span>
-                        </div>`;
-                    });
-                }
-                
-                if (selectedServices.length > 0) {
-                    selectedServices.forEach(service => {
-                        const serviceName = document.querySelector(`.option-card[data-value="${service}"] h3`).textContent;
-                        breakdownHTML += `<div class="price-item">
-                            <span>${serviceName}</span>
-                            <span>$${additionalServicesPrices[service].toLocaleString()}</span>
-                        </div>`;
-                    });
-                }
-                
-                priceBreakdown.innerHTML = breakdownHTML;
-                
-                // Show results
-                resultsContainer.style.display = 'block';
-                resultsContainer.scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // Reset button
-            const resetBtn = document.getElementById('reset-btn');
-            
-            resetBtn.addEventListener('click', function() {
-                document.getElementById('calculator-form').reset();
-                
-                // Reset option cards
-                optionCards.forEach(card => {
-                    card.classList.remove('selected');
-                });
-                
-                // Reset sliders
-                complexityValue.textContent = complexityLabels[2]; // Medium
-                scaleValue.textContent = '5';
-                
-                // Hide results
-                resultsContainer.style.display = 'none';
-            });
+            }
         });
+        
+        // Listen for select changes
+        const selectInputs = document.querySelectorAll('select');
+        selectInputs.forEach(select => {
+            select.addEventListener('change', calculateCosts);
+        });
+        
+        // Reset calculator
+        document.getElementById('reset-calculator').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('calculator-form').reset();
+            
+            // Reset range slider values display
+            rangeInputs.forEach(input => {
+                const valueElement = document.getElementById(`${input.id}-value`);
+                if (valueElement) {
+                    valueElement.textContent = input.value;
+                }
+            });
+            
+            calculateCosts();
+        });
+        
+        // Calculate costs
+        function calculateCosts() {
+            // Get form values
+            const businessSize = document.getElementById('business-size').value;
+            const industry = document.getElementById('industry').value;
+            const automationWorkflows = parseInt(document.getElementById('automation-workflows').value);
+            const aiAssistants = parseInt(document.getElementById('ai-assistants').value);
+            const chatbotConversations = document.getElementById('chatbot-conversations').value;
+            const aiAgentsHours = parseInt(document.getElementById('ai-agents-hours').value);
+            const consultingHours = parseInt(document.getElementById('consulting-hours').value);
+            const supportLevel = document.getElementById('support-level').value;
+            
+            // Calculate costs
+            let automationCost = automationWorkflows * 99;
+            let assistantsCost = aiAssistants * 199;
+            
+            let chatbotCost = 0;
+            if (chatbotConversations === "500") chatbotCost = 99;
+            else if (chatbotConversations === "2000") chatbotCost = 199;
+            else if (chatbotConversations === "5000") chatbotCost = 399;
+            else if (chatbotConversations === "10000") chatbotCost = 699;
+            else if (chatbotConversations === "unlimited") chatbotCost = 999;
+            
+            let agentsCost = aiAgentsHours * 3; // $3 per hour average
+            
+            // Adjust consulting rate based on business size
+            let consultingRate = 200; // default
+            if (businessSize === "small") consultingRate = 150;
+            else if (businessSize === "large") consultingRate = 225;
+            else if (businessSize === "enterprise") consultingRate = 250;
+            
+            let consultingCost = consultingHours * consultingRate;
+            
+            let supportCost = 0;
+            if (supportLevel === "basic") supportCost = 0; // Included
+            else if (supportLevel === "standard") supportCost = 50;
+            else if (supportLevel === "priority") supportCost = 150;
+            else if (supportLevel === "enterprise") supportCost = 500;
+            
+            // Apply industry-specific adjustments
+            let industryMultiplier = 1;
+            if (industry === "finance" || industry === "healthcare") {
+                industryMultiplier = 1.15; // 15% premium for regulated industries
+            }
+            
+            // Apply size-based discounts
+            let sizeDiscount = 1;
+            if (businessSize === "large") sizeDiscount = 0.95; // 5% discount
+            else if (businessSize === "enterprise") sizeDiscount = 0.9; // 10% discount
+            
+            // Apply volume-based discounts
+            let volumeDiscount = 1;
+            const totalItems = automationWorkflows + aiAssistants;
+            if (totalItems >= 5) volumeDiscount = 0.95; // 5% discount
+            else if (totalItems >= 10) volumeDiscount = 0.9; // 10% discount
+            
+            // Apply all multipliers
+            automationCost = Math.round(automationCost * industryMultiplier * sizeDiscount * volumeDiscount);
+            assistantsCost = Math.round(assistantsCost * industryMultiplier * sizeDiscount * volumeDiscount);
+            chatbotCost = Math.round(chatbotCost * industryMultiplier * sizeDiscount);
+            agentsCost = Math.round(agentsCost * industryMultiplier * sizeDiscount);
+            
+            // Update the UI
+            document.getElementById('automation-cost').textContent = `$${automationCost}`;
+            document.getElementById('assistants-cost').textContent = `$${assistantsCost}`;
+            document.getElementById('chatbot-cost').textContent = `$${chatbotCost}`;
+            document.getElementById('agents-cost').textContent = `$${agentsCost}`;
+            document.getElementById('consulting-cost').textContent = `$${consultingCost}`;
+            document.getElementById('support-cost').textContent = `$${supportCost}`;
+            
+            const totalCost = automationCost + assistantsCost + chatbotCost + agentsCost + consultingCost + supportCost;
+            document.getElementById('total-cost').textContent = `$${totalCost}`;
+        }
+        
+        // Initialize the calculator
+        calculateCosts();
     </script>
 </body>
 </html> 

@@ -1,11 +1,11 @@
 {
-    "name": "CAAKE",
+    "name": "CAAKE - AI Automation Solutions",
     "short_name": "CAAKE",
-    "description": "Leading the way in AI innovation",
-    "start_url": "/",
+    "description": "AI automation solutions to drive business growth and efficiency",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "theme_color": "#0066cc",
     "icons": [
         {
             "src": "assets/images/android-chrome-192x192.png",
@@ -16,6 +16,44 @@
             "src": "assets/images/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "assets/images/maskable-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "orientation": "portrait",
+    "scope": "/",
+    "categories": ["business", "productivity", "ai", "automation"],
+    "lang": "en-US",
+    "screenshots": [
+        {
+            "src": "assets/images/screenshot-1.jpg",
+            "type": "image/jpeg",
+            "sizes": "1280x720"
+        },
+        {
+            "src": "assets/images/screenshot-2.jpg",
+            "type": "image/jpeg",
+            "sizes": "1280x720"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Assessment",
+            "short_name": "Assessment",
+            "description": "Take AI readiness assessment",
+            "url": "/pages/assessment.html",
+            "icons": [{ "src": "assets/images/shortcut-assessment.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Contact",
+            "short_name": "Contact",
+            "description": "Contact our team",
+            "url": "/pages/contact.html",
+            "icons": [{ "src": "assets/images/shortcut-contact.png", "sizes": "192x192" }]
         }
     ]
 } 

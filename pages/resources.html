@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloadable Resources - CAAKE</title>
-    <meta name="description" content="Download free whitepapers and guides from CAAKE on AI automation, efficiency, and business growth.">
+    <meta name="description" content="Download free whitepapers, guides, checklists and templates from CAAKE to help implement AI automation for your business.">
     
     <!-- Link to main stylesheet and potential page-specific styles -->
     <link rel="stylesheet" href="../assets/css/styles.css">
@@ -38,6 +38,229 @@
             width: auto;
             height: auto;
             overflow: visible;
+        }
+        
+        /* Resource page specific styles */
+        .resource-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .resource-tab {
+            padding: 12px 25px;
+            margin: 0 5px 10px;
+            background: transparent;
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-tab.active {
+            background: #4a90e2;
+            color: white;
+        }
+        
+        .resource-tab:hover:not(.active) {
+            background: rgba(74, 144, 226, 0.1);
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .resource-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .resource-thumbnail {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .resource-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4a90e2;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .resource-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-content h3 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .resource-content p {
+            color: #64748b;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        
+        .resource-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        
+        .resource-meta i {
+            color: #4a90e2;
+            margin-right: 5px;
+        }
+        
+        .resource-meta span {
+            margin-right: 15px;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            background: #4a90e2;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            background: #3a7bc8;
+            transform: translateY(-3px);
+        }
+        
+        .download-btn i {
+            margin-left: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            margin: 0;
+            color: #1e293b;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        
+        .lead-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        
+        .lead-form button {
+            width: 100%;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .category-hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .resource-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .resource-tab {
+                margin-bottom: 10px;
+                width: 80%;
+            }
         }
     </style>
 </head>
@@ -81,40 +304,189 @@
     </header>
 
     <main id="main-content" role="main">
-        <section class="page-header" style="background: var(--bg-light); padding: 60px 0;">
+        <section class="page-header">
             <div class="container">
-                <h1 class="animate-on-scroll" data-animation="fade-in">Downloadable Resources</h1>
-                <p class="animate-on-scroll" data-animation="fade-in" data-delay="0.2s">Access our collection of insightful whitepapers and guides.</p>
+                <h1 class="animate-on-scroll" data-animation="fade-in">AI Resources Hub</h1>
+                <p class="animate-on-scroll" data-animation="fade-in" data-delay="0.2s">Access our library of free whitepapers, guides, templates, and tools to help you implement and optimize AI for your business.</p>
             </div>
         </section>
 
-        <section class="resources-list" style="padding: 60px 0;">
+        <section class="resources-section" style="padding: 60px 0;">
             <div class="container">
-                <div class="resource-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="resource-tabs" role="tablist" aria-label="Resource categories">
+                    <button class="resource-tab active" data-category="all" role="tab" aria-selected="true" aria-controls="all-resources">All Resources</button>
+                    <button class="resource-tab" data-category="whitepapers" role="tab" aria-selected="false" aria-controls="whitepaper-resources">Whitepapers</button>
+                    <button class="resource-tab" data-category="guides" role="tab" aria-selected="false" aria-controls="guide-resources">Guides</button>
+                    <button class="resource-tab" data-category="templates" role="tab" aria-selected="false" aria-controls="template-resources">Templates</button>
+                    <button class="resource-tab" data-category="tools" role="tab" aria-selected="false" aria-controls="tool-resources">Tools</button>
+                </div>
+                
+                <div class="resource-grid">
+                    <!-- Whitepaper 1 -->
+                    <article class="resource-item" data-category="whitepapers">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-efficiency-whitepaper.jpg');">
+                            <span class="resource-type">Whitepaper</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>5 Ways AI Can Boost Your Business Efficiency</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> May 2024</span>
+                                <span><i class="far fa-file-pdf"></i> 18 pages</span>
+                            </div>
+                            <p>Discover practical strategies to leverage AI for significant operational improvements and cost savings. This whitepaper includes real-world case studies and actionable insights.</p>
+                            <button class="download-btn" data-modal="efficiency-whitepaper">
+                                Download PDF <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
                     
-                    <div class="resource-item" style="border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 25px; background: var(--secondary-color); box-shadow: var(--box-shadow-sm);">
-                        <h3 style="margin-top: 0;">Whitepaper: 5 Ways AI Can Boost Your Business Efficiency</h3>
-                        <p>Discover practical strategies to leverage AI for significant operational improvements and cost savings.</p>
-                        <a href="../assets/downloads/whitepaper_ai_efficiency.pdf" download class="btn btn-primary" aria-label="Download Whitepaper: 5 Ways AI Can Boost Your Business Efficiency">
-                            Download PDF <i class="fas fa-download" aria-hidden="true"></i>
-                        </a>
-                        <!-- Add lead capture form here if desired -->
-                    </div>
-
-                    <div class="resource-item" style="border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 25px; background: var(--secondary-color); box-shadow: var(--box-shadow-sm);">
-                        <h3>Guide: Implementing AI in Your Workflow</h3>
-                        <p>A step-by-step guide to integrating AI tools and solutions into your existing business processes effectively.</p>
-                        <a href="../assets/downloads/guide_implementing_ai.pdf" download class="btn btn-primary" aria-label="Download Guide: Implementing AI in Your Workflow">
-                            Download PDF <i class="fas fa-download" aria-hidden="true"></i>
-                        </a>
-                        <!-- Add lead capture form here if desired -->
-                    </div>
+                    <!-- Whitepaper 2 -->
+                    <article class="resource-item" data-category="whitepapers">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-roi-whitepaper.jpg');">
+                            <span class="resource-type">Whitepaper</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>Measuring ROI on AI Investments: A Framework</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> April 2024</span>
+                                <span><i class="far fa-file-pdf"></i> 22 pages</span>
+                            </div>
+                            <p>A comprehensive guide to measuring and maximizing the return on investment for your AI initiatives, with metrics, KPIs, and evaluation techniques.</p>
+                            <button class="download-btn" data-modal="roi-whitepaper">
+                                Download PDF <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
                     
-                    <!-- Add more resource items here -->
-
+                    <!-- Guide 1 -->
+                    <article class="resource-item" data-category="guides">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-implementation-guide.jpg');">
+                            <span class="resource-type">Guide</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>Step-by-Step Guide to Implementing AI in Your Workflow</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> May 2024</span>
+                                <span><i class="far fa-file-pdf"></i> 15 pages</span>
+                            </div>
+                            <p>A practical guide to integrating AI tools and solutions into your existing business processes effectively, from assessment to deployment.</p>
+                            <button class="download-btn" data-modal="implementation-guide">
+                                Download PDF <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
+                    
+                    <!-- Guide 2 -->
+                    <article class="resource-item" data-category="guides">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-adoption-guide.jpg');">
+                            <span class="resource-type">Guide</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>Overcoming Resistance to AI Adoption</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> March 2024</span>
+                                <span><i class="far fa-file-pdf"></i> 12 pages</span>
+                            </div>
+                            <p>Learn strategies for managing change and gaining buy-in for AI initiatives within your organization. Includes communication templates and training plans.</p>
+                            <button class="download-btn" data-modal="adoption-guide">
+                                Download PDF <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
+                    
+                    <!-- Template 1 -->
+                    <article class="resource-item" data-category="templates">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-readiness-template.jpg');">
+                            <span class="resource-type">Template</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>AI Readiness Assessment Template</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> April 2024</span>
+                                <span><i class="far fa-file-excel"></i> Excel Template</span>
+                            </div>
+                            <p>A comprehensive template to evaluate your organization's readiness for AI implementation across technical, operational, and cultural dimensions.</p>
+                            <button class="download-btn" data-modal="readiness-template">
+                                Download Template <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
+                    
+                    <!-- Template 2 -->
+                    <article class="resource-item" data-category="templates">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-project-template.jpg');">
+                            <span class="resource-type">Template</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>AI Project Planning Template</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> May 2024</span>
+                                <span><i class="far fa-file-word"></i> Word Template</span>
+                            </div>
+                            <p>A detailed project plan template specifically designed for AI implementation projects, including timeline, budget, resource allocation, and risk assessment sections.</p>
+                            <button class="download-btn" data-modal="project-template">
+                                Download Template <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
+                    
+                    <!-- Tool 1 -->
+                    <article class="resource-item" data-category="tools">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/roi-calculator.jpg');">
+                            <span class="resource-type">Tool</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>AI ROI Calculator</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> May 2024</span>
+                                <span><i class="far fa-file-excel"></i> Excel Tool</span>
+                            </div>
+                            <p>An interactive calculator to estimate the potential return on investment for different AI implementations based on your specific business parameters.</p>
+                            <button class="download-btn" data-modal="roi-calculator">
+                                Access Calculator <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
+                    
+                    <!-- Tool 2 -->
+                    <article class="resource-item" data-category="tools">
+                        <div class="resource-thumbnail" style="background-image: url('../assets/images/resources/ai-process-checklist.jpg');">
+                            <span class="resource-type">Tool</span>
+                        </div>
+                        <div class="resource-content">
+                            <h3>AI Process Automation Checklist</h3>
+                            <div class="resource-meta">
+                                <span><i class="far fa-calendar"></i> April 2024</span>
+                                <span><i class="far fa-file-pdf"></i> PDF Checklist</span>
+                            </div>
+                            <p>A detailed checklist to identify and prioritize business processes that are ideal candidates for AI automation, with scoring system and evaluation criteria.</p>
+                            <button class="download-btn" data-modal="process-checklist">
+                                Download Checklist <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
+        
+        <!-- Lead Capture Modals -->
+        <div id="efficiency-whitepaper-modal" class="modal" role="dialog" aria-labelledby="efficiency-modal-title" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="efficiency-modal-title" class="modal-title">Download Whitepaper</h3>
+                    <button class="close-modal" aria-label="Close modal">&times;</button>
+                </div>
+                <p>Please fill out the form below to access "5 Ways AI Can Boost Your Business Efficiency"</p>
+                <form class="lead-form" action="#" method="post">
+                    <input type="text" name="name" placeholder="Full Name" required aria-label="Full Name">
+                    <input type="email" name="email" placeholder="Work Email" required aria-label="Work Email">
+                    <input type="text" name="company" placeholder="Company Name" required aria-label="Company Name">
+                    <button type="submit" class="download-btn">Get Instant Access <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Duplicate similar modal structures for other resources -->
         
     </main>
 
@@ -149,7 +521,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="current-year"></span> CAAKE. All rights reserved. | <a href="pages/privacy.html">Privacy Policy</a> | <a href="pages/terms.html">Terms of Service</a></p>
+                <p>&copy; <span id="current-year">2024</span> CAAKE. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -157,5 +529,70 @@
     <!-- Include main JS file -->
     <script src="../assets/js/main.js" defer></script>
     
+    <script>
+        // Resource filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.resource-tab');
+            const resources = document.querySelectorAll('.resource-item');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Filter resources
+                    const category = this.getAttribute('data-category');
+                    resources.forEach(resource => {
+                        if (category === 'all' || resource.getAttribute('data-category') === category) {
+                            resource.style.display = 'block';
+                        } else {
+                            resource.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Modal functionality
+            const downloadButtons = document.querySelectorAll('.download-btn[data-modal]');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal') + '-modal';
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        modal.setAttribute('aria-hidden', 'false');
+                        // Focus the close button for accessibility
+                        modal.querySelector('.close-modal').focus();
+                    }
+                });
+            });
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    modal.classList.remove('active');
+                    modal.setAttribute('aria-hidden', 'true');
+                });
+            });
+            
+            // Close modal on outside click
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.classList.remove('active');
+                    event.target.setAttribute('aria-hidden', 'true');
+                }
+            });
+            
+            // Update year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
 </html> 
