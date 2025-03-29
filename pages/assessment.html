@@ -379,10 +379,15 @@
             max-width: 800px;
             margin: 0 auto 50px;
             text-align: center;
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         
         .assessment-intro h2 {
-            color: #0066cc;
+            color: #4da6ff;
             margin-bottom: 20px;
             font-size: 2rem;
         }
@@ -391,7 +396,7 @@
             margin-bottom: 20px;
             font-size: 1.1rem;
             line-height: 1.6;
-            color: #555;
+            color: #e9ecef;
         }
         
         .benefits-list {
@@ -405,21 +410,35 @@
         .benefit-item {
             display: flex;
             align-items: center;
-            background-color: #f0f7ff;
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 15px;
             border-radius: 5px;
             width: calc(33.333% - 20px);
             min-width: 250px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
         }
         
         .benefit-icon {
-            color: #0066cc;
+            color: #4da6ff;
             font-size: 1.5rem;
             margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(77, 166, 255, 0.1);
+            border-radius: 50%;
         }
         
         .benefit-text {
             font-weight: 600;
+            color: #ffffff;
         }
         
         .assessment-result {
@@ -546,6 +565,7 @@
             
             .benefit-item {
                 width: 100%;
+                min-width: auto;
             }
             
             .form-navigation {
@@ -555,6 +575,10 @@
             
             .form-navigation button {
                 width: 100%;
+            }
+            
+            .assessment-intro {
+                padding: 30px 20px;
             }
         }
     </style>

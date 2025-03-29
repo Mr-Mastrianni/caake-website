@@ -1492,4 +1492,100 @@ main {
         order: 0;
         margin-bottom: 1.5rem;
     }
+}
+
+/* Assessment Section Improvements */
+.assessment-intro {
+    background-color: #2c3e50 !important;
+    color: #ffffff !important;
+    padding: 40px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.assessment-intro h2 {
+    color: #4da6ff !important;
+    font-size: 2.2rem !important;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.assessment-intro p {
+    color: #e9ecef !important;
+    font-size: 1.1rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 2rem !important;
+}
+
+.benefits-list {
+    display: flex !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+    margin: 2rem 0 !important;
+}
+
+.benefit-item {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: transform 0.3s ease, background-color 0.3s ease !important;
+}
+
+.benefit-item:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-5px) !important;
+}
+
+.benefit-icon {
+    color: #4da6ff !important;
+    font-size: 1.8rem !important;
+    margin-right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: rgba(77, 166, 255, 0.1) !important;
+    border-radius: 50% !important;
+}
+
+.benefit-text {
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    font-size: 1.1rem !important;
+}
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 768px) {
+    .benefit-item {
+        width: 100% !important;
+        min-width: auto !important;
+    }
+    
+    .assessment-intro {
+        padding: 30px 20px !important;
+    }
+    
+    .benefit-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.4rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .assessment-intro h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    .assessment-intro p {
+        font-size: 1rem !important;
+    }
+    
+    .benefit-text {
+        font-size: 1rem !important;
+    }
 } 

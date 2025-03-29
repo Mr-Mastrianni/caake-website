@@ -3,86 +3,23 @@ import WorkflowAutomationAnimation from './workflow-automation.js';
 import DigitalTwinAnimation from './digital-twin.js';
 import DataVisualizationAnimation from './data-visualization.js';
 
-// Check if Three.js is loaded, if not attempt to load it
-try {
-    // Check if GSAP is loaded, if not load it
-    if (typeof gsap === 'undefined') {
-        console.log('Loading GSAP...');
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js';
-        script.async = true;
-        document.head.appendChild(script);
-        
-        // Wait for GSAP to load
-        script.onload = () => {
-            console.log('GSAP loaded, initializing animations...');
-            initAnimations();
-        };
-    } else {
-        console.log('GSAP already loaded, initializing animations...');
+// Initialize animations when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        console.log('Initializing animations...');
         initAnimations();
-    }
-    
-    // Check for Three.js global object
-    if (typeof THREE === 'undefined') {
-        console.log('Three.js not found in global scope, loading from CDN...');
-        const threeScript = document.createElement('script');
-        threeScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
-        threeScript.async = true;
-        document.head.appendChild(threeScript);
-        
-        threeScript.onload = () => {
-            console.log('Three.js loaded from CDN');
-            loadAdditionalThreeModules();
-        };
-    }
-} catch (error) {
-    console.error('Error initializing animations:', error);
-    // Graceful fallback - hide animation containers and show static content
-    document.querySelectorAll('[data-animation]').forEach(element => {
-        element.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #000000 100%)';
-        const container = element.querySelector('.animation-container');
-        if (container) {
-            container.style.display = 'none';
-        }
-    });
-}
-
-function loadAdditionalThreeModules() {
-    // Load required Three.js modules
-    const moduleUrls = [
-        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js',
-        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
-        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js',
-        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js',
-        'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/ShaderPass.js'
-    ];
-    
-    let loadedCount = 0;
-    moduleUrls.forEach(url => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.async = true;
-        document.head.appendChild(script);
-        
-        script.onload = () => {
-            loadedCount++;
-            if (loadedCount === moduleUrls.length) {
-                console.log('All Three.js modules loaded');
-                initAnimations();
+    } catch (error) {
+        console.error('Error initializing animations:', error);
+        // Graceful fallback - hide animation containers and show static content
+        document.querySelectorAll('[data-animation]').forEach(element => {
+            element.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #000000 100%)';
+            const container = element.querySelector('.animation-container');
+            if (container) {
+                container.style.display = 'none';
             }
-        };
-        
-        script.onerror = () => {
-            console.error('Failed to load Three.js module:', url);
-            loadedCount++;
-            if (loadedCount === moduleUrls.length) {
-                // Try to initialize anyway
-                initAnimations();
-            }
-        };
-    });
-}
+        });
+    }
+});
 
 // Animation instances
 let neuralNetworkInstance = null;
@@ -261,22 +198,22 @@ function resumeAnimation(type) {
     switch (type) {
         case 'neural-network':
             if (neuralNetworkInstance && neuralNetworkInstance.renderer) {
-                neuralNetworkInstance.renderer.setAnimationLoop(neuralNetworkInstance.animate);
+                neuralNetworkInstance.renderer.setAnimationLoop(neuralNetworkInstance.animate.bind(neuralNetworkInstance));
             }
             break;
         case 'workflow-automation':
             if (workflowAutomationInstance && workflowAutomationInstance.renderer) {
-                workflowAutomationInstance.renderer.setAnimationLoop(workflowAutomationInstance.animate);
+                workflowAutomationInstance.renderer.setAnimationLoop(workflowAutomationInstance.animate.bind(workflowAutomationInstance));
             }
             break;
         case 'digital-twin':
             if (digitalTwinInstance && digitalTwinInstance.renderer) {
-                digitalTwinInstance.renderer.setAnimationLoop(digitalTwinInstance.animate);
+                digitalTwinInstance.renderer.setAnimationLoop(digitalTwinInstance.animate.bind(digitalTwinInstance));
             }
             break;
         case 'data-visualization':
             if (dataVisualizationInstance && dataVisualizationInstance.renderer) {
-                dataVisualizationInstance.renderer.setAnimationLoop(dataVisualizationInstance.animate);
+                dataVisualizationInstance.renderer.setAnimationLoop(dataVisualizationInstance.animate.bind(dataVisualizationInstance));
             }
             break;
     }

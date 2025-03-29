@@ -121,10 +121,14 @@
     <link rel="stylesheet" href="assets/css/style-fixes.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" defer></script>
     
-    <!-- Temporary: Disabled THREE.js imports
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script type="module" src="assets/js/three-animations/main.js" async></script>
-    -->
+    <!-- Fixed THREE.js imports - moved from dynamic loading to preloaded static imports -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script type="module" src="assets/js/three-animations/main.js" defer></script>
     
     <style>
         .hero-animation-container {

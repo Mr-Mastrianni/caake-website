@@ -10,6 +10,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style-fixes.css">
     <style>
+        .page-header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .page-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
         .pricing-table {
             display: flex;
             flex-wrap: wrap;
@@ -20,13 +41,16 @@
         
         .pricing-card {
             background: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            padding: 30px;
+            padding: 35px;
             flex: 1;
             min-width: 280px;
             max-width: 350px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eaeaea;
+            position: relative;
+            overflow: hidden;
         }
         
         .pricing-card:hover {
@@ -35,94 +59,385 @@
         }
         
         .pricing-card.featured {
-            border: 2px solid #4a90e2;
-            position: relative;
+            border: none;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f9ff 100%);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.2);
+            transform: scale(1.05);
+            z-index: 2;
         }
         
-        .pricing-card.featured::before {
-            content: "Most Popular";
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .featured-tag {
             position: absolute;
-            top: -15px;
-            right: 30px;
+            top: 0;
+            right: 0;
             background: #4a90e2;
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 10px 15px;
             font-size: 14px;
             font-weight: bold;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 15% 50%);
+            width: 140px;
+            text-align: center;
         }
         
         .pricing-card h3 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 15px;
-            color: #333;
+            color: #1e293b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .pricing-card h3:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: #4a90e2;
+            bottom: -5px;
+            left: 0;
         }
         
         .price {
             font-size: 48px;
             font-weight: bold;
             color: #4a90e2;
-            margin-bottom: 20px;
+            margin: 25px 0;
+            display: flex;
+            align-items: flex-end;
         }
         
         .price span {
             font-size: 16px;
-            color: #777;
+            color: #64748b;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+        
+        .pricing-card p {
+            color: #64748b;
+            margin-bottom: 25px;
+            min-height: 50px;
         }
         
         .features {
             margin-bottom: 30px;
+            padding-left: 0;
+            list-style-type: none;
         }
         
         .features li {
-            margin-bottom: 10px;
-            padding-left: 25px;
+            margin-bottom: 12px;
+            padding-left: 28px;
             position: relative;
+            color: #334155;
         }
         
         .features li::before {
-            content: "✓";
+            content: "\f00c";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
             color: #4a90e2;
             position: absolute;
             left: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
             font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border: 2px solid #4a90e2;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-accent {
+            background-color: #0f172a;
+            color: white;
+            border: 2px solid #0f172a;
+        }
+        
+        .btn-accent:hover {
+            background-color: #1e293b;
+            border-color: #1e293b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(15, 23, 42, 0.3);
         }
         
         .addons {
-            margin-top: 60px;
-            padding: 30px;
-            background: #f9f9f9;
-            border-radius: 10px;
+            margin-top: 80px;
+            padding: 50px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        
+        .addons h2, .projects h2, .faq-section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #1e293b;
+            font-size: 2rem;
+        }
+        
+        .addons p, .projects p {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #64748b;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .addon-list {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
         
         .addon-item {
             display: flex;
             justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #eaeaea;
+            transition: background-color 0.3s ease;
+        }
+        
+        .addon-item:hover {
+            background-color: #f8fafc;
         }
         
         .addon-item:last-child {
             border-bottom: none;
         }
         
+        .addon-info {
+            flex: 1;
+        }
+        
+        .addon-info h3 {
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .addon-info h3:before {
+            content: "\f067";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #4a90e2;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .addon-info p {
+            color: #64748b;
+            margin: 0;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .addon-price {
+            font-weight: bold;
+            color: #4a90e2;
+            font-size: 18px;
+            background: rgba(74, 144, 226, 0.1);
+            padding: 8px 15px;
+            border-radius: 6px;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+        
         .projects {
-            margin-top: 60px;
+            margin-top: 80px;
+            padding: 50px 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+        }
+        
+        .projects h2, .projects p {
+            color: white;
+        }
+        
+        .project-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
         }
         
         .project-item {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 30px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .project-item h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .project-item p {
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 20px;
+            text-align: left;
         }
         
         .project-price {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             color: #4a90e2;
-            margin: 10px 0;
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        .note {
+            font-size: 14px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .faq-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-item h3 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .faq-item h3:before {
+            content: "\f059";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #4a90e2;
+            position: absolute;
+            left: 0;
+        }
+        
+        .faq-item p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #4a90e2 0%, #3a7bc8 100%);
+            color: white;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .cta-section .btn-accent {
+            background-color: white;
+            color: #4a90e2;
+            border-color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            display: inline-block;
+            width: auto;
+        }
+        
+        .cta-section .btn-accent:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #3a7bc8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+            
+            .addon-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .addon-price {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .project-item {
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -193,6 +508,7 @@
                     </div>
                     
                     <div class="pricing-card featured">
+                        <div class="featured-tag">Most Popular</div>
                         <h3>Professional</h3>
                         <div class="price">$499 <span>/ month</span></div>
                         <p>Ideal for growing businesses looking to expand AI capabilities</p>

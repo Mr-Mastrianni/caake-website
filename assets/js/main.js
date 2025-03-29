@@ -820,6 +820,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize A/B Testing Framework
     initABTesting();
+
+    // Assessment Section Enhancements
+    enhanceAssessmentSection();
+
+    // Add resize listener to adjust icon sizes properly
+    window.addEventListener('resize', function() {
+        const benefitIcons = document.querySelectorAll('.benefit-icon');
+        benefitIcons.forEach(icon => {
+            if (window.innerWidth <= 768) {
+                icon.style.width = '40px';
+                icon.style.height = '40px';
+                icon.style.fontSize = '1.4rem';
+            } else {
+                icon.style.width = '50px';
+                icon.style.height = '50px';
+                icon.style.fontSize = '1.8rem';
+            }
+        });
+    });
 });
 
 /**
@@ -1430,6 +1449,18 @@ function initAccessibility() {
  * A/B Testing Framework (Simple Example)
  */
 function initABTesting() {
+    // Skip A/B testing for search engine crawlers to maintain consistent content
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('googlebot') || 
+        userAgent.includes('bingbot') || 
+        userAgent.includes('yandexbot') || 
+        userAgent.includes('baiduspider') || 
+        userAgent.includes('slurp') ||
+        userAgent.includes('duckduckbot')) {
+        console.log('Search engine crawler detected, skipping A/B testing');
+        return;
+    }
+
     const params = new URLSearchParams(window.location.search);
     let variation = params.get('ab_test_variation') || getCookie('ab_test_variation');
 
@@ -1487,4 +1518,51 @@ function applyVariations(variation) {
     }
 
     // Add more A/B test variations here for other elements/pages
+}
+
+// Assessment Section Enhancements
+function enhanceAssessmentSection() {
+    const assessmentIntro = document.querySelector('.assessment-intro');
+    const benefitItems = document.querySelectorAll('.benefit-item');
+    
+    if (assessmentIntro) {
+        // Add subtle animation to assessment section
+        assessmentIntro.classList.add('animate-fade-in');
+        
+        // Add staggered animations to benefit items
+        benefitItems.forEach((item, index) => {
+            item.classList.add('animate-fade-in');
+            item.style.animationDelay = `${(index + 1) * 200}ms`;
+            
+            // Add hover feedback
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+        
+        // Ensure icons are properly sized and centered
+        const benefitIcons = document.querySelectorAll('.benefit-icon');
+        benefitIcons.forEach(icon => {
+            icon.style.display = 'flex';
+            icon.style.alignItems = 'center';
+            icon.style.justifyContent = 'center';
+            
+            // Ensure all icons have the proper sizing
+            if (window.innerWidth <= 768) {
+                icon.style.width = '40px';
+                icon.style.height = '40px';
+                icon.style.fontSize = '1.4rem';
+            } else {
+                icon.style.width = '50px';
+                icon.style.height = '50px';
+                icon.style.fontSize = '1.8rem';
+            }
+        });
+    }
 }
