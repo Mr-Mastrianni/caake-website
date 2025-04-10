@@ -856,6 +856,29 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavbarScrollEffect();
 
     // Smooth scrolling for internal links
+    function initSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Smooth scroll to element
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // Update URL hash without jumping
+                    history.pushState(null, null, targetId);
+                }
+            });
+        });
+    }
+
+    // Initialize smooth scrolling
     initSmoothScrolling();
 
     // Image lazy loading (moved from HTML to main.js)

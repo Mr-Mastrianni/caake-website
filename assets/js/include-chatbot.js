@@ -48,29 +48,32 @@
     function loadConfigAndChatbot() {
         // Check if config is loaded
         if (!window.CAAKE_CONFIG) {
-            // Create a script element to load the config
+            // Load config first using a regular script
             const configScript = document.createElement('script');
-            configScript.type = 'module';
-
-            // Set the script content to import and set the config
-            configScript.textContent = `
-                import { config, security } from '${getBasePath()}assets/js/config.js';
-                window.CAAKE_CONFIG = config;
-                window.CAAKE_SECURITY = security;
-
-                // Load chatbot after config is loaded
-                import('${getBasePath()}assets/js/chatbot.js');
-            `;
-
-            // Add the script to the document
+            configScript.src = getBasePath() + 'assets/js/config.js';
+            configScript.onload = function() {
+                // Once config is loaded, load the chatbot
+                if (window.CAAKE_CONFIG) {
+                    loadChatbotScript();
+                } else {
+                    console.error('Config loaded but CAAKE_CONFIG not defined');
+                }
+            };
+            configScript.onerror = function() {
+                console.error('Failed to load config script');
+            };
             document.body.appendChild(configScript);
         } else if (!document.querySelector('script[src*="chatbot.js"]')) {
             // Config already loaded, load chatbot directly
-            const chatbotScript = document.createElement('script');
-            chatbotScript.type = 'module';
-            chatbotScript.src = getBasePath() + 'assets/js/chatbot.js';
-            document.body.appendChild(chatbotScript);
+            loadChatbotScript();
         }
+    }
+
+    // Helper function to load the chatbot script
+    function loadChatbotScript() {
+        const chatbotScript = document.createElement('script');
+        chatbotScript.src = getBasePath() + 'assets/js/chatbot.js';
+        document.body.appendChild(chatbotScript);
     }
 
     // Helper function to get the base path relative to the current page

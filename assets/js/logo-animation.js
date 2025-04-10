@@ -51,6 +51,11 @@ function init(containerId) {
     // Make sure THREE is available
     if (!window.THREE) {
         console.error('THREE.js not loaded');
+        // Add a fallback message to the container
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #5773ff;">CAAKE</div>';
+        }
         return;
     }
 
@@ -480,7 +485,7 @@ function loadThreeJS() {
     return new Promise((resolve) => {
         // Load Three.js core
         const threeScript = document.createElement('script');
-        threeScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
+        threeScript.src = 'https://unpkg.com/three@0.132.2/build/three.min.js';
         threeScript.onload = () => {
             // Once Three.js is loaded, load the required modules
             loadThreeJSModules().then(resolve);
@@ -519,18 +524,18 @@ function loadThreeJSModules() {
         // Define all scripts in the order they need to be loaded
         const scripts = [
             // Core dependencies
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FontLoader.js',
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/geometries/TextGeometry.js',
+            'https://unpkg.com/three@0.132.2/examples/js/loaders/FontLoader.js',
+            'https://unpkg.com/three@0.132.2/examples/js/geometries/TextGeometry.js',
 
             // Shaders needed for post-processing
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/shaders/CopyShader.js',
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/shaders/LuminosityHighPassShader.js',
+            'https://unpkg.com/three@0.132.2/examples/js/shaders/CopyShader.js',
+            'https://unpkg.com/three@0.132.2/examples/js/shaders/LuminosityHighPassShader.js',
 
             // Post-processing
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/ShaderPass.js',
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js',
-            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js'
+            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
+            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/ShaderPass.js',
+            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/RenderPass.js',
+            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js'
         ];
 
         // Start loading scripts sequentially
