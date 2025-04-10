@@ -1678,16 +1678,17 @@ function initNavbarScrollEffect() {
     window.addEventListener('scroll', handleScroll, { passive: true }); // Use passive listener for better performance
 }
 
-// Import Anime.js animations initialization script
-import { initAnimeAnimations } from './anime-animations/init.js';
+// Load Anime.js animations initialization script
+function loadAnimeAnimations() {
+    const script = document.createElement('script');
+    script.src = 'assets/js/anime-animations/init.js';
+    script.onload = function() {
+        // Initialize Anime.js animations when the script is loaded
+        if (window.initAnimeAnimations && document.querySelector('[data-anime-animation]')) {
+            console.log('Found anime.js animation elements, initializing...');
 
-// Initialize Anime.js animations when the script is loaded
-try {
-    if (document.querySelector('[data-anime-animation]')) {
-        console.log('Found anime.js animation elements, initializing...');
-        
-        // Check if Anime.js is loaded
-        if (typeof anime === 'undefined') {
+            // Check if Anime.js is loaded
+            if (typeof anime === 'undefined') {
             // Load Anime.js dynamically if not already loaded
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
@@ -1698,9 +1699,12 @@ try {
             document.head.appendChild(script);
         } else {
             // Initialize directly if Anime.js is already loaded
-            initAnimeAnimations();
+            window.initAnimeAnimations();
         }
     }
-} catch (error) {
-    console.error('Error initializing Anime.js animations:', error);
+};
+    document.head.appendChild(script);
 }
+
+// Call the function to load anime animations
+document.addEventListener('DOMContentLoaded', loadAnimeAnimations);

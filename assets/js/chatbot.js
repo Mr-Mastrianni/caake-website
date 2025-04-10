@@ -302,10 +302,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.OPENAI_API_KEY}`
+                    'Authorization': `Bearer ${window.CAAKE_CONFIG.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: config.DEFAULT_MODEL,
+                    model: window.CAAKE_CONFIG.DEFAULT_MODEL,
                     messages: [
                         { role: "system", content: "You are a calendar assistant. Extract calendar operation (list_events/create_event/update_event/delete_event/find_free_time), date, time, duration, and attendees from the user message. Respond in JSON format only." },
                         { role: "user", content: userMessage }
@@ -425,10 +425,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.OPENAI_API_KEY}`
+                    'Authorization': `Bearer ${window.CAAKE_CONFIG.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: config.DEFAULT_MODEL,
+                    model: window.CAAKE_CONFIG.DEFAULT_MODEL,
                     messages: [
                         { role: "system", content: SYSTEM_PROMPT },
                         { role: "user", content: userMessage }
@@ -486,10 +486,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.OPENAI_API_KEY}`
+                    'Authorization': `Bearer ${window.CAAKE_CONFIG.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: config.DEFAULT_MODEL,
+                    model: window.CAAKE_CONFIG.DEFAULT_MODEL,
                     messages: [
                         { role: "system", content: "Extract the image description from the user's request. Return only the description, nothing else." },
                         { role: "user", content: userMessage }
@@ -509,7 +509,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.OPENAI_API_KEY}`
+                    'Authorization': `Bearer ${window.CAAKE_CONFIG.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
                     model: "dall-e-3",

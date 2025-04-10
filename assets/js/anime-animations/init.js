@@ -1,18 +1,18 @@
-import AIConceptMorphAnimation from './ai-concept-morph.js';
+/**
+ * Anime.js Animations Initialization
+ * This file initializes all Anime.js animations on the page
+ */
 
-// Initialize anime.js animations when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        console.log('Initializing Anime.js animations...');
-        initAnimeAnimations();
-    } catch (error) {
-        console.error('Error initializing Anime.js animations:', error);
-        // Graceful fallback - apply static background
-        document.querySelectorAll('[data-anime-animation]').forEach(element => {
-            element.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #000000 100%)';
-        });
-    }
-});
+// Load AIConceptMorphAnimation
+function loadAIConceptMorphAnimation() {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'assets/js/anime-animations/ai-concept-morph.js';
+        script.onload = () => resolve(window.AIConceptMorphAnimation);
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
 
 // Animation instances
 const animationInstances = new Map();
@@ -22,7 +22,7 @@ function initAnimeAnimations() {
     try {
         // Initialize AIConceptMorph animation
         initAnimationByType('ai-concept-morph');
-        
+
         // Set up scroll-based animation visibility
         setupScrollObserver();
     } catch (error) {
@@ -31,40 +31,51 @@ function initAnimeAnimations() {
 }
 
 // Initialize specific animation type
-function initAnimationByType(type) {
+async function initAnimationByType(type) {
     const elements = document.querySelectorAll(`[data-anime-animation="${type}"]`);
+    if (elements.length === 0) return;
 
+    // Load the animation class based on type
+    let AnimationClass;
+    try {
+        switch (type) {
+            case 'ai-concept-morph':
+                AnimationClass = await loadAIConceptMorphAnimation();
+                break;
+
+            // Add other anime.js animations here
+
+            default:
+                console.warn(`Unknown animation type: ${type}`);
+                return;
+        }
+    } catch (error) {
+        console.error(`Failed to load animation class for ${type}:`, error);
+        return;
+    }
+
+    // Initialize the animation on each element
     elements.forEach(element => {
         try {
             // Get animation options from data attributes
             const options = getOptionsFromDataAttributes(element);
-            
+
             // Get or generate container ID
             let containerId = element.id;
             if (!containerId) {
                 containerId = `${type}-container-${Math.floor(Math.random() * 10000)}`;
                 element.id = containerId;
             }
-            
-            // Initialize animation based on type
-            let animationInstance;
-            
-            switch (type) {
-                case 'ai-concept-morph':
-                    animationInstance = new AIConceptMorphAnimation(containerId, options);
-                    break;
-                
-                // Add other anime.js animations here
-                
-                default:
-                    console.warn(`Unknown animation type: ${type}`);
-                    return;
+
+            // Initialize animation
+            if (AnimationClass) {
+                const animationInstance = new AnimationClass(containerId, options);
+
+                // Store animation instance for later reference
+                animationInstances.set(containerId, animationInstance);
+
+                console.log(`Initialized ${type} animation on ${containerId}`);
             }
-            
-            // Store animation instance for later reference
-            animationInstances.set(containerId, animationInstance);
-            
-            console.log(`Initialized ${type} animation on ${containerId}`);
         } catch (error) {
             console.error(`Error initializing ${type} animation:`, error);
             // Apply fallback styling
@@ -111,9 +122,9 @@ function setupScrollObserver() {
         entries.forEach(entry => {
             const containerId = entry.target.id;
             const animationInstance = animationInstances.get(containerId);
-            
+
             if (!animationInstance) return;
-            
+
             if (entry.isIntersecting) {
                 // Play/resume animation when in viewport
                 if (animationInstance.play && typeof animationInstance.play === 'function') {
@@ -136,8 +147,6 @@ function setupScrollObserver() {
     });
 }
 
-// Export functions for potential external use
-export {
-    initAnimeAnimations,
-    animationInstances
-}; 
+// Make functions available globally
+window.initAnimeAnimations = initAnimeAnimations;
+window.animeAnimationInstances = animationInstances;

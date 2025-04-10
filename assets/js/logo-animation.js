@@ -3,14 +3,20 @@
  * Using Three.js for 3D rendering and Anime.js for animations
  */
 
-// We'll load THREE.js dynamically to avoid import errors
+// Prevent duplicate initialization
+if (window.CAAKE_LOGO_INITIALIZED) {
+    console.warn('CAAKE Logo Animation already initialized. Skipping duplicate initialization.');
+} else {
+    window.CAAKE_LOGO_INITIALIZED = true;
 
-// Initialize variables
-let scene, camera, renderer, composer;
-let logo, particleSystem;
-let clock;
-let mixer, animationAction;
-let mouseX = 0, mouseY = 0;
+    // We'll load THREE.js dynamically to avoid import errors
+
+    // Initialize variables
+    var scene, camera, renderer, composer;
+    var logo, particleSystem;
+    var clock;
+    var mixer, animationAction;
+    var mouseX = 0, mouseY = 0;
 
 // Configuration
 const config = {
@@ -483,38 +489,52 @@ function loadThreeJS() {
     });
 }
 
-// Load Three.js modules
+// Load Three.js modules in sequence to ensure dependencies are met
 function loadThreeJSModules() {
     return new Promise((resolve) => {
         // Create global THREE object if it doesn't exist
         window.THREE = window.THREE || {};
 
-        // Load TextGeometry
-        const textGeometryScript = document.createElement('script');
-        textGeometryScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/geometries/TextGeometry.js';
-        document.head.appendChild(textGeometryScript);
+        // Helper function to load scripts sequentially
+        function loadScriptSequentially(scripts, index) {
+            if (index >= scripts.length) {
+                resolve(); // All scripts loaded
+                return;
+            }
 
-        // Load FontLoader
-        const fontLoaderScript = document.createElement('script');
-        fontLoaderScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FontLoader.js';
-        document.head.appendChild(fontLoaderScript);
+            const script = document.createElement('script');
+            script.src = scripts[index];
+            script.onload = function() {
+                // Load the next script when this one is done
+                loadScriptSequentially(scripts, index + 1);
+            };
+            script.onerror = function() {
+                console.warn('Failed to load script:', scripts[index]);
+                // Try to continue with the next script
+                loadScriptSequentially(scripts, index + 1);
+            };
+            document.head.appendChild(script);
+        }
 
-        // Load EffectComposer and related passes
-        const effectComposerScript = document.createElement('script');
-        effectComposerScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js';
-        document.head.appendChild(effectComposerScript);
+        // Define all scripts in the order they need to be loaded
+        const scripts = [
+            // Core dependencies
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FontLoader.js',
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/geometries/TextGeometry.js',
 
-        const renderPassScript = document.createElement('script');
-        renderPassScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js';
-        document.head.appendChild(renderPassScript);
+            // Shaders needed for post-processing
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/shaders/CopyShader.js',
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/shaders/LuminosityHighPassShader.js',
 
-        const bloomPassScript = document.createElement('script');
-        bloomPassScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js';
-        bloomPassScript.onload = () => {
-            // All scripts loaded
-            resolve();
-        };
-        document.head.appendChild(bloomPassScript);
+            // Post-processing
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/ShaderPass.js',
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js',
+            'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js'
+        ];
+
+        // Start loading scripts sequentially
+        loadScriptSequentially(scripts, 0);
     });
 }
 
@@ -533,5 +553,6 @@ function initLogoAnimation(containerId) {
     });
 }
 
-// Make the function available globally
-window.initLogoAnimation = initLogoAnimation;
+    // Make the function available globally
+    window.initLogoAnimation = initLogoAnimation;
+} // End of initialization check

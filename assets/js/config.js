@@ -1,5 +1,10 @@
-// Configuration
-const config = {
+/**
+ * CAAKE Configuration
+ * This file contains configuration settings for the CAAKE website
+ */
+
+// Create global CAAKE_CONFIG object
+window.CAAKE_CONFIG = {
     OPENAI_API_KEY: 'your-api-key-here', // Replace with your actual API key
     OPENAI_API_ENDPOINT: 'https://api.openai.com/v1/chat/completions',
     DALLE_API_ENDPOINT: 'https://api.openai.com/v1/images/generations',
@@ -17,14 +22,20 @@ const config = {
     }
 };
 
-// Security measures
-const security = {
-    sanitizeInput: (input) => {
+// Create global CAAKE_SECURITY object
+window.CAAKE_SECURITY = {
+    sanitizeInput: function(input) {
         return input.replace(/<[^>]*>/g, '');
     },
-    validateImagePrompt: (prompt) => {
+    validateImagePrompt: function(prompt) {
         return prompt.length <= 1000 && !prompt.match(/[<>]/g);
     }
 };
 
-export { config, security }; 
+// For backwards compatibility with code that might still use import
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        config: window.CAAKE_CONFIG,
+        security: window.CAAKE_SECURITY
+    };
+}
