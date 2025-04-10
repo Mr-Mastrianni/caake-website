@@ -10,6 +10,7 @@ import BusinessAutomationAnimation from './business-automation.js';
 import DataFlowNetworkAnimation from './data-flow-network.js';
 import AIKnowledgeSpheresAnimation from './ai-knowledge-spheres.js';
 import ZedStyleAnimation from './zed-style-animation.js';
+import { handleError } from '../utils/error-handler.js';
 
 // Initialize animations when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,6 +43,9 @@ let businessAutomationInstance = null;
 let dataFlowNetworkInstance = null;
 let aiKnowledgeSpheresInstance = null;
 let zedStyleInstance = null;
+
+// Store active animations to manage them
+let activeAnimations = {};
 
 // Initialization function
 function initAnimations() {
@@ -376,3 +380,87 @@ window.addEventListener('resize', () => {
     if (healthcareVisualizationInstance) healthcareVisualizationInstance.onWindowResize();
     if (businessAutomationInstance) businessAutomationInstance.onWindowResize();
 });
+
+/**
+ * Initialize animations based on data attributes in the DOM
+ */
+export function initializeAnimations() {
+    console.log('Initializing animations...');
+    // Clean up existing animations before creating new ones
+    cleanupAnimations(); 
+    
+    const animationElements = document.querySelectorAll('[data-animation]');
+    
+    animationElements.forEach(el => {
+        const animationType = el.dataset.animation;
+        const containerId = el.id;
+
+        if (!containerId) {
+            handleError(new Error('Animation container needs an ID.'), 'Animation Initialization');
+            return;
+        }
+        
+        console.log(`Found animation: ${animationType} in container #${containerId}`);
+        
+        try { // Wrap instantiation
+            switch(animationType) {
+                case 'zed-style':
+                    activeAnimations[containerId] = new ZedStyleAnimation(containerId, {
+                        enableVanta: false // Disable Vanta by default unless explicitly needed
+                    });
+                    break;
+                case 'data-visualization':
+                    activeAnimations[containerId] = new DataVisualizationAnimation(containerId, {
+                        autoMorph: true, // Example option
+                        cameraZ: 25 // Adjust camera for this viz
+                    }); 
+                    break;
+                case 'workflow-automation':
+                    activeAnimations[containerId] = new WorkflowAutomationAnimation(containerId, {}); 
+                    break;
+                case 'digital-twin':
+                    activeAnimations[containerId] = new DigitalTwinAnimation(containerId, {}); 
+                    break;
+                // Add cases for other animations here
+                default:
+                    handleError(new Error(`Unknown animation type: ${animationType}`), 'Animation Initialization');
+            }
+        } catch (error) {
+            handleError(error, `Error initializing ${animationType} animation for #${containerId}`);
+            // Optionally display a fallback message in the container
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.innerHTML = '<p class="error-message">Failed to load animation.</p>';
+            }
+        }
+    });
+    
+    if (animationElements.length === 0) {
+        console.log('No elements with [data-animation] attribute found.');
+    }
+}
+
+/**
+ * Clean up existing animations
+ */
+function cleanupAnimations() {
+    console.log('Cleaning up existing animations...');
+    Object.keys(activeAnimations).forEach(key => {
+        const animation = activeAnimations[key];
+        if (animation && typeof animation.dispose === 'function') {
+            try {
+                animation.dispose();
+            } catch (error) {
+                handleError(error, `Error disposing animation for container #${key}`);
+            }
+        }
+        delete activeAnimations[key];
+    });
+}
+
+// Initial call if loading directly as a module script
+// However, initialization is typically triggered by the HTML page after THREE is loaded.
+// initializeAnimations(); 
+
+// Optional: Re-initialize animations on dynamic content changes (e.g., SPA navigation)
+// document.addEventListener('contentUpdated', initializeAnimations);

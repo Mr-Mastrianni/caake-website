@@ -1,90 +1,100 @@
 import ThreeJSSetup from './setup.js';
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+import { handleError } from '../utils/error-handler.js';
 
 class DigitalTwinAnimation extends ThreeJSSetup {
     constructor(containerId, options = {}) {
-        // Set default options for digital twin animation
-        const defaultOptions = {
-            backgroundColor: 0x05071F,
-            transparent: true,
-            orbitControls: true,
-            postprocessing: true,
-            bloom: true,
-            bloomStrength: 0.7,
-            bloomRadius: 0.4,
-            bloomThreshold: 0.3,
-            cameraZ: 100,
-            cameraY: 80,
-            cameraX: 80,
-            controlsConfig: {
-                enableZoom: true,
-                enablePan: true,
-                maxPolarAngle: Math.PI / 2 - 0.1,
-                minPolarAngle: Math.PI / 8,
-                maxDistance: 200,
-                minDistance: 30
-            }
-        };
-        
-        super(containerId, {...defaultOptions, ...options});
-        
-        // Digital twin parameters
-        this.citySize = options.citySize || 200;
-        this.gridDivisions = options.gridDivisions || 20;
-        this.buildingColors = {
-            primary: 0x1E2761,
-            secondary: 0x408EC6,
-            accent: 0x7A2048,
-            ground: 0x1A2639,
-            roads: 0x0D1321,
-            highlight: 0x2DE2E6,
-            aiAgents: 0xFF3864
-        };
-        
-        // Initialize the digital twin environment
-        this.initializeEnvironment();
-        
-        // Set up AI agents and animations
-        this.setupAgentAnimations();
-        
-        // Start the animation loop
-        this.animate();
+        try { // Wrap constructor
+            // Set default options for digital twin animation
+            const defaultOptions = {
+                backgroundColor: 0x05071F,
+                transparent: true,
+                orbitControls: true,
+                postprocessing: true,
+                bloom: true,
+                bloomStrength: 0.7,
+                bloomRadius: 0.4,
+                bloomThreshold: 0.3,
+                cameraZ: 100,
+                cameraY: 80,
+                cameraX: 80,
+                controlsConfig: {
+                    enableZoom: true,
+                    enablePan: true,
+                    maxPolarAngle: Math.PI / 2 - 0.1,
+                    minPolarAngle: Math.PI / 8,
+                    maxDistance: 200,
+                    minDistance: 30
+                }
+            };
+            
+            super(containerId, {...defaultOptions, ...options});
+            
+            // Digital twin parameters
+            this.citySize = options.citySize || 200;
+            this.gridDivisions = options.gridDivisions || 20;
+            this.buildingColors = {
+                primary: 0x1E2761,
+                secondary: 0x408EC6,
+                accent: 0x7A2048,
+                ground: 0x1A2639,
+                roads: 0x0D1321,
+                highlight: 0x2DE2E6,
+                aiAgents: 0xFF3864
+            };
+            
+            // Initialize the digital twin environment
+            this.initializeEnvironment();
+            
+            // Set up AI agents and animations
+            this.setupAgentAnimations();
+            
+            // Start the animation loop
+            this.animate();
+        } catch (error) {
+            handleError(error, 'Error during DigitalTwinAnimation construction');
+            if (this.renderer) this.dispose();
+        }
     }
     
     initializeEnvironment() {
-        // Add ambient and directional lights
-        this.lights = this.addLights();
-        this.lights.ambientLight.intensity = 0.2;
-        
-        // Create directional light for shadows
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(50, 100, 50);
-        directionalLight.castShadow = true;
-        
-        // Configure shadow settings
-        directionalLight.shadow.mapSize.width = 2048;
-        directionalLight.shadow.mapSize.height = 2048;
-        directionalLight.shadow.camera.near = 10;
-        directionalLight.shadow.camera.far = 300;
-        directionalLight.shadow.camera.left = -100;
-        directionalLight.shadow.camera.right = 100;
-        directionalLight.shadow.camera.top = 100;
-        directionalLight.shadow.camera.bottom = -100;
-        
-        this.scene.add(directionalLight);
-        this.renderer.shadowMap.enabled = true;
-        
-        // Create city ground
-        this.createCityGround();
-        
-        // Create city grid (roads)
-        this.createCityGrid();
-        
-        // Create buildings
-        this.createBuildings();
-        
-        // Create special structures (data centers, utility nodes)
-        this.createSpecialStructures();
+        try { // Wrap environment initialization
+            // Add ambient and directional lights
+            this.lights = this.addLights();
+            this.lights.ambientLight.intensity = 0.2;
+            
+            // Create directional light for shadows
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(50, 100, 50);
+            directionalLight.castShadow = true;
+            
+            // Configure shadow settings
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 10;
+            directionalLight.shadow.camera.far = 300;
+            directionalLight.shadow.camera.left = -100;
+            directionalLight.shadow.camera.right = 100;
+            directionalLight.shadow.camera.top = 100;
+            directionalLight.shadow.camera.bottom = -100;
+            
+            this.scene.add(directionalLight);
+            this.renderer.shadowMap.enabled = true;
+            
+            // Create city ground
+            this.createCityGround();
+            
+            // Create city grid (roads)
+            this.createCityGrid();
+            
+            // Create buildings
+            this.createBuildings();
+            
+            // Create special structures (data centers, utility nodes)
+            this.createSpecialStructures();
+        } catch (error) {
+            handleError(error, 'Error initializing digital twin environment');
+        }
     }
     
     createCityGround() {
@@ -548,94 +558,98 @@ class DigitalTwinAnimation extends ThreeJSSetup {
     }
     
     setupAgentAnimations() {
-        // Create AI agents that move through the city
-        this.agents = [];
-        
-        // Create agent model (simple glowing sphere)
-        const agentGeometry = new THREE.SphereGeometry(0.8, 16, 16);
-        const agentMaterial = new THREE.MeshStandardMaterial({
-            color: this.buildingColors.aiAgents,
-            emissive: this.buildingColors.aiAgents,
-            emissiveIntensity: 0.7,
-            transparent: true,
-            opacity: 0.9
-        });
-        
-        // Generate paths for agents
-        const paths = this.generateAgentPaths();
-        
-        // Create agents along the paths
-        const agentCount = 30;
-        for (let i = 0; i < agentCount; i++) {
-            const agent = new THREE.Mesh(agentGeometry, agentMaterial.clone());
+        try { // Wrap agent setup
+            // Create AI agents that move through the city
+            this.agents = [];
             
-            // Add glow effect
-            const agentGlow = this.createGlowSprite(this.buildingColors.aiAgents);
-            agent.add(agentGlow);
-            
-            // Add data trail effect
-            const trailGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-            const trailMaterial = new THREE.MeshBasicMaterial({
+            // Create agent model (simple glowing sphere)
+            const agentGeometry = new THREE.SphereGeometry(0.8, 16, 16);
+            const agentMaterial = new THREE.MeshStandardMaterial({
                 color: this.buildingColors.aiAgents,
+                emissive: this.buildingColors.aiAgents,
+                emissiveIntensity: 0.7,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.9
             });
             
-            const trail = [];
-            const trailLength = 10;
+            // Generate paths for agents
+            const paths = this.generateAgentPaths();
             
-            for (let j = 0; j < trailLength; j++) {
-                const trailSegment = new THREE.Mesh(trailGeometry, trailMaterial.clone());
-                trailSegment.visible = false;
-                this.scene.add(trailSegment);
-                trail.push(trailSegment);
+            // Create agents along the paths
+            const agentCount = 30;
+            for (let i = 0; i < agentCount; i++) {
+                const agent = new THREE.Mesh(agentGeometry, agentMaterial.clone());
+                
+                // Add glow effect
+                const agentGlow = this.createGlowSprite(this.buildingColors.aiAgents);
+                agent.add(agentGlow);
+                
+                // Add data trail effect
+                const trailGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+                const trailMaterial = new THREE.MeshBasicMaterial({
+                    color: this.buildingColors.aiAgents,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                const trail = [];
+                const trailLength = 10;
+                
+                for (let j = 0; j < trailLength; j++) {
+                    const trailSegment = new THREE.Mesh(trailGeometry, trailMaterial.clone());
+                    trailSegment.visible = false;
+                    this.scene.add(trailSegment);
+                    trail.push(trailSegment);
+                }
+                
+                // Choose a random path for this agent
+                const pathIndex = Math.floor(Math.random() * paths.length);
+                const selectedPath = paths[pathIndex];
+                
+                // Random starting position along the path
+                const progress = Math.random();
+                const position = selectedPath.getPointAt(progress);
+                
+                // Position agent slightly above the ground
+                position.y = 1;
+                agent.position.copy(position);
+                
+                // Add to scene
+                this.scene.add(agent);
+                
+                // Add to agents array with metadata
+                this.agents.push({
+                    mesh: agent,
+                    glow: agentGlow,
+                    path: selectedPath,
+                    progress,
+                    speed: 0.0005 + Math.random() * 0.001,
+                    trail,
+                    trailTimer: 0,
+                    trailUpdateInterval: 0.1,
+                    lastTrailPoint: position.clone()
+                });
             }
             
-            // Choose a random path for this agent
-            const pathIndex = Math.floor(Math.random() * paths.length);
-            const selectedPath = paths[pathIndex];
+            // Set up periodic events
+            this.eventTimers = {
+                beaconPulse: 0,
+                beaconPulseInterval: 10,
+                agentBurst: 0,
+                agentBurstInterval: 15
+            };
             
-            // Random starting position along the path
-            const progress = Math.random();
-            const position = selectedPath.getPointAt(progress);
-            
-            // Position agent slightly above the ground
-            position.y = 1;
-            agent.position.copy(position);
-            
-            // Add to scene
-            this.scene.add(agent);
-            
-            // Add to agents array with metadata
-            this.agents.push({
-                mesh: agent,
-                glow: agentGlow,
-                path: selectedPath,
-                progress,
-                speed: 0.0005 + Math.random() * 0.001,
-                trail,
-                trailTimer: 0,
-                trailUpdateInterval: 0.1,
-                lastTrailPoint: position.clone()
-            });
+            // Set up update function
+            this.update = (delta, elapsedTime) => {
+                // Update agents
+                this.updateAgents(delta, elapsedTime);
+                
+                // Trigger periodic events
+                this.triggerPeriodicEvents(elapsedTime);
+            };
+        } catch (error) {
+            handleError(error, 'Error setting up agent animations');
         }
-        
-        // Set up periodic events
-        this.eventTimers = {
-            beaconPulse: 0,
-            beaconPulseInterval: 10,
-            agentBurst: 0,
-            agentBurstInterval: 15
-        };
-        
-        // Set up update function
-        this.update = (delta, elapsedTime) => {
-            // Update agents
-            this.updateAgents(delta, elapsedTime);
-            
-            // Trigger periodic events
-            this.triggerPeriodicEvents(elapsedTime);
-        };
     }
     
     generateAgentPaths() {
@@ -990,6 +1004,79 @@ class DigitalTwinAnimation extends ThreeJSSetup {
         sprite.scale.set(3, 3, 3);
         
         return sprite;
+    }
+
+    // Override update method
+    update(delta, elapsedTime) {
+        try { // Wrap update logic
+            if (this.boundTriggerEvents) { // Ensure setup completed
+                this.boundTriggerEvents(delta, elapsedTime);
+            }
+
+            // Update agent positions and trails
+            if (this.agents) {
+                this.updateAgents(delta);
+            }
+            if (this.trailSystems) {
+                this.trailSystems.forEach(ts => ts.update(delta));
+            }
+        } catch (error) {
+            handleError(error, 'Error in DigitalTwinAnimation update loop');
+            this.dispose(); // Stop animation
+        }
+    }
+
+    updateAgents(delta) {
+        // Update each agent's position and trail
+        this.agents.forEach(agent => {
+            // Update progress along path
+            agent.progress += agent.speed * delta * 60;
+            
+            // Wrap progress to keep it between 0 and 1
+            agent.progress = agent.progress % 1;
+            
+            // Get new position
+            const newPosition = agent.path.getPointAt(agent.progress);
+            
+            // Calculate direction for smooth movement
+            const tangent = agent.path.getTangent(agent.progress);
+            const lookTarget = newPosition.clone().add(tangent);
+            
+            // Update position
+            agent.mesh.position.copy(newPosition);
+            agent.mesh.lookAt(lookTarget);
+            
+            // Update trail
+            agent.trailTimer += delta;
+            if (agent.trailTimer >= agent.trailUpdateInterval) {
+                agent.trailTimer = 0;
+                
+                // Shift all trail segments
+                for (let i = agent.trail.length - 1; i > 0; i--) {
+                    agent.trail[i].position.copy(agent.trail[i-1].position);
+                    agent.trail[i].visible = agent.trail[i-1].visible;
+                    
+                    // Fade out trail segments
+                    agent.trail[i].material.opacity = 0.5 * (1 - i / agent.trail.length);
+                    agent.trail[i].scale.set(
+                        0.8 * (1 - i / agent.trail.length),
+                        0.8 * (1 - i / agent.trail.length),
+                        0.8 * (1 - i / agent.trail.length)
+                    );
+                }
+                
+                // Update first trail segment to current position
+                agent.trail[0].position.copy(agent.mesh.position);
+                agent.trail[0].visible = true;
+                
+                // Save last trail point
+                agent.lastTrailPoint.copy(agent.mesh.position);
+            }
+            
+            // Subtle pulsing effect for agents
+            const scale = 0.9 + 0.2 * Math.sin(elapsedTime * 3 + agent.progress * 10);
+            agent.glow.scale.set(scale, scale, scale);
+        });
     }
 }
 

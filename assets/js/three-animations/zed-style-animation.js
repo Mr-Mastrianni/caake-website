@@ -4,54 +4,63 @@
  * Uses Three.js for 3D rendering and GSAP for animations
  */
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
-import { ShaderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/ShaderPass.js';
+// Assume THREE and addons are loaded globally by module-loader.js
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+// import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+// import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
+// import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
+// import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
+// import { ShaderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/ShaderPass.js';
+
+import { gsap } from 'gsap';
+import { throttle } from '../utils/performance.js'; // Import throttle
+import { handleError } from '../utils/error-handler.js'; // Import handleError
 
 class ZedStyleAnimation {
     constructor(containerId, options = {}) {
-        // Default options
-        this.options = Object.assign({
-            backgroundColor: 0x0a0a12,
-            wireframeColor: 0x5773ff,
-            glowColor: 0x00f0ff,
-            accentColor: 0xff007a,
-            bloomStrength: 1.5,
-            bloomRadius: 0.75,
-            bloomThreshold: 0.2,
-            rotationSpeed: 0.005,
-            interactive: true,
-            mouseFollowIntensity: 0.1,
-            enableOrbitControls: false,
-            enableVanta: true,
-            vantaEffect: 'globe', // 'globe', 'net', 'waves', 'dots'
-            objectsToRender: ['torus', 'cube', 'pyramid', 'particles'] // Which objects to include
-        }, options);
+        try { // Wrap constructor
+            // Default options
+            this.options = Object.assign({
+                backgroundColor: 0x0a0a12,
+                wireframeColor: 0x5773ff,
+                glowColor: 0x00f0ff,
+                accentColor: 0xff007a,
+                bloomStrength: 1.5,
+                bloomRadius: 0.75,
+                bloomThreshold: 0.2,
+                rotationSpeed: 0.005,
+                interactive: true,
+                mouseFollowIntensity: 0.1,
+                enableOrbitControls: false,
+                enableVanta: true,
+                vantaEffect: 'globe', // 'globe', 'net', 'waves', 'dots'
+                objectsToRender: ['torus', 'cube', 'pyramid', 'particles'] // Which objects to include
+            }, options);
 
-        // Get container
-        this.container = document.getElementById(containerId);
-        if (!this.container) {
-            console.error(`Container with ID "${containerId}" not found.`);
-            return;
-        }
+            // Get container
+            this.container = document.getElementById(containerId);
+            if (!this.container) {
+                console.error(`Container with ID "${containerId}" not found.`);
+                return;
+            }
 
-        // Set container style
-        this.container.style.position = 'relative';
-        this.container.style.overflow = 'hidden';
-        
-        // Initialize
-        this.init();
-        this.createObjects();
-        this.setupPostprocessing();
-        this.setupEventListeners();
-        this.animate();
+            // Set container style
+            this.container.style.position = 'relative';
+            this.container.style.overflow = 'hidden';
+            
+            // Initialize
+            this.init();
+            this.createObjects();
+            this.setupPostprocessing();
+            this.setupEventListeners();
+            this.animate();
 
-        // Initialize Vanta.js background if enabled
-        if (this.options.enableVanta) {
-            this.initVanta();
+            // Initialize Vanta.js background if enabled
+            if (this.options.enableVanta) {
+                this.initVanta();
+            }
+        } catch (error) {
+            handleError(error, 'Error during ZedStyleAnimation construction');
         }
     }
 
@@ -184,21 +193,13 @@ class ZedStyleAnimation {
     }
 
     setupEventListeners() {
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            this.width = this.container.clientWidth;
-            this.height = this.container.clientHeight;
-            
-            this.camera.aspect = this.width / this.height;
-            this.camera.updateProjectionMatrix();
-            
-            this.renderer.setSize(this.width, this.height);
-            this.composer.setSize(this.width, this.height);
-        });
+        // Handle window resize - throttled
+        this.handleResizeThrottled = throttle(this.resize.bind(this), 250); // Use the existing resize method
+        window.addEventListener('resize', this.handleResizeThrottled);
 
-        // Handle mouse movement for interactive effects
+        // Handle mouse movement for interactive effects - throttled
         if (this.options.interactive) {
-            this.container.addEventListener('mousemove', (event) => {
+            this.handleMouseMoveThrottled = throttle((event) => {
                 // Calculate mouse position in normalized device coordinates
                 const rect = this.container.getBoundingClientRect();
                 this.mouse.x = ((event.clientX - rect.left) / this.width) * 2 - 1;
@@ -207,151 +208,166 @@ class ZedStyleAnimation {
                 // Set target rotation based on mouse position
                 this.targetRotation.x = this.mouse.y * 0.5;
                 this.targetRotation.y = this.mouse.x * 0.5;
-            });
+            }, 50); // Throttle mousemove to 50ms
+            this.container.addEventListener('mousemove', this.handleMouseMoveThrottled);
         }
     }
 
     initVanta() {
-        // Check if VANTA is available
-        if (typeof VANTA === 'undefined') {
-            console.warn('VANTA.js is not loaded. Skipping background effect.');
-            return;
-        }
+        try { // Wrap Vanta initialization
+            // Check if VANTA is available
+            if (typeof VANTA === 'undefined') {
+                console.warn('VANTA.js is not loaded. Skipping background effect.');
+                return;
+            }
 
-        // Create a background div for Vanta
-        const vantaContainer = document.createElement('div');
-        vantaContainer.style.position = 'absolute';
-        vantaContainer.style.top = '0';
-        vantaContainer.style.left = '0';
-        vantaContainer.style.width = '100%';
-        vantaContainer.style.height = '100%';
-        vantaContainer.style.zIndex = '-1';
-        this.container.appendChild(vantaContainer);
+            // Create a background div for Vanta
+            const vantaContainer = document.createElement('div');
+            vantaContainer.style.position = 'absolute';
+            vantaContainer.style.top = '0';
+            vantaContainer.style.left = '0';
+            vantaContainer.style.width = '100%';
+            vantaContainer.style.height = '100%';
+            vantaContainer.style.zIndex = '-1';
+            this.container.appendChild(vantaContainer);
 
-        // Initialize Vanta effect based on option
-        switch (this.options.vantaEffect.toLowerCase()) {
-            case 'globe':
-                this.vantaEffect = VANTA.GLOBE({
-                    el: vantaContainer,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: this.options.wireframeColor,
-                    backgroundColor: this.options.backgroundColor,
-                    size: 0.8
-                });
-                break;
-            case 'net':
-                this.vantaEffect = VANTA.NET({
-                    el: vantaContainer,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: this.options.wireframeColor,
-                    backgroundColor: this.options.backgroundColor,
-                    points: 10,
-                    maxDistance: 20,
-                    spacing: 15
-                });
-                break;
-            case 'waves':
-                this.vantaEffect = VANTA.WAVES({
-                    el: vantaContainer,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: this.options.wireframeColor,
-                    shininess: 30,
-                    waveHeight: 15,
-                    waveSpeed: 0.75,
-                    zoom: 0.75
-                });
-                break;
-            case 'dots':
-                this.vantaEffect = VANTA.DOTS({
-                    el: vantaContainer,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: this.options.wireframeColor,
-                    backgroundColor: this.options.backgroundColor,
-                    size: 3,
-                    spacing: 35
-                });
-                break;
-            default:
-                console.warn(`Unknown Vanta effect: ${this.options.vantaEffect}. Using GLOBE.`);
-                this.vantaEffect = VANTA.GLOBE({
-                    el: vantaContainer,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: this.options.wireframeColor,
-                    backgroundColor: this.options.backgroundColor,
-                    size: 0.8
-                });
+            // Initialize Vanta effect based on option
+            switch (this.options.vantaEffect.toLowerCase()) {
+                case 'globe':
+                    this.vantaEffect = VANTA.GLOBE({
+                        el: vantaContainer,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: this.options.wireframeColor,
+                        backgroundColor: this.options.backgroundColor,
+                        size: 0.8
+                    });
+                    break;
+                case 'net':
+                    this.vantaEffect = VANTA.NET({
+                        el: vantaContainer,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: this.options.wireframeColor,
+                        backgroundColor: this.options.backgroundColor,
+                        points: 10,
+                        maxDistance: 20,
+                        spacing: 15
+                    });
+                    break;
+                case 'waves':
+                    this.vantaEffect = VANTA.WAVES({
+                        el: vantaContainer,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: this.options.wireframeColor,
+                        shininess: 30,
+                        waveHeight: 15,
+                        waveSpeed: 0.75,
+                        zoom: 0.75
+                    });
+                    break;
+                case 'dots':
+                    this.vantaEffect = VANTA.DOTS({
+                        el: vantaContainer,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: this.options.wireframeColor,
+                        backgroundColor: this.options.backgroundColor,
+                        size: 3,
+                        spacing: 35
+                    });
+                    break;
+                default:
+                    console.warn(`Unknown Vanta effect: ${this.options.vantaEffect}. Using GLOBE.`);
+                    this.vantaEffect = VANTA.GLOBE({
+                        el: vantaContainer,
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: this.options.wireframeColor,
+                        backgroundColor: this.options.backgroundColor,
+                        size: 0.8
+                    });
+            }
+        } catch (error) {
+            handleError(error, 'Error initializing Vanta background');
         }
     }
 
     animate() {
-        requestAnimationFrame(this.animate.bind(this));
+        // requestAnimationFrame is already safe
+        this.animationFrameId = requestAnimationFrame(this.animate.bind(this)); // Store ID for cancellation
         
-        // Rotate objects
-        if (this.torus) {
-            this.torus.rotation.x += this.options.rotationSpeed;
-            this.torus.rotation.y += this.options.rotationSpeed * 0.5;
+        try { // Wrap animation logic
+            // Rotate objects
+            if (this.torus) {
+                this.torus.rotation.x += this.options.rotationSpeed;
+                this.torus.rotation.y += this.options.rotationSpeed * 0.5;
+            }
+            
+            if (this.cube) {
+                this.cube.rotation.x += this.options.rotationSpeed * 0.7;
+                this.cube.rotation.y += this.options.rotationSpeed * 0.9;
+            }
+            
+            if (this.pyramid) {
+                this.pyramid.rotation.x += this.options.rotationSpeed * 0.8;
+                this.pyramid.rotation.z += this.options.rotationSpeed * 0.6;
+            }
+            
+            if (this.particles) {
+                this.particles.rotation.y += this.options.rotationSpeed * 0.1;
+            }
+            
+            // Interactive mouse follow effect
+            if (this.options.interactive) {
+                this.objects.forEach(obj => {
+                    // Smoothly interpolate towards target rotation
+                    obj.rotation.x += (this.targetRotation.x - obj.rotation.x) * this.options.mouseFollowIntensity;
+                    obj.rotation.y += (this.targetRotation.y - obj.rotation.y) * this.options.mouseFollowIntensity;
+                });
+            }
+            
+            // Update controls if enabled
+            if (this.options.enableOrbitControls && this.controls) {
+                this.controls.update();
+            }
+            
+            // Render scene with post-processing
+            this.composer.render();
+        } catch (error) {
+            handleError(error, 'Error in ZedStyleAnimation animate loop');
+            // Stop the animation loop on error
+            if (this.animationFrameId) {
+                cancelAnimationFrame(this.animationFrameId);
+            }
+            // Consider calling destroy() or a specific cleanup method
         }
-        
-        if (this.cube) {
-            this.cube.rotation.x += this.options.rotationSpeed * 0.7;
-            this.cube.rotation.y += this.options.rotationSpeed * 0.9;
-        }
-        
-        if (this.pyramid) {
-            this.pyramid.rotation.x += this.options.rotationSpeed * 0.8;
-            this.pyramid.rotation.z += this.options.rotationSpeed * 0.6;
-        }
-        
-        if (this.particles) {
-            this.particles.rotation.y += this.options.rotationSpeed * 0.1;
-        }
-        
-        // Interactive mouse follow effect
-        if (this.options.interactive) {
-            this.objects.forEach(obj => {
-                // Smoothly interpolate towards target rotation
-                obj.rotation.x += (this.targetRotation.x - obj.rotation.x) * this.options.mouseFollowIntensity;
-                obj.rotation.y += (this.targetRotation.y - obj.rotation.y) * this.options.mouseFollowIntensity;
-            });
-        }
-        
-        // Update controls if enabled
-        if (this.options.enableOrbitControls && this.controls) {
-            this.controls.update();
-        }
-        
-        // Render scene with post-processing
-        this.composer.render();
     }
 
     // Public method to resize the animation
@@ -373,8 +389,16 @@ class ZedStyleAnimation {
 
     // Public method to destroy the animation and clean up
     destroy() {
+        // Stop animation loop first
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
         // Remove event listeners
-        window.removeEventListener('resize', this.resize);
+        window.removeEventListener('resize', this.handleResizeThrottled); // Use throttled handler
+        if (this.options.interactive && this.handleMouseMoveThrottled) {
+            this.container.removeEventListener('mousemove', this.handleMouseMoveThrottled); // Use throttled handler
+        }
         
         // Dispose of Three.js objects
         this.objects.forEach(obj => {

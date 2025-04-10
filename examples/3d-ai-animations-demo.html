@@ -226,25 +226,33 @@
         </div>
     </footer>
     
-    <!-- THREE.js imports -->
+    <!-- Load Utilities and Initialize Animations -->
     <script type="module">
-        import * as THREE from 'https://unpkg.com/three@0.132.2/build/three.module.js';
-        import { OrbitControls } from 'https://unpkg.com/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-        import { EffectComposer } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
-        import { ShaderPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/ShaderPass.js';
-        
-        // Make THREE available globally for our animations
-        window.THREE = THREE;
-        window.OrbitControls = OrbitControls;
-        window.EffectComposer = EffectComposer;
-        window.RenderPass = RenderPass;
-        window.UnrealBloomPass = UnrealBloomPass;
-        window.ShaderPass = ShaderPass;
-        
-        // Load our animations
-        import('../assets/js/three-animations/main.js');
+        import { loadThreeJS } from '../assets/js/utils/module-loader.js';
+        import { initializeAnimations } from '../assets/js/three-animations/main.js';
+        import { handleError } from '../assets/js/utils/error-handler.js';
+
+        loadThreeJS({
+            useGlobal: true, // Make THREE globally available for animations
+            addons: ['controls/OrbitControls.js', 'postprocessing/EffectComposer.js', 'postprocessing/RenderPass.js', 'postprocessing/UnrealBloomPass.js', 'postprocessing/ShaderPass.js'],
+            onLoad: (loadedModules) => {
+                console.log('Three.js loaded successfully via module loader for demo page.');
+                // Make OrbitControls etc. global if needed by older animation code relying on globals
+                // Alternatively, pass loadedModules.addons to initializeAnimations if it's refactored
+                window.OrbitControls = loadedModules.addons[0].OrbitControls; 
+                window.EffectComposer = loadedModules.addons[1].EffectComposer;
+                window.RenderPass = loadedModules.addons[2].RenderPass;
+                window.UnrealBloomPass = loadedModules.addons[3].UnrealBloomPass;
+                window.ShaderPass = loadedModules.addons[4].ShaderPass;
+                
+                initializeAnimations(); // Initialize animations after Three.js is loaded
+            },
+            onError: (err) => {
+                handleError(err, 'Failed to load Three.js in 3d-ai-animations-demo.html');
+            }
+        }).catch(err => {
+            handleError(err, 'Unhandled error during Three.js loading in 3d-ai-animations-demo.html');
+        });
     </script>
 </body>
 </html>

@@ -1,91 +1,101 @@
 import ThreeJSSetup from './setup.js';
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+import { handleError } from '../utils/error-handler.js';
 
 class WorkflowAutomationAnimation extends ThreeJSSetup {
     constructor(containerId, options = {}) {
-        // Set default options for workflow animation
-        const defaultOptions = {
-            backgroundColor: 0x1a1a2e,
-            transparent: true,
-            orbitControls: true,
-            postprocessing: true,
-            bloom: true,
-            bloomStrength: 0.8,
-            bloomRadius: 0.5,
-            bloomThreshold: 0.4,
-            cameraZ: 20,
-            cameraY: 15,
-            cameraX: 15,
-            controlsConfig: {
-                enableZoom: true,
-                enablePan: true,
-                maxPolarAngle: Math.PI / 2 - 0.1,
-                minPolarAngle: Math.PI / 6,
-                maxDistance: 50,
-                minDistance: 10
-            }
-        };
-        
-        super(containerId, {...defaultOptions, ...options});
-        
-        // Workflow scene parameters
-        this.gridSize = options.gridSize || 30;
-        this.buildingColors = {
-            department1: 0x16213e,  // Dark blue
-            department2: 0x533483,  // Purple
-            department3: 0x0f3460,  // Navy
-            department4: 0x1e5128,  // Green
-            roof: 0x1e2022,         // Dark gray
-            ground: 0x0f0f1b,       // Very dark blue
-            paths: 0x2c394b,        // Medium blue
-            highlight: 0x00bfff,     // Light blue
-            dataParticles: 0x4cc9f0  // Cyan
-        };
-        
-        // Initialize the workflow scene
-        this.initializeScene();
-        
-        // Set up the automated workflow animations
-        this.setupWorkflowAnimations();
-        
-        // Start the animation loop
-        this.animate();
+        try { // Wrap constructor
+            // Set default options for workflow animation
+            const defaultOptions = {
+                backgroundColor: 0x1a1a2e,
+                transparent: true,
+                orbitControls: true,
+                postprocessing: true,
+                bloom: true,
+                bloomStrength: 0.8,
+                bloomRadius: 0.5,
+                bloomThreshold: 0.4,
+                cameraZ: 20,
+                cameraY: 15,
+                cameraX: 15,
+                controlsConfig: {
+                    enableZoom: true,
+                    enablePan: true,
+                    maxPolarAngle: Math.PI / 2 - 0.1,
+                    minPolarAngle: Math.PI / 6,
+                    maxDistance: 50,
+                    minDistance: 10
+                }
+            };
+            
+            super(containerId, {...defaultOptions, ...options});
+            
+            // Workflow scene parameters
+            this.gridSize = options.gridSize || 30;
+            this.buildingColors = {
+                department1: 0x16213e,  // Dark blue
+                department2: 0x533483,  // Purple
+                department3: 0x0f3460,  // Navy
+                department4: 0x1e5128,  // Green
+                roof: 0x1e2022,         // Dark gray
+                ground: 0x0f0f1b,       // Very dark blue
+                paths: 0x2c394b,        // Medium blue
+                highlight: 0x00bfff,     // Light blue
+                dataParticles: 0x4cc9f0  // Cyan
+            };
+            
+            // Initialize the workflow scene
+            this.initializeScene();
+            
+            // Set up the automated workflow animations
+            this.setupWorkflowAnimations();
+            
+            // Start the animation loop
+            this.animate();
+        } catch (error) {
+            handleError(error, 'Error during WorkflowAutomationAnimation construction');
+            if (this.renderer) this.dispose();
+        }
     }
     
     initializeScene() {
-        // Add ambient and directional lights
-        this.lights = this.addLights();
-        this.lights.ambientLight.intensity = 0.3;
-        
-        // Create directional light for shadows
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(20, 30, 20);
-        directionalLight.castShadow = true;
-        
-        // Configure shadow settings
-        directionalLight.shadow.mapSize.width = 2048;
-        directionalLight.shadow.mapSize.height = 2048;
-        directionalLight.shadow.camera.near = 0.1;
-        directionalLight.shadow.camera.far = 100;
-        directionalLight.shadow.camera.left = -30;
-        directionalLight.shadow.camera.right = 30;
-        directionalLight.shadow.camera.top = 30;
-        directionalLight.shadow.camera.bottom = -30;
-        
-        this.scene.add(directionalLight);
-        this.renderer.shadowMap.enabled = true;
-        
-        // Create ground plane
-        this.createGround();
-        
-        // Create building departments
-        this.createDepartments();
-        
-        // Create connecting paths
-        this.createPaths();
-        
-        // Create data particles
-        this.createDataParticles();
+        try { // Wrap scene initialization
+            // Add ambient and directional lights
+            this.lights = this.addLights();
+            this.lights.ambientLight.intensity = 0.3;
+            
+            // Create directional light for shadows
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(20, 30, 20);
+            directionalLight.castShadow = true;
+            
+            // Configure shadow settings
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 0.1;
+            directionalLight.shadow.camera.far = 100;
+            directionalLight.shadow.camera.left = -30;
+            directionalLight.shadow.camera.right = 30;
+            directionalLight.shadow.camera.top = 30;
+            directionalLight.shadow.camera.bottom = -30;
+            
+            this.scene.add(directionalLight);
+            this.renderer.shadowMap.enabled = true;
+            
+            // Create ground plane
+            this.createGround();
+            
+            // Create building departments
+            this.createDepartments();
+            
+            // Create connecting paths
+            this.createPaths();
+            
+            // Create data particles
+            this.createDataParticles();
+        } catch (error) {
+            handleError(error, 'Error initializing workflow automation scene');
+        }
     }
     
     createGround() {
@@ -510,205 +520,49 @@ class WorkflowAutomationAnimation extends ThreeJSSetup {
     }
     
     setupWorkflowAnimations() {
-        // Set up event timing parameters
-        this.eventTimers = {
-            particleSpeed: 0.3,
-            particleBurstInterval: 5,
-            buildingPulseInterval: 8,
-            lastParticleBurst: 0,
-            lastBuildingPulse: 0
-        };
-        
-        // Animate building features
-        this.departments.forEach(dept => {
-            // Animate antenna tip
-            gsap.to(dept.antennaTip.material, {
-                emissiveIntensity: 0.3,
-                duration: 1 + Math.random(),
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
-        });
-        
-        // Set up update function
-        this.update = (delta, elapsedTime) => {
-            // Update particles along the paths
-            this.updateDataParticles(delta, elapsedTime);
-            
-            // Trigger periodic events
-            this.triggerPeriodicEvents(elapsedTime);
-        };
+        try { // Wrap animation setup
+            // Set up event timing parameters
+            this.eventTimers = {
+                dataFlow: { interval: 3, lastTrigger: 0, active: false },
+                processHighlight: { interval: 5, lastTrigger: 0, active: false },
+                statusUpdate: { interval: 7, lastTrigger: 0, active: false }
+            };
+
+            // Bind the event trigger function to the class instance
+            this.boundTriggerEvents = (delta, elapsedTime) => {
+                this.triggerPeriodicEvents(elapsedTime);
+            };
+
+            // Initially start the animation logic (could be triggered by user interaction later)
+            this.startWorkflow();
+        } catch (error) {
+            handleError(error, 'Error setting up workflow animations');
+        }
     }
     
-    updateDataParticles(delta, elapsedTime) {
-        // Update each particle
-        this.dataParticles.forEach(particle => {
-            // Progress along the path
-            particle.progress += particle.speed * delta * 30;
-            
-            // Reset if reached the end
-            if (particle.progress > 1) {
-                particle.progress = 0;
-                
-                // Make a small pulse at the end of the path
-                this.pulseAtTarget(particle);
+    // Override update method (called by ThreeJSSetup)
+    update(delta, elapsedTime) {
+        try { // Wrap update logic
+            if (this.boundTriggerEvents) { // Check if setup completed
+                this.boundTriggerEvents(delta, elapsedTime);
             }
             
-            // Update position
-            const newPosition = particle.path.curve.getPointAt(particle.progress % 1);
-            particle.mesh.position.copy(newPosition);
-            
-            // Subtle size pulsing
-            const scale = 0.9 + 0.2 * Math.sin(elapsedTime * 5 + particle.progress * 10);
-            particle.glowSprite.scale.set(scale, scale, scale);
-        });
+            // Update particles
+            if (this.particleSystems) {
+                this.particleSystems.forEach(ps => ps.update(delta));
+            }
+        } catch (error) {
+            handleError(error, 'Error in WorkflowAutomationAnimation update loop');
+            this.dispose(); // Stop animation
+        }
+    }
+    
+    startWorkflow() {
+        // ... existing code ...
     }
     
     triggerPeriodicEvents(elapsedTime) {
-        // Trigger particle burst every interval
-        if (elapsedTime - this.eventTimers.lastParticleBurst > this.eventTimers.particleBurstInterval) {
-            this.eventTimers.lastParticleBurst = elapsedTime;
-            this.triggerParticleBurst();
-        }
-        
-        // Trigger building pulse every interval
-        if (elapsedTime - this.eventTimers.lastBuildingPulse > this.eventTimers.buildingPulseInterval) {
-            this.eventTimers.lastBuildingPulse = elapsedTime;
-            this.triggerBuildingPulse();
-        }
-    }
-    
-    triggerParticleBurst() {
-        // Choose a random department as source
-        const sourceIndex = Math.floor(Math.random() * this.departments.length);
-        const sourceDept = this.departments[sourceIndex];
-        
-        // Find paths from this department
-        const outgoingPaths = this.paths.filter(path => path.source.id === sourceDept.id);
-        
-        if (outgoingPaths.length > 0) {
-            // Send a burst of particles along these paths
-            outgoingPaths.forEach(path => {
-                // Add extra temporary particles
-                const burstCount = 5 + Math.floor(Math.random() * 5);
-                for (let i = 0; i < burstCount; i++) {
-                    setTimeout(() => {
-                        this.createBurstParticle(path);
-                    }, i * 100);
-                }
-                
-                // Pulse the source building
-                this.pulseBuilding(sourceDept);
-            });
-        }
-    }
-    
-    createBurstParticle(path) {
-        // Create a temporary particle for the burst
-        const particleGeometry = new THREE.SphereGeometry(0.3, 8, 8);
-        const particleMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00ffff,
-            transparent: true,
-            opacity: 0.9
-        });
-        
-        const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-        
-        // Set particle to start of path
-        const position = path.curve.getPointAt(0);
-        particle.position.copy(position);
-        
-        // Add glow effect
-        const glowSprite = this.createGlowSprite(0x00ffff);
-        particle.add(glowSprite);
-        
-        // Add to scene
-        this.scene.add(particle);
-        
-        // Animate along the path
-        gsap.to(particle.position, {
-            x: path.targetPoint.x,
-            y: path.targetPoint.y + 0.1,
-            z: path.targetPoint.z,
-            duration: 1 + Math.random() * 0.5,
-            ease: "power1.inOut",
-            onComplete: () => {
-                // Remove particle after animation
-                this.scene.remove(particle);
-                particle.geometry.dispose();
-                particle.material.dispose();
-                
-                // Pulse at target
-                this.pulseBuilding(path.target);
-            }
-        });
-    }
-    
-    pulseAtTarget(particle) {
-        // Create a pulse effect at the target point
-        const targetPosition = particle.path.targetPoint.clone();
-        targetPosition.y += 0.1;
-        
-        // Create a pulse sphere
-        const pulseGeometry = new THREE.SphereGeometry(0.1, 8, 8);
-        const pulseMaterial = new THREE.MeshBasicMaterial({
-            color: this.buildingColors.dataParticles,
-            transparent: true,
-            opacity: 0.8
-        });
-        
-        const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
-        pulse.position.copy(targetPosition);
-        this.scene.add(pulse);
-        
-        // Animate pulse
-        gsap.to(pulse.scale, {
-            x: 3,
-            y: 3,
-            z: 3,
-            duration: 0.6,
-            ease: "power2.out"
-        });
-        
-        gsap.to(pulse.material, {
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            onComplete: () => {
-                // Remove pulse after animation
-                this.scene.remove(pulse);
-                pulse.geometry.dispose();
-                pulse.material.dispose();
-            }
-        });
-    }
-    
-    pulseBuilding(department) {
-        // Create a pulse effect around the building
-        // Animate building material
-        gsap.to(department.building.material, {
-            emissiveIntensity: 0.3,
-            duration: 0.3,
-            yoyo: true,
-            repeat: 1,
-            ease: "power2.inOut"
-        });
-        
-        // Antenna pulse
-        gsap.to(department.antenna.material, {
-            emissiveIntensity: 1,
-            duration: 0.3,
-            yoyo: true,
-            repeat: 1,
-            ease: "power2.inOut"
-        });
-    }
-    
-    triggerBuildingPulse() {
-        // Choose a random building to pulse
-        const randomIndex = Math.floor(Math.random() * this.departments.length);
-        this.pulseBuilding(this.departments[randomIndex]);
+        // ... existing code ...
     }
 }
 

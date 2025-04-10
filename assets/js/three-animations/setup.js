@@ -1,60 +1,72 @@
 // Three.js Core Setup and Utilities
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+// Imports are handled by module-loader.js and made global
+// import * as THREE from 'three';
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+// import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+// import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+// import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+// import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+
+import { throttle } from '../utils/performance.js'; // Import throttle
+import { handleError } from '../utils/error-handler.js'; // Import handleError
 
 class ThreeJSSetup {
     constructor(containerId, options = {}) {
-        this.container = document.getElementById(containerId);
-        
-        if (!this.container) {
-            console.error(`Container element with ID ${containerId} not found.`);
-            return;
+        try { // Wrap constructor
+            this.container = document.getElementById(containerId);
+            
+            if (!this.container) {
+                // Use handleError for consistent reporting
+                handleError(new Error(`Container element with ID ${containerId} not found.`), 'ThreeJSSetup Initialization');
+                return; // Stop execution if container not found
+            }
+            
+            // Default options
+            this.options = {
+                backgroundColor: options.backgroundColor || 0x000000,
+                transparent: options.transparent !== undefined ? options.transparent : true,
+                orbitControls: options.orbitControls !== undefined ? options.orbitControls : true,
+                postprocessing: options.postprocessing !== undefined ? options.postprocessing : false,
+                bloom: options.bloom !== undefined ? options.bloom : false,
+                bloomStrength: options.bloomStrength || 1.5,
+                bloomRadius: options.bloomRadius || 0.4,
+                bloomThreshold: options.bloomThreshold || 0.8,
+                cameraZ: options.cameraZ || 100,
+                controlsConfig: options.controlsConfig || {}
+            };
+            
+            // Setup
+            this.setupScene();
+            this.setupCamera();
+            this.setupRenderer();
+            
+            // Make sure animation container doesn't interfere with scroll
+            this.container.style.position = 'absolute';
+            this.container.style.pointerEvents = 'none';
+            
+            if (this.options.orbitControls) {
+                this.setupOrbitControls();
+            }
+            
+            if (this.options.postprocessing) {
+                this.setupPostprocessing();
+            }
+            
+            // Handle resize
+            // Throttle the resize event to improve performance (e.g., call max once per 250ms)
+            this.throttledResize = throttle(this.onWindowResize.bind(this), 250);
+            window.addEventListener('resize', this.throttledResize);
+            
+            // Initial resize
+            this.onWindowResize();
+            
+            // Animation loop
+            this.animate = this.animate.bind(this);
+            this.clock = new THREE.Clock();
+        } catch (error) {
+            handleError(error, 'Error during ThreeJSSetup construction');
+            // Optionally trigger fallback behavior
         }
-        
-        // Default options
-        this.options = {
-            backgroundColor: options.backgroundColor || 0x000000,
-            transparent: options.transparent !== undefined ? options.transparent : true,
-            orbitControls: options.orbitControls !== undefined ? options.orbitControls : true,
-            postprocessing: options.postprocessing !== undefined ? options.postprocessing : false,
-            bloom: options.bloom !== undefined ? options.bloom : false,
-            bloomStrength: options.bloomStrength || 1.5,
-            bloomRadius: options.bloomRadius || 0.4,
-            bloomThreshold: options.bloomThreshold || 0.8,
-            cameraZ: options.cameraZ || 100,
-            controlsConfig: options.controlsConfig || {}
-        };
-        
-        // Setup
-        this.setupScene();
-        this.setupCamera();
-        this.setupRenderer();
-        
-        // Make sure animation container doesn't interfere with scroll
-        this.container.style.position = 'absolute';
-        this.container.style.pointerEvents = 'none';
-        
-        if (this.options.orbitControls) {
-            this.setupOrbitControls();
-        }
-        
-        if (this.options.postprocessing) {
-            this.setupPostprocessing();
-        }
-        
-        // Handle resize
-        window.addEventListener('resize', this.onWindowResize.bind(this));
-        
-        // Initial resize
-        this.onWindowResize();
-        
-        // Animation loop
-        this.animate = this.animate.bind(this);
-        this.clock = new THREE.Clock();
     }
     
     setupScene() {
@@ -96,40 +108,54 @@ class ThreeJSSetup {
     }
     
     setupOrbitControls() {
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.05;
-        
-        if (this.options.controlsConfig) {
-            Object.assign(this.controls, this.options.controlsConfig);
+        try { // Wrap setup method
+            // Access THREE and OrbitControls from the global scope
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            this.controls.enableDamping = true;
+            this.controls.dampingFactor = 0.05;
+            
+            if (this.options.controlsConfig) {
+                Object.assign(this.controls, this.options.controlsConfig);
+            }
+        } catch (error) {
+            handleError(error, 'Error setting up OrbitControls');
         }
     }
     
     setupPostprocessing() {
-        this.composer = new EffectComposer(this.renderer);
-        
-        // Add render pass
-        const renderPass = new RenderPass(this.scene, this.camera);
-        this.composer.addPass(renderPass);
-        
-        // Add bloom effect
-        if (this.options.bloom) {
-            const bloomPass = new UnrealBloomPass(
-                new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
-                this.options.bloomStrength,
-                this.options.bloomRadius,
-                this.options.bloomThreshold
-            );
-            this.composer.addPass(bloomPass);
+        try { // Wrap setup method
+            // Access THREE, EffectComposer, RenderPass, UnrealBloomPass from the global scope
+            this.composer = new EffectComposer(this.renderer);
+            
+            // Add render pass
+            const renderPass = new RenderPass(this.scene, this.camera);
+            this.composer.addPass(renderPass);
+            
+            // Add bloom effect
+            if (this.options.bloom) {
+                const bloomPass = new UnrealBloomPass(
+                    new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
+                    this.options.bloomStrength,
+                    this.options.bloomRadius,
+                    this.options.bloomThreshold
+                );
+                this.composer.addPass(bloomPass);
+            }
+            
+            // Store passes for later reference
+            this.passes = {
+                renderPass
+            };
+            // TODO: Add other passes if needed (e.g., ShaderPass)
+        } catch (error) {
+            handleError(error, 'Error setting up Postprocessing');
         }
-        
-        // Store passes for later reference
-        this.passes = {
-            renderPass
-        };
     }
     
     onWindowResize() {
+        // Check if container exists
+        if (!this.container) return;
+
         this.container.style.width = this.container.clientWidth + 'px';
         this.container.style.height = this.container.clientHeight + 'px';
         
@@ -155,15 +181,26 @@ class ThreeJSSetup {
         }
         
         // Call custom update function if provided
-        if (this.update) {
-            this.update(delta, elapsedTime);
+        try {
+            if (this.update) { // Ensure update exists before calling
+                 this.update(delta, elapsedTime);
+            }
+        } catch (error) {
+            // Use handleError for consistent reporting
+            handleError(error, 'Error in custom update function');
+            this.dispose(); // Stop animation on error
         }
         
         // Render scene
-        if (this.composer) {
-            this.composer.render();
-        } else {
-            this.renderer.render(this.scene, this.camera);
+        try { // Wrap rendering
+            if (this.composer) {
+                this.composer.render();
+            } else {
+                this.renderer.render(this.scene, this.camera);
+            }
+        } catch (error) {
+            handleError(error, 'Error during rendering');
+            this.dispose(); // Stop animation on error
         }
     }
     
@@ -235,13 +272,15 @@ class ThreeJSSetup {
     
     // Helper for loading textures
     loadTexture(path, callback) {
+        // Access THREE.TextureLoader from the global scope
         const loader = new THREE.TextureLoader();
         return loader.load(path, callback);
     }
     
     // Clean up resources when disposing
     dispose() {
-        window.removeEventListener('resize', this.onWindowResize.bind(this));
+        // Remove event listener
+        window.removeEventListener('resize', this.throttledResize); // Use the throttled function reference
         
         // Dispose of geometries and materials
         this.scene.traverse((object) => {

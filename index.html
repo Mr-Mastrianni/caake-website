@@ -144,16 +144,46 @@
 
     <!-- THREE.js imports - load only if needed -->
     <script type="module">
+        // Import necessary modules at the top level
+        import { loadThreeJS } from './assets/js/utils/module-loader.js';
+        import { initializeAnimations } from './assets/js/three-animations/main.js';
+        import { handleError } from './assets/js/utils/error-handler.js';
+
         // Only load THREE.js if the page needs it
-        if (document.querySelector('[data-animation]')) {
-            import('https://unpkg.com/three@0.132.2/build/three.module.js').then(() => {
-                import('./assets/js/three-animations/main.js');
+        if (document.querySelector('[data-animation]') || document.querySelector('.logo')) { // Also check for logo presence
+            // Load THREE.js and then the animations using the module loader
+            loadThreeJS({
+                useGlobal: true, // Make THREE globally available for simplicity with existing code
+                addons: ['controls/OrbitControls.js', 'postprocessing/EffectComposer.js', 'postprocessing/RenderPass.js', 'postprocessing/UnrealBloomPass.js', 'postprocessing/ShaderPass.js'],
+                onLoad: () => {
+                    console.log('Three.js loaded successfully via module loader.');
+                    initializeAnimations(); // Initialize animations after Three.js is loaded
+
+                    // Load and initialize logo animation *after* Three.js is ready
+                    const logoScript = document.createElement('script');
+                    logoScript.src = 'assets/js/include-logo-animation.js';
+                    logoScript.onload = () => {
+                        console.log('Logo animation include script loaded.');
+                        // Initialization might happen automatically within the script, 
+                        // or might need a specific call if refactored.
+                    };
+                    logoScript.onerror = (err) => handleError(err, 'Failed to load include-logo-animation.js');
+                    document.body.appendChild(logoScript);
+
+                },
+                onError: (err) => {
+                    handleError(err, 'Failed to load Three.js in index.html');
+                    // Optionally provide fallback content or behavior
+                }
+            }).catch(err => {
+                // This catch is redundant due to onError but good for safety
+                handleError(err, 'Unhandled error during Three.js loading in index.html');
             });
         }
     </script>
 
-    <!-- 3D Logo Animation -->
-    <script src="assets/js/include-logo-animation.js"></script>
+    <!-- 3D Logo Animation script is now loaded dynamically -->
+    <!-- <script src="assets/js/include-logo-animation.js"></script> -->
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->

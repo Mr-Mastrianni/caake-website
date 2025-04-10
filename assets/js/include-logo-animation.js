@@ -14,6 +14,12 @@ function loadCSS() {
 // Load the logo animation script
 function loadLogoScript() {
     return new Promise((resolve, reject) => {
+        // Check if script is already loaded
+        if (window.CAAKE_LOGO_INITIALIZED) {
+            resolve();
+            return;
+        }
+
         const script = document.createElement('script');
         script.type = 'module';
         script.src = 'assets/js/logo-animation.js';
@@ -50,16 +56,12 @@ function initNavbarLogo() {
         }
 
         // Initialize the 3D logo animation
-        // Load the script first
-        const script = document.createElement('script');
-        script.src = 'assets/js/logo-animation.js';
-        script.onload = function() {
+        loadLogoScript().then(() => {
             // Once loaded, call the global function
             if (window.initLogoAnimation) {
                 window.initLogoAnimation('navbar-logo-3d');
             }
-        };
-        document.head.appendChild(script);
+        });
     }
 }
 
@@ -84,21 +86,12 @@ function initHeroLogo() {
         heroSection.appendChild(logoAnimationContainer);
 
         // Initialize the 3D logo animation
-        // Check if script is already loaded
-        if (window.initLogoAnimation) {
-            window.initLogoAnimation('hero-logo-3d');
-        } else {
-            // Load the script first
-            const script = document.createElement('script');
-            script.src = 'assets/js/logo-animation.js';
-            script.onload = function() {
-                // Once loaded, call the global function
-                if (window.initLogoAnimation) {
-                    window.initLogoAnimation('hero-logo-3d');
-                }
-            };
-            document.head.appendChild(script);
-        }
+        loadLogoScript().then(() => {
+            // Once loaded, call the global function
+            if (window.initLogoAnimation) {
+                window.initLogoAnimation('hero-logo-3d');
+            }
+        });
     }
 }
 
@@ -120,21 +113,12 @@ function initBackgroundLogo() {
     document.body.appendChild(logoAnimationContainer);
 
     // Initialize the 3D logo animation
-    // Check if script is already loaded
-    if (window.initLogoAnimation) {
-        window.initLogoAnimation('background-logo-3d');
-    } else {
-        // Load the script first
-        const script = document.createElement('script');
-        script.src = 'assets/js/logo-animation.js';
-        script.onload = function() {
-            // Once loaded, call the global function
-            if (window.initLogoAnimation) {
-                window.initLogoAnimation('background-logo-3d');
-            }
-        };
-        document.head.appendChild(script);
-    }
+    loadLogoScript().then(() => {
+        // Once loaded, call the global function
+        if (window.initLogoAnimation) {
+            window.initLogoAnimation('background-logo-3d');
+        }
+    });
 }
 
 // Initialize all logo animations

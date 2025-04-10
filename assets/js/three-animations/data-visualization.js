@@ -1,99 +1,106 @@
 import ThreeJSSetup from './setup.js';
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+import { handleError } from '../utils/error-handler.js';
 
 class DataVisualizationAnimation extends ThreeJSSetup {
     constructor(containerId, options = {}) {
-        // Set default options for data visualization
-        const defaultOptions = {
-            backgroundColor: 0x000000,
-            transparent: true,
-            orbitControls: true,
-            postprocessing: true,
-            bloom: true,
-            bloomStrength: 1.2,
-            bloomRadius: 0.6,
-            bloomThreshold: 0.4,
-            cameraZ: 30,
-            cameraY: 0,
-            cameraX: 0,
-            controlsConfig: {
-                enableZoom: true,
-                enablePan: false,
-                autoRotate: true,
-                autoRotateSpeed: 0.5,
-                maxDistance: 100,
-                minDistance: 10,
-                maxPolarAngle: Math.PI - 0.1,
-                minPolarAngle: 0.1
-            }
-        };
-        
-        super(containerId, {...defaultOptions, ...options});
-        
-        // Visualization parameters
-        this.visualizationState = {
-            currentShape: 0,
-            targetShape: 0,
-            morphProgress: 0,
-            scrollPosition: 0,
-            autoMorph: options.autoMorph || false,
-            autoMorphDuration: options.autoMorphDuration || 10, // seconds between auto-morphs
-            lastAutoMorphTime: 0
-        };
-        
-        // Shape generation parameters
-        this.shapeParams = {
-            particleCount: options.particleCount || 5000,
-            particleSize: options.particleSize || 0.15,
-            shapeSize: options.shapeSize || 15,
-            shapes: [
-                'sphere',         // Standard sphere
-                'torus',          // Donut/torus shape
-                'cube',           // Cube/box
-                'helix',          // DNA-like spiral
-                'grid',           // 3D grid 
-                'wave',           // Sine wave surface
-                'spiral',         // Logarithmic spiral
-                'hyperboloid',    // Hourglass shape
-                'pyramid',        // Pyramid
-                'random'          // Random scatter
-            ],
-            colorSchemes: [
-                {
-                    name: 'cyber',
-                    colors: [0x00fffb, 0xff00f3, 0x00ff73, 0xeaff00]
-                },
-                {
-                    name: 'sunset',
-                    colors: [0xff3e00, 0xffbe00, 0xfff700, 0xff00a3]
-                },
-                {
-                    name: 'ocean',
-                    colors: [0x00e1ff, 0x0098ff, 0x0049ff, 0x00b3ff]
-                },
-                {
-                    name: 'forest',
-                    colors: [0x00ff73, 0x00b627, 0x2d9d16, 0x98ff00]
+        try { // Wrap constructor
+            // Set default options for data visualization
+            const defaultOptions = {
+                backgroundColor: 0x000000,
+                transparent: true,
+                orbitControls: true,
+                postprocessing: true,
+                bloom: true,
+                bloomStrength: 1.2,
+                bloomRadius: 0.6,
+                bloomThreshold: 0.4,
+                cameraZ: 30,
+                cameraY: 0,
+                cameraX: 0,
+                controlsConfig: {
+                    enableZoom: true,
+                    enablePan: false,
+                    autoRotate: true,
+                    autoRotateSpeed: 0.5,
+                    maxDistance: 100,
+                    minDistance: 10,
+                    maxPolarAngle: Math.PI - 0.1,
+                    minPolarAngle: 0.1
                 }
-            ]
-        };
-        
-        // Select a random color scheme
-        this.colorScheme = this.shapeParams.colorSchemes[
-            Math.floor(Math.random() * this.shapeParams.colorSchemes.length)
-        ];
-        
-        // Initialize shaders and particle system
-        this.initializeShaders();
-        
-        // Create particle system
-        this.createParticleSystem();
-        
-        // Set up event listeners
-        this.setupEventListeners();
-        
-        // Set up the animation loop
-        this.animate();
+            };
+            
+            super(containerId, {...defaultOptions, ...options});
+            
+            // Visualization parameters
+            this.visualizationState = {
+                currentShape: 0,
+                targetShape: 0,
+                morphProgress: 0,
+                scrollPosition: 0,
+                autoMorph: options.autoMorph || false,
+                autoMorphDuration: options.autoMorphDuration || 10, // seconds between auto-morphs
+                lastAutoMorphTime: 0
+            };
+            
+            // Shape generation parameters
+            this.shapeParams = {
+                particleCount: options.particleCount || 5000,
+                particleSize: options.particleSize || 0.15,
+                shapeSize: options.shapeSize || 15,
+                shapes: [
+                    'sphere',         // Standard sphere
+                    'torus',          // Donut/torus shape
+                    'cube',           // Cube/box
+                    'helix',          // DNA-like spiral
+                    'grid',           // 3D grid 
+                    'wave',           // Sine wave surface
+                    'spiral',         // Logarithmic spiral
+                    'hyperboloid',    // Hourglass shape
+                    'pyramid',        // Pyramid
+                    'random'          // Random scatter
+                ],
+                colorSchemes: [
+                    {
+                        name: 'cyber',
+                        colors: [0x00fffb, 0xff00f3, 0x00ff73, 0xeaff00]
+                    },
+                    {
+                        name: 'sunset',
+                        colors: [0xff3e00, 0xffbe00, 0xfff700, 0xff00a3]
+                    },
+                    {
+                        name: 'ocean',
+                        colors: [0x00e1ff, 0x0098ff, 0x0049ff, 0x00b3ff]
+                    },
+                    {
+                        name: 'forest',
+                        colors: [0x00ff73, 0x00b627, 0x2d9d16, 0x98ff00]
+                    }
+                ]
+            };
+            
+            // Select a random color scheme
+            this.colorScheme = this.shapeParams.colorSchemes[
+                Math.floor(Math.random() * this.shapeParams.colorSchemes.length)
+            ];
+            
+            // Initialize shaders and particle system
+            this.initializeShaders();
+            
+            // Create particle system
+            this.createParticleSystem();
+            
+            // Set up event listeners
+            this.setupEventListeners();
+            
+            // Set up the animation loop
+            this.animate();
+        } catch (error) {
+            handleError(error, 'Error during DataVisualizationAnimation construction');
+            // If super constructor succeeded partially, try to clean up
+            if (this.renderer) this.dispose();
+        }
     }
     
     initializeShaders() {
@@ -676,6 +683,26 @@ class DataVisualizationAnimation extends ThreeJSSetup {
             positions[i * 3] = (Math.random() * 2 - 1) * size / 2;
             positions[i * 3 + 1] = (Math.random() * 2 - 1) * size / 2;
             positions[i * 3 + 2] = (Math.random() * 2 - 1) * size / 2;
+        }
+    }
+
+    initializeScene() {
+        try { // Wrap scene initialization
+            // Add lights
+            this.lights = this.addLights();
+        } catch (error) {
+            handleError(error, 'Error initializing data visualization scene');
+        }
+    }
+
+    // Override update method (called by ThreeJSSetup animation loop)
+    update(delta, elapsedTime) {
+        try { // Wrap update logic
+            // Call the specific visualization update logic
+            this.updateVisualization(delta, elapsedTime);
+        } catch (error) {
+            handleError(error, 'Error in DataVisualizationAnimation update loop');
+            this.dispose(); // Stop animation
         }
     }
 }

@@ -507,24 +507,31 @@
     <!-- Core JS -->
     <script src="../../assets/js/main.js" type="module"></script>
     
-    <!-- THREE.js Libraries -->
+    <!-- Load Utilities and Initialize Animations -->
     <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-        import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
-        
-        // Make THREE available globally for our animations
-        window.THREE = THREE;
-        window.OrbitControls = OrbitControls;
-        window.EffectComposer = EffectComposer;
-        window.RenderPass = RenderPass;
-        window.UnrealBloomPass = UnrealBloomPass;
-        
-        // Load animations
-        import('../../assets/js/three-animations/main.js')
-            .catch(error => console.error('Error loading animations:', error));
+        import { loadThreeJS } from '../../assets/js/utils/module-loader.js';
+        import { initializeAnimations } from '../../assets/js/three-animations/main.js';
+        import { handleError } from '../../assets/js/utils/error-handler.js';
+
+        loadThreeJS({
+            useGlobal: true, // Make THREE globally available
+            addons: ['controls/OrbitControls.js', 'postprocessing/EffectComposer.js', 'postprocessing/RenderPass.js', 'postprocessing/UnrealBloomPass.js'],
+            onLoad: (loadedModules) => {
+                console.log('Three.js loaded successfully via module loader for blog page.');
+                // Make add-ons global if needed, similar to the demo page
+                window.OrbitControls = loadedModules.addons[0].OrbitControls;
+                window.EffectComposer = loadedModules.addons[1].EffectComposer;
+                window.RenderPass = loadedModules.addons[2].RenderPass;
+                window.UnrealBloomPass = loadedModules.addons[3].UnrealBloomPass;
+                
+                initializeAnimations(); // Initialize animations after Three.js is loaded
+            },
+            onError: (err) => {
+                handleError(err, 'Failed to load Three.js in ai-trends-2024.html');
+            }
+        }).catch(err => {
+            handleError(err, 'Unhandled error during Three.js loading in ai-trends-2024.html');
+        });
     </script>
     
     <!-- Anime.js Library -->
