@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Anime.js Animations - CAAKE</title>
+    <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+        
+        header {
+            background-color: #7c3aed;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #7c3aed;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .demo-title {
+            color: #fff;
+            margin-top: 0;
+        }
+        
+        .demo-description {
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #6d28d9;
+        }
+        
+        .animation-container {
+            min-height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .floating-element {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(124, 58, 237, 0.5);
+            border-radius: 50%;
+            margin: 10px;
+        }
+        
+        .text-scramble-container {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            min-height: 60px;
+        }
+        
+        .counter-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .counter-item {
+            text-align: center;
+            padding: 1rem;
+            min-width: 150px;
+        }
+        
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #7c3aed;
+        }
+        
+        .counter-label {
+            font-size: 1rem;
+        }
+        
+        .morphing-shape {
+            width: 100px;
+            height: 100px;
+            background-color: #7c3aed;
+            margin: 0 auto;
+        }
+        
+        .parallax-container {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .svg-container {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .animated-svg {
+            width: 200px;
+            height: 200px;
+            stroke: #7c3aed;
+            stroke-width: 2;
+            fill: none;
+        }
+        
+        .gradient-box {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #007bff, #7c3aed);
+        }
+        
+        .ripple-button {
+            position: relative;
+            overflow: hidden;
+            padding: 15px 30px;
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        
+        .reveal-box {
+            width: 100%;
+            height: 200px;
+            background-color: #7c3aed;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced Anime.js Animations</h1>
+        <p>Explore the power of Anime.js with these advanced animation techniques</p>
+    </header>
+    
+    <div class="container">
+        <h2>Animation Demos</h2>
+        
+        <!-- 1. Morphing Shape Animation -->
+        <div class="demo-section">
+            <h3 class="demo-title">1. Morphing Shape Animation</h3>
+            <p class="demo-description">Shapes that transform and morph on hover or click.</p>
+            
+            <div class="animation-container">
+                <div class="morphing-shape" id="morphingShape"></div>
+            </div>
+            
+            <button class="btn" id="morphButton">Morph Shape</button>
+        </div>
+        
+        <!-- 2. Text Scramble Effect -->
+        <div class="demo-section">
+            <h3 class="demo-title">2. Text Scramble Effect</h3>
+            <p class="demo-description">A futuristic text scramble effect for headlines.</p>
+            
+            <div class="animation-container">
+                <div class="text-scramble-container" id="textScramble">AI-Powered Enterprise Automation</div>
+            </div>
+            
+            <button class="btn" id="scrambleButton">Scramble Text</button>
+        </div>
+        
+        <!-- 3. Floating Elements Animation -->
+        <div class="demo-section">
+            <h3 class="demo-title">3. Floating Elements Animation</h3>
+            <p class="demo-description">Elements that float gently with different timings.</p>
+            
+            <div class="animation-container">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            
+            <button class="btn" id="floatButton">Start Floating</button>
+        </div>
+        
+        <!-- 4. Animated Number Counters -->
+        <div class="demo-section">
+            <h3 class="demo-title">4. Animated Number Counters</h3>
+            <p class="demo-description">Counters that animate with easing effects.</p>
+            
+            <div class="counter-container">
+                <div class="counter-item">
+                    <div class="counter" id="counter1">0</div>
+                    <div class="counter-label">Projects</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter" id="counter2">0</div>
+                    <div class="counter-label">Satisfaction</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter" id="counter3">0</div>
+                    <div class="counter-label">Team Members</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter" id="counter4">0</div>
+                    <div class="counter-label">Years</div>
+                </div>
+            </div>
+            
+            <button class="btn" id="counterButton">Animate Counters</button>
+        </div>
+        
+        <!-- 5. SVG Path Drawing Animation -->
+        <div class="demo-section">
+            <h3 class="demo-title">5. SVG Path Drawing Animation</h3>
+            <p class="demo-description">SVG paths that draw themselves.</p>
+            
+            <div class="svg-container">
+                <svg class="animated-svg" viewBox="0 0 100 100">
+                    <path d="M20,50 C20,30 50,30 50,50 C50,70 80,70 80,50" id="svgPath"></path>
+                </svg>
+            </div>
+            
+            <button class="btn" id="svgButton">Draw Path</button>
+        </div>
+        
+        <!-- 6. Animated Background Gradient -->
+        <div class="demo-section">
+            <h3 class="demo-title">6. Animated Background Gradient</h3>
+            <p class="demo-description">A smoothly animated background gradient that shifts colors.</p>
+            
+            <div class="animation-container">
+                <div class="gradient-box" id="gradientBox">Animated Gradient</div>
+            </div>
+            
+            <button class="btn" id="gradientButton">Animate Gradient</button>
+        </div>
+        
+        <!-- 7. Button Ripple Effect -->
+        <div class="demo-section">
+            <h3 class="demo-title">7. Button Ripple Effect</h3>
+            <p class="demo-description">Buttons with a ripple effect on click.</p>
+            
+            <div class="animation-container">
+                <button class="ripple-button" id="rippleButton">Click Me</button>
+            </div>
+        </div>
+        
+        <!-- 8. Staggered Grid Animation -->
+        <div class="demo-section">
+            <h3 class="demo-title">8. Staggered Grid Animation</h3>
+            <p class="demo-description">Grid items that animate with staggered timing.</p>
+            
+            <div class="animation-container" id="gridContainer">
+                <!-- Grid items will be created by JavaScript -->
+            </div>
+            
+            <button class="btn" id="gridButton">Animate Grid</button>
+        </div>
+        
+        <!-- 9. Scroll-Triggered Reveal Animation -->
+        <div class="demo-section">
+            <h3 class="demo-title">9. Scroll-Triggered Reveal Animation</h3>
+            <p class="demo-description">Elements that reveal themselves as you scroll down.</p>
+            
+            <div class="animation-container">
+                <div class="reveal-box" id="revealBox">Scroll-Triggered Animation</div>
+            </div>
+        </div>
+        
+        <!-- 10. Parallax Effect -->
+        <div class="demo-section">
+            <h3 class="demo-title">10. Parallax Effect</h3>
+            <p class="demo-description">Elements that move at different speeds based on mouse position.</p>
+            
+            <div class="parallax-container" id="parallaxContainer">
+                <div class="parallax-layer" style="background-color: rgba(0, 123, 255, 0.2); transform: translateZ(-10px);"></div>
+                <div class="parallax-layer" style="background-color: rgba(124, 58, 237, 0.2); transform: translateZ(-5px);"></div>
+                <div class="parallax-layer" style="background-color: rgba(0, 123, 255, 0.3); transform: translateZ(0px);"></div>
+            </div>
+            
+            <p class="demo-description">Move your mouse over the container to see the parallax effect.</p>
+        </div>
+    </div>
+    
+    <!-- Load Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create grid items for staggered animation
+            createGridItems();
+            
+            // Initialize scroll observer for reveal animation
+            initScrollObserver();
+            
+            // Initialize parallax effect
+            initParallaxEffect();
+            
+            // Set up demo buttons
+            setupDemoButtons();
+        });
+        
+        // Create grid items
+        function createGridItems() {
+            const container = document.getElementById('gridContainer');
+            
+            // Create a 4x4 grid
+            for (let i = 0; i < 16; i++) {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                item.style.width = '40px';
+                item.style.height = '40px';
+                item.style.margin = '5px';
+                item.style.backgroundColor = '#7c3aed';
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0)';
+                container.appendChild(item);
+            }
+            
+            // Style the container as a grid
+            container.style.display = 'grid';
+            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            container.style.gap = '10px';
+            container.style.justifyItems = 'center';
+        }
+        
+        // Initialize scroll observer for reveal animation
+        function initScrollObserver() {
+            const revealBox = document.getElementById('revealBox');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: revealBox,
+                            opacity: [0, 1],
+                            translateY: [50, 0],
+                            duration: 800,
+                            easing: 'easeOutQuad'
+                        });
+                        
+                        observer.unobserve(revealBox);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(revealBox);
+        }
+        
+        // Initialize parallax effect
+        function initParallaxEffect() {
+            const container = document.getElementById('parallaxContainer');
+            const layers = container.querySelectorAll('.parallax-layer');
+            
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+                const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+                
+                layers.forEach((layer, index) => {
+                    const depth = (index + 1) * 10;
+                    const moveX = mouseX * depth;
+                    const moveY = mouseY * depth;
+                    
+                    anime({
+                        targets: layer,
+                        translateX: moveX + '%',
+                        translateY: moveY + '%',
+                        duration: 400,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+        }
+        
+        // Set up demo buttons
+        function setupDemoButtons() {
+            // 1. Morphing Shape Animation
+            document.getElementById('morphButton').addEventListener('click', () => {
+                anime({
+                    targets: '#morphingShape',
+                    borderRadius: ['0%', '50%', '10%', '50%', '0%'],
+                    scale: [1, 1.2, 0.8, 1.1, 1],
+                    backgroundColor: [
+                        '#7c3aed',
+                        '#3b82f6',
+                        '#ec4899',
+                        '#10b981',
+                        '#7c3aed'
+                    ],
+                    duration: 2000,
+                    easing: 'easeInOutQuad'
+                });
+            });
+            
+            // 2. Text Scramble Effect
+            document.getElementById('scrambleButton').addEventListener('click', () => {
+                const phrases = [
+                    'AI-Powered Enterprise Automation',
+                    'Intelligent Business Solutions',
+                    'Future-Ready AI Technology',
+                    'Smart Automation for Growth'
+                ];
+                
+                const el = document.getElementById('textScramble');
+                
+                class TextScramble {
+                    constructor(el) {
+                        this.el = el;
+                        this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                        this.update = this.update.bind(this);
+                    }
+                    
+                    setText(newText) {
+                        const oldText = this.el.innerText;
+                        const length = Math.max(oldText.length, newText.length);
+                        const promise = new Promise((resolve) => this.resolve = resolve);
+                        this.queue = [];
+                        
+                        for (let i = 0; i < length; i++) {
+                            const from = oldText[i] || '';
+                            const to = newText[i] || '';
+                            const start = Math.floor(Math.random() * 40);
+                            const end = start + Math.floor(Math.random() * 40);
+                            this.queue.push({ from, to, start, end });
+                        }
+                        
+                        cancelAnimationFrame(this.frameRequest);
+                        this.frame = 0;
+                        this.update();
+                        return promise;
+                    }
+                    
+                    update() {
+                        let output = '';
+                        let complete = 0;
+                        
+                        for (let i = 0, n = this.queue.length; i < n; i++) {
+                            let { from, to, start, end, char } = this.queue[i];
+                            
+                            if (this.frame >= end) {
+                                complete++;
+                                output += to;
+                            } else if (this.frame >= start) {
+                                if (!char || Math.random() < 0.28) {
+                                    char = this.randomChar();
+                                    this.queue[i].char = char;
+                                }
+                                output += `<span style="color: #7c3aed;">${char}</span>`;
+                            } else {
+                                output += from;
+                            }
+                        }
+                        
+                        this.el.innerHTML = output;
+                        
+                        if (complete === this.queue.length) {
+                            this.resolve();
+                        } else {
+                            this.frameRequest = requestAnimationFrame(this.update);
+                            this.frame++;
+                        }
+                    }
+                    
+                    randomChar() {
+                        return this.chars[Math.floor(Math.random() * this.chars.length)];
+                    }
+                }
+                
+                const fx = new TextScramble(el);
+                let counter = 0;
+                
+                const next = () => {
+                    fx.setText(phrases[counter]).then(() => {
+                        setTimeout(next, 3000);
+                    });
+                    counter = (counter + 1) % phrases.length;
+                };
+                
+                next();
+            });
+            
+            // 3. Floating Elements Animation
+            document.getElementById('floatButton').addEventListener('click', () => {
+                const elements = document.querySelectorAll('.floating-element');
+                
+                elements.forEach((element, index) => {
+                    const delay = index * 200;
+                    const duration = 3000 + (index * 500);
+                    
+                    anime({
+                        targets: element,
+                        translateY: ['-20px', '20px'],
+                        duration: duration,
+                        delay: delay,
+                        direction: 'alternate',
+                        loop: true,
+                        easing: 'easeInOutSine'
+                    });
+                });
+            });
+            
+            // 4. Animated Number Counters
+            document.getElementById('counterButton').addEventListener('click', () => {
+                // Counter 1
+                anime({
+                    targets: '#counter1',
+                    innerHTML: [0, 250],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeOutExpo'
+                });
+                
+                // Counter 2
+                anime({
+                    targets: '#counter2',
+                    innerHTML: [0, 98],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeOutExpo',
+                    update: function(anim) {
+                        document.getElementById('counter2').innerHTML = document.getElementById('counter2').innerHTML + '%';
+                    }
+                });
+                
+                // Counter 3
+                anime({
+                    targets: '#counter3',
+                    innerHTML: [0, 42],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeOutExpo',
+                    update: function(anim) {
+                        document.getElementById('counter3').innerHTML = '+' + document.getElementById('counter3').innerHTML;
+                    }
+                });
+                
+                // Counter 4
+                anime({
+                    targets: '#counter4',
+                    innerHTML: [0, 15],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeOutExpo'
+                });
+            });
+            
+            // 5. SVG Path Drawing Animation
+            document.getElementById('svgButton').addEventListener('click', () => {
+                const path = document.getElementById('svgPath');
+                
+                // Get the length of the path
+                const pathLength = path.getTotalLength();
+                
+                // Make the path invisible initially
+                path.style.strokeDasharray = pathLength;
+                path.style.strokeDashoffset = pathLength;
+                
+                // Animate the path
+                anime({
+                    targets: path,
+                    strokeDashoffset: [pathLength, 0],
+                    duration: 1500,
+                    easing: 'easeInOutSine'
+                });
+            });
+            
+            // 6. Animated Background Gradient
+            document.getElementById('gradientButton').addEventListener('click', () => {
+                const gradientBox = document.getElementById('gradientBox');
+                
+                gradientBox.style.background = 'linear-gradient(135deg, #007bff, #7c3aed)';
+                gradientBox.style.backgroundSize = '400% 400%';
+                
+                anime({
+                    targets: gradientBox,
+                    background: [
+                        'linear-gradient(135deg, #007bff, #7c3aed)',
+                        'linear-gradient(135deg, #7c3aed, #3b82f6)',
+                        'linear-gradient(135deg, #3b82f6, #ec4899)',
+                        'linear-gradient(135deg, #ec4899, #10b981)',
+                        'linear-gradient(135deg, #10b981, #007bff)'
+                    ],
+                    duration: 10000,
+                    easing: 'easeInOutQuad',
+                    direction: 'alternate',
+                    loop: true
+                });
+            });
+            
+            // 7. Button Ripple Effect
+            document.getElementById('rippleButton').addEventListener('click', (e) => {
+                const button = e.target;
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create ripple element
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.top = y + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+                ripple.style.pointerEvents = 'none';
+                
+                button.appendChild(ripple);
+                
+                anime({
+                    targets: ripple,
+                    scale: 15,
+                    opacity: [1, 0],
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                    complete: function() {
+                        button.removeChild(ripple);
+                    }
+                });
+            });
+            
+            // 8. Staggered Grid Animation
+            document.getElementById('gridButton').addEventListener('click', () => {
+                anime({
+                    targets: '.grid-item',
+                    scale: [0, 1],
+                    opacity: [0, 1],
+                    delay: anime.stagger(50, {grid: [4, 4], from: 'center'}),
+                    duration: 800,
+                    easing: 'easeOutQuad'
+                });
+            });
+        }
+    </script>
+</body>
+</html>

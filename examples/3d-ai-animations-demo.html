@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D AI Animations - CAAKE</title>
+    <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117;
+            color: #f0f2f5;
+        }
+        
+        header {
+            background-color: #161b22;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #ffffff;
+        }
+        
+        h2 {
+            color: #4d9fff;
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .animation-section {
+            margin-bottom: 4rem;
+        }
+        
+        .animation-container {
+            position: relative;
+            height: 500px;
+            background-color: #0d1117;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 2rem 0;
+            border: 1px solid #30363d;
+        }
+        
+        .animation-description {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .animation-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4d9fff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #2d7de0;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid #4d9fff;
+            color: #4d9fff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(77, 159, 255, 0.1);
+        }
+        
+        .code-example {
+            background-color: #161b22;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow-x: auto;
+            border: 1px solid #30363d;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e0e3e8;
+        }
+        
+        .highlight {
+            color: #9d6eff;
+        }
+        
+        footer {
+            background-color: #161b22;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid #30363d;
+        }
+        
+        .back-to-home {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3D AI Animations</h1>
+            <p>Explore our advanced 3D animations for AI concepts using Three.js</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="animation-section">
+            <h2>AI Brain Visualization</h2>
+            <div class="animation-description">
+                <p>This animation represents an AI brain made of particles that pulse and connect, simulating neural activity and thought processes. The particles form connections that light up to show information flow.</p>
+            </div>
+            <div class="animation-container" data-animation="ai-brain" id="ai-brain-container"></div>
+            <div class="code-example">
+                <code>
+                    &lt;div data-animation="ai-brain"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+        
+        <div class="animation-section">
+            <h2>Machine Learning Cube</h2>
+            <div class="animation-description">
+                <p>This animation shows a 3D cube with data points that transform and organize themselves into different patterns, representing how machine learning algorithms classify and organize data. Watch as the data points learn and adapt to form different shapes.</p>
+            </div>
+            <div class="animation-container" data-animation="machine-learning-cube" id="machine-learning-cube-container"></div>
+            <div class="code-example">
+                <code>
+                    &lt;div data-animation="machine-learning-cube"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+        
+        <div class="animation-section">
+            <h2>AI Voice Waveform</h2>
+            <div class="animation-description">
+                <p>This animation visualizes AI voice and speech processing with a dynamic 3D waveform. The circular audio visualization pulses and reacts as if the AI is speaking and listening, representing voice assistants and natural language processing.</p>
+            </div>
+            <div class="animation-container" data-animation="ai-voice-waveform" id="ai-voice-waveform-container"></div>
+            <div class="code-example">
+                <code>
+                    &lt;div data-animation="ai-voice-waveform"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+        
+        <div class="animation-section">
+            <h2>Neural Network</h2>
+            <div class="animation-description">
+                <p>This animation shows a 3D neural network with nodes and connections that light up to simulate data flowing through the network. It represents the fundamental structure of deep learning models.</p>
+            </div>
+            <div class="animation-container" data-animation="neural-network" id="neural-network-container"></div>
+            <div class="code-example">
+                <code>
+                    &lt;div data-animation="neural-network"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+        
+        <div class="animation-section">
+            <h2>How to Use These Animations</h2>
+            <p>To add these animations to your website, follow these steps:</p>
+            <ol>
+                <li>Add the <code>data-animation</code> attribute to any container element with one of these values:
+                    <ul>
+                        <li><code>ai-brain</code> - AI Brain Visualization</li>
+                        <li><code>machine-learning-cube</code> - Machine Learning Cube</li>
+                        <li><code>ai-voice-waveform</code> - AI Voice Waveform</li>
+                        <li><code>neural-network</code> - Neural Network</li>
+                        <li><code>workflow-automation</code> - Workflow Automation</li>
+                        <li><code>digital-twin</code> - Digital Twin</li>
+                        <li><code>data-visualization</code> - Data Visualization</li>
+                    </ul>
+                </li>
+                <li>Make sure the container has a position of <code>relative</code> or <code>absolute</code> and a defined height.</li>
+                <li>The animation will automatically be initialized when the page loads.</li>
+            </ol>
+            
+            <div class="code-example">
+                <code>
+                    &lt;!-- Example HTML --&gt;<br>
+                    &lt;div class="hero-section" style="position: relative; height: 500px;"&gt;<br>
+                    &nbsp;&nbsp;&lt;div data-animation="ai-brain"&gt;&lt;/div&gt;<br>
+                    &nbsp;&nbsp;&lt;div class="hero-content"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;AI-Powered Solutions&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Transform your business with our cutting-edge AI technology&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&lt;/div&gt;<br>
+                    &lt;/div&gt;
+                </code>
+            </div>
+        </div>
+        
+        <div class="back-to-home">
+            <a href="../index.html" class="btn">Back to Home</a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 CAAKE - Cost Avoidance Automation Kingz Enterprise</p>
+        </div>
+    </footer>
+    
+    <!-- THREE.js imports -->
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.132.2/build/three.module.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+        import { EffectComposer } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
+        import { ShaderPass } from 'https://unpkg.com/three@0.132.2/examples/jsm/postprocessing/ShaderPass.js';
+        
+        // Make THREE available globally for our animations
+        window.THREE = THREE;
+        window.OrbitControls = OrbitControls;
+        window.EffectComposer = EffectComposer;
+        window.RenderPass = RenderPass;
+        window.UnrealBloomPass = UnrealBloomPass;
+        window.ShaderPass = ShaderPass;
+        
+        // Load our animations
+        import('../assets/js/three-animations/main.js');
+    </script>
+</body>
+</html>

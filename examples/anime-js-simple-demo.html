@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime.js Simple Demo - CAAKE</title>
+    <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+        
+        header {
+            background-color: #7c3aed;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #7c3aed;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .animation-box {
+            width: 100px;
+            height: 100px;
+            background-color: #7c3aed;
+            margin: 20px;
+            display: inline-block;
+        }
+        
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        button {
+            padding: 8px 16px;
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #6d28d9;
+        }
+        
+        .stagger-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stagger-item {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            background-color: #7c3aed;
+        }
+        
+        .timeline-element {
+            padding: 20px;
+            margin: 10px 0;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            opacity: 0;
+        }
+        
+        .counter-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .counter-item {
+            padding: 20px;
+            margin: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .counter {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #7c3aed;
+            margin: 10px 0;
+        }
+        
+        .counter-label {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: #7c3aed;
+            width: 0%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+    
+    <header>
+        <h1>Anime.js Simple Demo</h1>
+        <p>Explore the power of Anime.js v4 with these interactive examples</p>
+    </header>
+    
+    <div class="container">
+        <!-- Basic Animation Demo -->
+        <div class="demo-section">
+            <h2>Basic Animations</h2>
+            <p>Simple property animations with different easing functions.</p>
+            
+            <div class="control-panel">
+                <button id="translateDemo">Translate</button>
+                <button id="rotateDemo">Rotate</button>
+                <button id="scaleDemo">Scale</button>
+                <button id="colorDemo">Color</button>
+                <button id="resetDemo">Reset</button>
+            </div>
+            
+            <div class="animation-container">
+                <div class="animation-box" id="demoBox"></div>
+            </div>
+        </div>
+        
+        <!-- Staggering Demo -->
+        <div class="demo-section">
+            <h2>Staggered Animations</h2>
+            <p>Animate multiple elements with a delay between each animation.</p>
+            
+            <div class="control-panel">
+                <button id="staggerDemo">Animate</button>
+                <button id="staggerResetDemo">Reset</button>
+            </div>
+            
+            <div class="stagger-container" id="staggerContainer">
+                <!-- Stagger items will be created by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Timeline Demo -->
+        <div class="demo-section">
+            <h2>Timeline Animations</h2>
+            <p>Sequence animations with precise control over timing.</p>
+            
+            <div class="control-panel">
+                <button id="timelineDemo">Play Timeline</button>
+                <button id="timelineResetDemo">Reset</button>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline-element" id="timeline1">First element to animate</div>
+                <div class="timeline-element" id="timeline2">Second element with slight delay</div>
+                <div class="timeline-element" id="timeline3">Third element with overlap</div>
+                <div class="timeline-element" id="timeline4">Final element in sequence</div>
+            </div>
+        </div>
+        
+        <!-- Counter Demo -->
+        <div class="demo-section">
+            <h2>Counter Animations</h2>
+            <p>Animate numerical values with precision.</p>
+            
+            <div class="counter-container">
+                <div class="counter-item">
+                    <div class="counter" id="counter1">0</div>
+                    <div class="counter-label">Projects Completed</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter" id="counter2">0</div>
+                    <div class="counter-label">Satisfaction Rate (%)</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter" id="counter3">0</div>
+                    <div class="counter-label">Years Experience</div>
+                </div>
+            </div>
+            <div class="control-panel">
+                <button id="counterDemo">Animate Counters</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Load Anime.js directly (no module) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize scroll progress animation
+            initScrollProgress();
+            
+            // Create stagger items
+            createStaggerItems();
+            
+            // Set up demo buttons
+            setupDemoButtons();
+        });
+        
+        // Initialize scroll progress bar
+        function initScrollProgress() {
+            const progressBar = document.querySelector('.scroll-progress');
+            
+            // Update animation based on scroll position
+            window.addEventListener('scroll', () => {
+                // Calculate scroll percentage
+                const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                
+                // Update progress bar width
+                progressBar.style.width = scrollPercent + '%';
+            });
+        }
+        
+        // Create stagger items
+        function createStaggerItems() {
+            const container = document.getElementById('staggerContainer');
+            
+            // Create 20 items
+            for (let i = 0; i < 20; i++) {
+                const item = document.createElement('div');
+                item.className = 'stagger-item';
+                container.appendChild(item);
+            }
+        }
+        
+        // Set up demo buttons
+        function setupDemoButtons() {
+            // Basic animation demos
+            document.getElementById('translateDemo').addEventListener('click', () => {
+                anime({
+                    targets: '#demoBox',
+                    translateX: 250,
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                });
+            });
+            
+            document.getElementById('rotateDemo').addEventListener('click', () => {
+                anime({
+                    targets: '#demoBox',
+                    rotate: '1turn',
+                    duration: 1000,
+                    easing: 'easeInOutSine'
+                });
+            });
+            
+            document.getElementById('scaleDemo').addEventListener('click', () => {
+                anime({
+                    targets: '#demoBox',
+                    scale: [1, 1.5],
+                    duration: 1000,
+                    easing: 'spring(1, 80, 10, 0)'
+                });
+            });
+            
+            document.getElementById('colorDemo').addEventListener('click', () => {
+                anime({
+                    targets: '#demoBox',
+                    backgroundColor: ['#7c3aed', '#FF0080'],
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                });
+            });
+            
+            document.getElementById('resetDemo').addEventListener('click', () => {
+                anime({
+                    targets: '#demoBox',
+                    translateX: 0,
+                    rotate: 0,
+                    scale: 1,
+                    backgroundColor: '#7c3aed',
+                    duration: 800,
+                    easing: 'easeOutElastic(1, .6)'
+                });
+            });
+            
+            // Stagger demo
+            document.getElementById('staggerDemo').addEventListener('click', () => {
+                anime({
+                    targets: '.stagger-item',
+                    translateY: [-50, 0],
+                    opacity: [0, 1],
+                    delay: anime.stagger(50),
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+            });
+            
+            document.getElementById('staggerResetDemo').addEventListener('click', () => {
+                anime({
+                    targets: '.stagger-item',
+                    translateY: 0,
+                    opacity: 0,
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+            
+            // Timeline demo
+            document.getElementById('timelineDemo').addEventListener('click', () => {
+                const timeline = anime.timeline({
+                    easing: 'easeOutExpo',
+                    duration: 750
+                });
+                
+                timeline
+                    .add({
+                        targets: '#timeline1',
+                        opacity: [0, 1],
+                        translateX: [-50, 0]
+                    })
+                    .add({
+                        targets: '#timeline2',
+                        opacity: [0, 1],
+                        translateY: [50, 0]
+                    }, '-=500')
+                    .add({
+                        targets: '#timeline3',
+                        opacity: [0, 1],
+                        scale: [0.5, 1]
+                    }, '-=600')
+                    .add({
+                        targets: '#timeline4',
+                        opacity: [0, 1],
+                        rotate: ['45deg', '0deg']
+                    });
+            });
+            
+            document.getElementById('timelineResetDemo').addEventListener('click', () => {
+                anime({
+                    targets: '.timeline-element',
+                    opacity: 0,
+                    translateX: 0,
+                    translateY: 0,
+                    scale: 1,
+                    rotate: '0deg',
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+            });
+            
+            // Counter demo
+            document.getElementById('counterDemo').addEventListener('click', () => {
+                // Counter 1
+                anime({
+                    targets: '#counter1',
+                    innerHTML: [0, 250],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeInOutQuad'
+                });
+                
+                // Counter 2
+                anime({
+                    targets: '#counter2',
+                    innerHTML: [0, 98],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeInOutQuad'
+                });
+                
+                // Counter 3
+                anime({
+                    targets: '#counter3',
+                    innerHTML: [0, 15],
+                    round: 1,
+                    duration: 2000,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        }
+    </script>
+</body>
+</html>

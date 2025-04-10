@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAKE - AI-Powered Enterprise Automation</title>
+    <meta name="description" content="Transform your business operations with intelligent AI solutions designed for maximum impact.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/zed-style.css">
+    
+    <!-- Vanta.js for background effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <header role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <a href="../index.html" class="logo-link">
+                    <div class="logo">
+                        <img src="../assets/images/logo.png" alt="CAAKE Logo">
+                        <span class="logo-text">CAAKE</span>
+                    </div>
+                </a>
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu" role="menu">
+                    <li role="none"><a href="../index.html" role="menuitem" aria-current="page">Home</a></li>
+                    <li class="has-dropdown" role="none">
+                        <a href="../pages/services.html" role="menuitem" aria-haspopup="true" aria-expanded="false">Services</a>
+                        <ul class="dropdown" role="menu" aria-label="Services submenu">
+                            <li role="none"><a href="../pages/services/consulting.html" role="menuitem" tabindex="-1">AI Consulting</a></li>
+                            <li role="none"><a href="../pages/services/automations.html" role="menuitem" tabindex="-1">Automations</a></li>
+                            <li role="none"><a href="../pages/services/solutions.html" role="menuitem" tabindex="-1">AI Solutions</a></li>
+                            <li role="none"><a href="../pages/services/agents.html" role="menuitem" tabindex="-1">AI Agents</a></li>
+                            <li role="none"><a href="../pages/services/assistants.html" role="menuitem" tabindex="-1">AI Assistants</a></li>
+                            <li role="none"><a href="../pages/services/chatbots.html" role="menuitem" tabindex="-1">Chatbots</a></li>
+                        </ul>
+                    </li>
+                    <li role="none"><a href="../pages/about.html" role="menuitem">About Us</a></li>
+                    <li role="none"><a href="../pages/contact.html" role="menuitem">Contact</a></li>
+                    <li role="none"><a href="../pages/assessment.html" role="menuitem">Assessment</a></li>
+                </ul>
+                <div class="search-toggle" aria-label="Open search" role="button" tabindex="0">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Zed-Style Hero Section -->
+        <div class="scanline" style="position: relative; height: 80vh; overflow: hidden;">
+            <!-- Zed-Style 3D Animation -->
+            <div data-animation="zed-style" id="hero-zed-animation" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+            
+            <div class="hero-content" style="position: relative; z-index: 1; padding: 4rem 2rem; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h1 class="zed-heading glitch-text" data-text="CAAKE" style="font-size: 4rem; margin-bottom: 1rem;">CAAKE</h1>
+                <h2 class="neon-text" style="font-size: 2rem; margin-bottom: 2rem; font-family: 'Orbitron', sans-serif;">AI-Powered Enterprise Automation</h2>
+                <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.2rem; color: rgba(255, 255, 255, 0.8);">Transform your business operations with intelligent AI solutions designed for maximum impact.</p>
+                <div class="hero-buttons" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <a href="../pages/assessment.html" class="zed-button">Get Free Assessment</a>
+                    <a href="../pages/services.html" class="zed-button">Explore Solutions</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Services Section with Zed-Style Cards -->
+        <section class="services grid-background" id="services" aria-labelledby="services-heading" style="padding: 6rem 0;">
+            <div class="container" style="position: relative; z-index: 1;">
+                <h2 id="services-heading" class="zed-heading" style="text-align: center; margin-bottom: 3rem;">Our Services</h2>
+                
+                <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="holographic-card" tabindex="0" role="article" aria-labelledby="service-consulting-heading">
+                        <div class="icon" aria-hidden="true" style="font-size: 2.5rem; margin-bottom: 1rem;">🤝</div>
+                        <h3 id="service-consulting-heading" class="neon-text" style="font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">AI Consulting</h3>
+                        <p style="margin-bottom: 1.5rem;">Expert advice on AI strategy and implementation for your business needs.</p>
+                        <a href="../pages/services/consulting.html" class="zed-button">Learn More</a>
+                    </div>
+                    
+                    <div class="holographic-card" tabindex="0" role="article" aria-labelledby="service-automations-heading">
+                        <div class="icon" aria-hidden="true" style="font-size: 2.5rem; margin-bottom: 1rem;">⚙️</div>
+                        <h3 id="service-automations-heading" class="neon-text" style="font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">Automations</h3>
+                        <p style="margin-bottom: 1.5rem;">Streamline workflows and reduce manual tasks with intelligent automation.</p>
+                        <a href="../pages/services/automations.html" class="zed-button">Learn More</a>
+                    </div>
+                    
+                    <div class="holographic-card" tabindex="0" role="article" aria-labelledby="service-solutions-heading">
+                        <div class="icon" aria-hidden="true" style="font-size: 2.5rem; margin-bottom: 1rem;">💡</div>
+                        <h3 id="service-solutions-heading" class="neon-text" style="font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">AI Solutions</h3>
+                        <p style="margin-bottom: 1.5rem;">Custom AI solutions tailored to your specific business challenges.</p>
+                        <a href="../pages/services/solutions.html" class="zed-button">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section with Zed-Style Animation -->
+        <section class="about scanline" id="about" aria-labelledby="about-heading" style="padding: 6rem 0; position: relative;">
+            <div data-animation="zed-style" id="about-zed-animation" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+            
+            <div class="container" style="position: relative; z-index: 1;">
+                <div style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: center;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h2 id="about-heading" class="zed-heading">About CAAKE</h2>
+                        <p class="zed-text">CAAKE (Cost Avoidance Automation Kingz Enterprise) is a leading provider of AI-powered automation solutions for businesses of all sizes.</p>
+                        <p class="zed-text">Our mission is to make AI accessible and beneficial for all businesses, empowering them to thrive in the digital age through innovative and practical AI solutions.</p>
+                        <a href="../pages/about.html" class="zed-button">Learn More About Us</a>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="holographic-card">
+                            <h3 class="neon-text" style="font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">Our Approach</h3>
+                            <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem;">
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                                    <span style="color: #00f0ff; margin-right: 0.5rem;">✓</span> 
+                                    <span>Understand your unique business challenges</span>
+                                </li>
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                                    <span style="color: #00f0ff; margin-right: 0.5rem;">✓</span> 
+                                    <span>Develop tailored AI solutions</span>
+                                </li>
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                                    <span style="color: #00f0ff; margin-right: 0.5rem;">✓</span> 
+                                    <span>Implement with minimal disruption</span>
+                                </li>
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                                    <span style="color: #00f0ff; margin-right: 0.5rem;">✓</span> 
+                                    <span>Provide ongoing support and optimization</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta grid-background" style="padding: 6rem 0; text-align: center;">
+            <div class="container">
+                <h2 class="zed-heading" style="margin-bottom: 1.5rem;">Ready to Transform Your Business?</h2>
+                <p class="zed-text" style="max-width: 800px; margin: 0 auto 2rem;">Take the first step towards AI-powered automation and efficiency. Contact us today for a free consultation.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="../pages/contact.html" class="zed-button">Contact Us</a>
+                    <a href="../pages/assessment.html" class="zed-button">Get Free Assessment</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" style="background-color: #0a0a12; padding: 4rem 0 2rem;">
+        <div class="container">
+            <div class="footer-content" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+                <div class="footer-logo" style="flex: 1; min-width: 200px;">
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: #fff; margin-bottom: 1rem;">CAAKE</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7);">Leading the way in AI innovation</p>
+                </div>
+                <div class="footer-links" style="flex: 1; min-width: 200px;">
+                    <h4 style="color: #fff; margin-bottom: 1rem;">Quick Links</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="../index.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Home</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Services</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/about.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">About Us</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/contact.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Contact</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/assessment.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Assessment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services" style="flex: 1; min-width: 200px;">
+                    <h4 style="color: #fff; margin-bottom: 1rem;">Our Services</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/consulting.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">AI Consulting</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/automations.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Automations</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/solutions.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">AI Solutions</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/agents.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">AI Agents</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/assistants.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">AI Assistants</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="../pages/services/chatbots.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Chatbots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact" style="flex: 1; min-width: 200px;">
+                    <h4 style="color: #fff; margin-bottom: 1rem;">Contact Us</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem;">480-364-1164</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem;">automationking11@caake.org</p>
+                    <div class="social-icons" style="display: flex; gap: 1rem;">
+                        <a href="#" aria-label="LinkedIn" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Facebook" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+                <p style="color: rgba(255, 255, 255, 0.5);">&copy; 2023 CAAKE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for animations -->
+    <script type="module">
+        // Import the ZedStyleAnimation class
+        import ZedStyleAnimation from '../assets/js/three-animations/zed-style-animation.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the hero animation
+            const heroAnimation = new ZedStyleAnimation('hero-zed-animation', {
+                backgroundColor: 0x0a0a12,
+                wireframeColor: 0x5773ff,
+                glowColor: 0x00f0ff,
+                accentColor: 0xff007a,
+                bloomStrength: 1.5,
+                rotationSpeed: 0.005,
+                vantaEffect: 'globe',
+                objectsToRender: ['torus', 'cube', 'pyramid', 'particles']
+            });
+            
+            // Initialize the about section animation with different settings
+            const aboutAnimation = new ZedStyleAnimation('about-zed-animation', {
+                backgroundColor: 0x0a0a12,
+                wireframeColor: 0x00f0ff,
+                glowColor: 0xff007a,
+                accentColor: 0x5773ff,
+                bloomStrength: 1.0,
+                rotationSpeed: 0.003,
+                vantaEffect: 'net',
+                objectsToRender: ['particles']
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                heroAnimation.resize();
+                aboutAnimation.resize();
+            });
+        });
+    </script>
+</body>
+</html>
