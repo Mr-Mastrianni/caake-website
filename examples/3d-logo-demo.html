@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAKE 3D Logo Animation Demo</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/logo-animation.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a12;
+            color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #5773ff, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .demo-section {
+            margin-bottom: 4rem;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        
+        .control-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(87, 115, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(87, 115, 255, 0.5);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(87, 115, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            overflow: auto;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #5773ff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CAAKE 3D Logo Animation</h1>
+        
+        <div class="demo-section">
+            <h2>Hero Section Logo</h2>
+            <div id="logo-hero" class="logo-3d-container logo-hero">
+                <div class="logo-loading">Loading 3D Logo...</div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="spin-btn">Spin Logo</button>
+                <button class="control-btn" id="pulse-btn">Pulse Effect</button>
+                <button class="control-btn" id="burst-btn">Particle Burst</button>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// HTML
+&lt;div id="logo-container" class="logo-3d-container"&gt;&lt;/div&gt;
+
+// JavaScript
+import initLogoAnimation from '../assets/js/logo-animation.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    initLogoAnimation('logo-container');
+});</code></pre>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Navbar Logo</h2>
+            <div style="display: flex; justify-content: center;">
+                <div id="logo-navbar" class="logo-3d-container logo-navbar">
+                    <div class="logo-loading">Loading...</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// HTML
+&lt;div id="navbar-logo" class="logo-3d-container logo-navbar"&gt;&lt;/div&gt;
+
+// JavaScript
+import initLogoAnimation from '../assets/js/logo-animation.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    initLogoAnimation('navbar-logo');
+});</code></pre>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Background Logo</h2>
+            <p style="text-align: center;">The logo can also be used as a background element with reduced opacity.</p>
+            
+            <div class="code-example">
+                <pre><code>// HTML
+&lt;div id="background-logo" class="logo-3d-container logo-fullscreen"&gt;&lt;/div&gt;
+
+// CSS
+.logo-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    opacity: 0.3;
+}</code></pre>
+            </div>
+        </div>
+        
+        <a href="../index.html" class="back-link">← Back to Home</a>
+    </div>
+    
+    <!-- Background Logo -->
+    <div id="logo-background" class="logo-3d-container logo-fullscreen" style="opacity: 0.15;">
+        <div class="logo-loading">Loading...</div>
+    </div>
+    
+    <script type="module">
+        import initLogoAnimation from '../assets/js/logo-animation.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize all logo instances
+            initLogoAnimation('logo-hero');
+            initLogoAnimation('logo-navbar');
+            initLogoAnimation('logo-background');
+            
+            // Add event listeners for control buttons
+            document.getElementById('spin-btn').addEventListener('click', () => {
+                // Trigger a click on the logo to spin it
+                const logoElement = document.getElementById('logo-hero');
+                if (logoElement) {
+                    logoElement.click();
+                }
+            });
+            
+            document.getElementById('pulse-btn').addEventListener('click', () => {
+                // Use anime.js directly to create a pulse effect
+                if (window.anime) {
+                    window.anime({
+                        targets: '#logo-hero',
+                        scale: [1, 1.05, 1],
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+            });
+            
+            document.getElementById('burst-btn').addEventListener('click', () => {
+                // Trigger a click on the logo for particle burst
+                const logoElement = document.getElementById('logo-hero');
+                if (logoElement) {
+                    logoElement.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

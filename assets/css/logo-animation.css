@@ -1,0 +1,65 @@
+/**
+ * CAAKE 3D Logo Animation Styles
+ */
+
+.logo-3d-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #0a0a12;
+}
+
+/* For fullscreen logo background */
+.logo-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+/* For hero section logo */
+.logo-hero {
+    height: 400px;
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* For navbar logo */
+.logo-navbar {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo-navbar:hover {
+    transform: scale(1.1);
+}
+
+/* Loading indicator */
+.logo-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #5773ff;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Canvas styling */
+.logo-3d-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
