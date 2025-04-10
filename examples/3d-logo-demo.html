@@ -14,18 +14,18 @@
             background-color: #0a0a12;
             color: #ffffff;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
+
         h1, h2 {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         h1 {
             font-size: 2.5rem;
             background: linear-gradient(90deg, #5773ff, #00f0ff);
@@ -34,11 +34,11 @@
             background-clip: text;
             text-fill-color: transparent;
         }
-        
+
         .demo-section {
             margin-bottom: 4rem;
         }
-        
+
         .controls {
             display: flex;
             flex-wrap: wrap;
@@ -46,7 +46,7 @@
             margin: 2rem 0;
             justify-content: center;
         }
-        
+
         .control-btn {
             padding: 0.75rem 1.5rem;
             background: rgba(87, 115, 255, 0.2);
@@ -56,12 +56,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .control-btn:hover {
             background: rgba(87, 115, 255, 0.4);
             transform: translateY(-2px);
         }
-        
+
         .code-example {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
@@ -72,14 +72,14 @@
             font-size: 14px;
             line-height: 1.5;
         }
-        
+
         .back-link {
             display: inline-block;
             margin-top: 2rem;
             color: #5773ff;
             text-decoration: none;
         }
-        
+
         .back-link:hover {
             text-decoration: underline;
         }
@@ -88,32 +88,36 @@
 <body>
     <div class="container">
         <h1>CAAKE 3D Logo Animation</h1>
-        
+
         <div class="demo-section">
             <h2>Hero Section Logo</h2>
             <div id="logo-hero" class="logo-3d-container logo-hero">
                 <div class="logo-loading">Loading 3D Logo...</div>
             </div>
-            
+
             <div class="controls">
                 <button class="control-btn" id="spin-btn">Spin Logo</button>
                 <button class="control-btn" id="pulse-btn">Pulse Effect</button>
                 <button class="control-btn" id="burst-btn">Particle Burst</button>
             </div>
-            
+
             <div class="code-example">
                 <pre><code>// HTML
 &lt;div id="logo-container" class="logo-3d-container"&gt;&lt;/div&gt;
 
 // JavaScript
-import initLogoAnimation from '../assets/js/logo-animation.js';
+&lt;script src="assets/js/logo-animation.js"&gt;&lt;/script&gt;
 
+&lt;script&gt;
 document.addEventListener('DOMContentLoaded', () => {
-    initLogoAnimation('logo-container');
-});</code></pre>
+    if (window.initLogoAnimation) {
+        window.initLogoAnimation('logo-container');
+    }
+});
+&lt;/script&gt;</code></pre>
             </div>
         </div>
-        
+
         <div class="demo-section">
             <h2>Navbar Logo</h2>
             <div style="display: flex; justify-content: center;">
@@ -121,24 +125,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="logo-loading">Loading...</div>
                 </div>
             </div>
-            
+
             <div class="code-example">
                 <pre><code>// HTML
 &lt;div id="navbar-logo" class="logo-3d-container logo-navbar"&gt;&lt;/div&gt;
 
 // JavaScript
-import initLogoAnimation from '../assets/js/logo-animation.js';
+&lt;script src="assets/js/logo-animation.js"&gt;&lt;/script&gt;
 
+&lt;script&gt;
 document.addEventListener('DOMContentLoaded', () => {
-    initLogoAnimation('navbar-logo');
-});</code></pre>
+    if (window.initLogoAnimation) {
+        window.initLogoAnimation('navbar-logo');
+    }
+});
+&lt;/script&gt;</code></pre>
             </div>
         </div>
-        
+
         <div class="demo-section">
             <h2>Background Logo</h2>
             <p style="text-align: center;">The logo can also be used as a background element with reduced opacity.</p>
-            
+
             <div class="code-example">
                 <pre><code>// HTML
 &lt;div id="background-logo" class="logo-3d-container logo-fullscreen"&gt;&lt;/div&gt;
@@ -152,27 +160,43 @@ document.addEventListener('DOMContentLoaded', () => {
     height: 100vh;
     z-index: -1;
     opacity: 0.3;
-}</code></pre>
+}
+
+// JavaScript
+&lt;script src="assets/js/logo-animation.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.initLogoAnimation) {
+        window.initLogoAnimation('background-logo');
+    }
+});
+&lt;/script&gt;</code></pre>
             </div>
         </div>
-        
+
         <a href="../index.html" class="back-link">← Back to Home</a>
     </div>
-    
+
     <!-- Background Logo -->
     <div id="logo-background" class="logo-3d-container logo-fullscreen" style="opacity: 0.15;">
         <div class="logo-loading">Loading...</div>
     </div>
-    
-    <script type="module">
-        import initLogoAnimation from '../assets/js/logo-animation.js';
-        
+
+    <!-- Load the logo animation script -->
+    <script src="../assets/js/logo-animation.js"></script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize all logo instances
-            initLogoAnimation('logo-hero');
-            initLogoAnimation('logo-navbar');
-            initLogoAnimation('logo-background');
-            
+            if (window.initLogoAnimation) {
+                window.initLogoAnimation('logo-hero');
+                window.initLogoAnimation('logo-navbar');
+                window.initLogoAnimation('logo-background');
+            } else {
+                console.error('Logo animation script not loaded properly');
+            }
+
             // Add event listeners for control buttons
             document.getElementById('spin-btn').addEventListener('click', () => {
                 // Trigger a click on the logo to spin it
@@ -181,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     logoElement.click();
                 }
             });
-            
+
             document.getElementById('pulse-btn').addEventListener('click', () => {
                 // Use anime.js directly to create a pulse effect
                 if (window.anime) {
@@ -193,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-            
+
             document.getElementById('burst-btn').addEventListener('click', () => {
                 // Trigger a click on the logo for particle burst
                 const logoElement = document.getElementById('logo-hero');

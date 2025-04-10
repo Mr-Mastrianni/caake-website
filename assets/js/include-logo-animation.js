@@ -27,19 +27,19 @@ function loadLogoScript() {
 function initNavbarLogo() {
     // Find the logo container in the navbar
     const logoContainer = document.querySelector('.logo');
-    
+
     if (logoContainer) {
         // Create a container for the 3D logo
         const logoAnimationContainer = document.createElement('div');
         logoAnimationContainer.id = 'navbar-logo-3d';
         logoAnimationContainer.className = 'logo-3d-container logo-navbar';
-        
+
         // Add loading indicator
         const loadingIndicator = document.createElement('div');
         loadingIndicator.className = 'logo-loading';
         loadingIndicator.textContent = 'Loading...';
         logoAnimationContainer.appendChild(loadingIndicator);
-        
+
         // Replace the existing logo with the 3D logo container
         const existingLogo = logoContainer.querySelector('img');
         if (existingLogo) {
@@ -48,12 +48,18 @@ function initNavbarLogo() {
         } else {
             logoContainer.appendChild(logoAnimationContainer);
         }
-        
+
         // Initialize the 3D logo animation
-        import('./logo-animation.js').then(module => {
-            const initLogoAnimation = module.default;
-            initLogoAnimation('navbar-logo-3d');
-        });
+        // Load the script first
+        const script = document.createElement('script');
+        script.src = 'assets/js/logo-animation.js';
+        script.onload = function() {
+            // Once loaded, call the global function
+            if (window.initLogoAnimation) {
+                window.initLogoAnimation('navbar-logo-3d');
+            }
+        };
+        document.head.appendChild(script);
     }
 }
 
@@ -61,27 +67,38 @@ function initNavbarLogo() {
 function initHeroLogo() {
     // Find the hero section
     const heroSection = document.querySelector('.hero, .hero-section, header');
-    
+
     if (heroSection) {
         // Create a container for the 3D logo
         const logoAnimationContainer = document.createElement('div');
         logoAnimationContainer.id = 'hero-logo-3d';
         logoAnimationContainer.className = 'logo-3d-container logo-hero';
-        
+
         // Add loading indicator
         const loadingIndicator = document.createElement('div');
         loadingIndicator.className = 'logo-loading';
         loadingIndicator.textContent = 'Loading...';
         logoAnimationContainer.appendChild(loadingIndicator);
-        
+
         // Add the logo container to the hero section
         heroSection.appendChild(logoAnimationContainer);
-        
+
         // Initialize the 3D logo animation
-        import('./logo-animation.js').then(module => {
-            const initLogoAnimation = module.default;
-            initLogoAnimation('hero-logo-3d');
-        });
+        // Check if script is already loaded
+        if (window.initLogoAnimation) {
+            window.initLogoAnimation('hero-logo-3d');
+        } else {
+            // Load the script first
+            const script = document.createElement('script');
+            script.src = 'assets/js/logo-animation.js';
+            script.onload = function() {
+                // Once loaded, call the global function
+                if (window.initLogoAnimation) {
+                    window.initLogoAnimation('hero-logo-3d');
+                }
+            };
+            document.head.appendChild(script);
+        }
     }
 }
 
@@ -92,41 +109,52 @@ function initBackgroundLogo() {
     logoAnimationContainer.id = 'background-logo-3d';
     logoAnimationContainer.className = 'logo-3d-container logo-fullscreen';
     logoAnimationContainer.style.opacity = '0.15';
-    
+
     // Add loading indicator
     const loadingIndicator = document.createElement('div');
     loadingIndicator.className = 'logo-loading';
     loadingIndicator.textContent = 'Loading...';
     logoAnimationContainer.appendChild(loadingIndicator);
-    
+
     // Add the logo container to the body
     document.body.appendChild(logoAnimationContainer);
-    
+
     // Initialize the 3D logo animation
-    import('./logo-animation.js').then(module => {
-        const initLogoAnimation = module.default;
-        initLogoAnimation('background-logo-3d');
-    });
+    // Check if script is already loaded
+    if (window.initLogoAnimation) {
+        window.initLogoAnimation('background-logo-3d');
+    } else {
+        // Load the script first
+        const script = document.createElement('script');
+        script.src = 'assets/js/logo-animation.js';
+        script.onload = function() {
+            // Once loaded, call the global function
+            if (window.initLogoAnimation) {
+                window.initLogoAnimation('background-logo-3d');
+            }
+        };
+        document.head.appendChild(script);
+    }
 }
 
 // Initialize all logo animations
 function initAllLogoAnimations() {
     loadCSS();
-    
+
     // Check if we should initialize different logo placements
     const urlParams = new URLSearchParams(window.location.search);
     const initNavbar = urlParams.get('navbar-logo') !== 'false';
     const initHero = urlParams.get('hero-logo') !== 'false';
     const initBackground = urlParams.get('background-logo') === 'true';
-    
+
     if (initNavbar) {
         initNavbarLogo();
     }
-    
+
     if (initHero) {
         initHeroLogo();
     }
-    
+
     if (initBackground) {
         initBackgroundLogo();
     }
@@ -135,8 +163,8 @@ function initAllLogoAnimations() {
 // Initialize when the DOM is loaded
 document.addEventListener('DOMContentLoaded', initAllLogoAnimations);
 
-// Export functions for manual initialization
-export {
+// Make functions available globally for manual initialization
+window.CAAKE_Logo = {
     initNavbarLogo,
     initHeroLogo,
     initBackgroundLogo

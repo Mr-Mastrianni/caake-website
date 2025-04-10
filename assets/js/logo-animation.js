@@ -3,17 +3,12 @@
  * Using Three.js for 3D rendering and Anime.js for animations
  */
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
-import { TextGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/geometries/TextGeometry.js';
-import { FontLoader } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/FontLoader.js';
-import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/postprocessing/UnrealBloomPass.js';
+// We'll load THREE.js dynamically to avoid import errors
 
 // Initialize variables
 let scene, camera, renderer, composer;
 let logo, particleSystem;
-let clock = new THREE.Clock();
+let clock;
 let mixer, animationAction;
 let mouseX = 0, mouseY = 0;
 
@@ -47,6 +42,15 @@ const config = {
 
 // Initialize the scene
 function init(containerId) {
+    // Make sure THREE is available
+    if (!window.THREE) {
+        console.error('THREE.js not loaded');
+        return;
+    }
+
+    // Initialize clock
+    clock = new THREE.Clock();
+
     const container = document.getElementById(containerId);
     if (!container) {
         console.error(`Container with ID "${containerId}" not found.`);
@@ -60,24 +64,24 @@ function init(containerId) {
     // Create scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(config.colors.background);
-    
+
     // Create camera
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.z = 5;
-    
+
     // Create renderer
-    renderer = new THREE.WebGLRenderer({ 
+    renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
-    
+
     // Add lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
-    
+
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
@@ -90,29 +94,39 @@ function init(containerId) {
     const pointLight2 = new THREE.PointLight(config.colors.highlight, 1, 10);
     pointLight2.position.set(-2, -1, 3);
     scene.add(pointLight2);
-    
-    // Add bloom effect
-    const renderPass = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(
-        new THREE.Vector2(width, height),
-        config.bloom.strength,
-        config.bloom.radius,
-        config.bloom.threshold
-    );
-    
-    composer = new EffectComposer(renderer);
-    composer.addPass(renderPass);
-    composer.addPass(bloomPass);
-    
+
+    // Add bloom effect if available
+    if (window.THREE.EffectComposer && window.THREE.RenderPass && window.THREE.UnrealBloomPass) {
+        const renderPass = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(
+            new THREE.Vector2(width, height),
+            config.bloom.strength,
+            config.bloom.radius,
+            config.bloom.threshold
+        );
+
+        composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderPass);
+        composer.addPass(bloomPass);
+    } else {
+        console.warn('Post-processing not available. Using standard renderer.');
+        // Create a simple render function as fallback
+        composer = {
+            render: function() {
+                renderer.render(scene, camera);
+            }
+        };
+    }
+
     // Load font and create logo
     loadLogoText();
-    
+
     // Create particles
     createParticles();
-    
+
     // Start animation loop
     animate();
-    
+
     // Handle window resize
     window.addEventListener('resize', () => onWindowResize(container));
 
@@ -124,12 +138,18 @@ function init(containerId) {
 }
 
 function loadLogoText() {
-    const fontLoader = new FontLoader();
-    
+    // Make sure FontLoader is available
+    if (!window.THREE || !window.THREE.FontLoader) {
+        console.error('THREE.FontLoader not loaded');
+        return;
+    }
+
+    const fontLoader = new THREE.FontLoader();
+
     // Load Helvetiker as fallback, but try to load a more stylish font first
     fontLoader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', function(font) {
         createLogoGeometry(font);
-        
+
         // Try to load a more stylish font
         fontLoader.load('https://threejs.org/examples/fonts/optimer_bold.typeface.json', function(betterFont) {
             // If we successfully loaded the better font, recreate the logo
@@ -140,6 +160,12 @@ function loadLogoText() {
 }
 
 function createLogoGeometry(font) {
+    // Make sure TextGeometry is available
+    if (!window.THREE || !window.THREE.TextGeometry) {
+        console.error('THREE.TextGeometry not loaded');
+        return;
+    }
+
     const textOptions = {
         font: font,
         size: config.text.size,
@@ -151,12 +177,12 @@ function createLogoGeometry(font) {
         bevelOffset: 0,
         bevelSegments: config.text.bevelSegments
     };
-    
-    const textGeometry = new TextGeometry('CAAKE', textOptions);
+
+    const textGeometry = new THREE.TextGeometry('CAAKE', textOptions);
     textGeometry.center();
-    
+
     // Create materials for the logo
-    const mainMaterial = new THREE.MeshStandardMaterial({ 
+    const mainMaterial = new THREE.MeshStandardMaterial({
         color: config.colors.primary,
         metalness: 0.8,
         roughness: 0.2,
@@ -164,23 +190,23 @@ function createLogoGeometry(font) {
         emissiveIntensity: 0.2
     });
 
-    const sideMaterial = new THREE.MeshStandardMaterial({ 
+    const sideMaterial = new THREE.MeshStandardMaterial({
         color: config.colors.highlight,
         metalness: 0.8,
         roughness: 0.3,
         emissive: config.colors.highlight,
         emissiveIntensity: 0.1
     });
-    
+
     // Create multi-material for different sides of the text
     const materials = [mainMaterial, sideMaterial];
-    
+
     logo = new THREE.Mesh(textGeometry, materials);
     scene.add(logo);
-    
+
     // Set initial scale to zero for animation
     logo.scale.set(0, 0, 0);
-    
+
     // Start animations
     initLogoAnimations();
 }
@@ -190,25 +216,25 @@ function createParticles() {
     const particles = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
-    
+
     const color1 = new THREE.Color(config.colors.accent);
     const color2 = new THREE.Color(config.colors.highlight);
     const color3 = new THREE.Color(config.colors.primary);
-    
+
     for (let i = 0; i < particleCount * 3; i += 3) {
         // Create particles in a spherical area around the logo
         const radius = config.particles.radius * (0.5 + Math.random() * 0.5);
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.random() * Math.PI;
-        
+
         positions[i] = radius * Math.sin(phi) * Math.cos(theta);
         positions[i+1] = radius * Math.sin(phi) * Math.sin(theta);
         positions[i+2] = radius * Math.cos(phi);
-        
+
         // Assign random colors from our palette
         const colorChoice = Math.random();
         let color;
-        
+
         if (colorChoice < 0.33) {
             color = color1;
         } else if (colorChoice < 0.66) {
@@ -216,15 +242,15 @@ function createParticles() {
         } else {
             color = color3;
         }
-        
+
         colors[i] = color.r;
         colors[i+1] = color.g;
         colors[i+2] = color.b;
     }
-    
+
     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    
+
     const particleMaterial = new THREE.PointsMaterial({
         size: config.particles.size,
         vertexColors: true,
@@ -232,7 +258,7 @@ function createParticles() {
         opacity: 0.8,
         blending: THREE.AdditiveBlending
     });
-    
+
     particleSystem = new THREE.Points(particles, particleMaterial);
     scene.add(particleSystem);
 }
@@ -248,7 +274,7 @@ function initLogoAnimations() {
         easing: 'easeOutElastic(1, 0.8)',
         complete: startLoopAnimations
     });
-    
+
     // Initial rotation animation
     anime({
         targets: logo.rotation,
@@ -267,7 +293,7 @@ function startLoopAnimations() {
         easing: 'easeInOutQuad',
         loop: true
     });
-    
+
     // Subtle continuous rotation
     anime({
         targets: logo.rotation,
@@ -276,7 +302,7 @@ function startLoopAnimations() {
         easing: 'linear',
         loop: true
     });
-    
+
     // Pulsating glow effect by animating emissive intensity
     if (logo.material.length > 0) {
         // For multi-material
@@ -307,7 +333,7 @@ function onLogoClick() {
         duration: 1500,
         easing: 'easeOutElastic(1, .8)'
     });
-    
+
     // Scale pulse
     anime({
         targets: logo.scale,
@@ -317,16 +343,16 @@ function onLogoClick() {
         duration: 1000,
         easing: 'easeInOutQuad'
     });
-    
+
     // Particle burst
     const positions = particleSystem.geometry.attributes.position.array;
     for (let i = 0; i < positions.length; i += 3) {
         const direction = new THREE.Vector3(
-            positions[i], 
-            positions[i+1], 
+            positions[i],
+            positions[i+1],
             positions[i+2]
         ).normalize();
-        
+
         // Animate particles outward
         anime({
             targets: {x: positions[i], y: positions[i+1], z: positions[i+2]},
@@ -367,7 +393,7 @@ function onMouseMove(event) {
     // (-1 to +1) for both components
     mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    
+
     if (logo) {
         // Subtle tilt based on mouse position with smooth transition
         anime({
@@ -378,7 +404,7 @@ function onMouseMove(event) {
             easing: 'easeOutQuad'
         });
     }
-    
+
     // Make particles slightly follow mouse
     if (particleSystem) {
         const positions = particleSystem.geometry.attributes.position.array;
@@ -393,27 +419,27 @@ function onMouseMove(event) {
 
 function animate() {
     requestAnimationFrame(animate);
-    
+
     const delta = clock.getDelta();
-    
+
     // Animate particles
     if (particleSystem) {
         particleSystem.rotation.y += 0.0005;
-        
+
         const positions = particleSystem.geometry.attributes.position.array;
         for (let i = 0; i < positions.length; i += 3) {
             // Add subtle random movement
             positions[i] += 0.002 * (Math.random() - 0.5);
             positions[i+1] += 0.002 * (Math.random() - 0.5);
             positions[i+2] += 0.002 * (Math.random() - 0.5);
-            
+
             // Keep particles within bounds
             const distance = Math.sqrt(
-                positions[i] * positions[i] + 
-                positions[i+1] * positions[i+1] + 
+                positions[i] * positions[i] +
+                positions[i+1] * positions[i+1] +
                 positions[i+2] * positions[i+2]
             );
-            
+
             if (distance > config.particles.radius * 1.5) {
                 positions[i] *= 0.99;
                 positions[i+1] *= 0.99;
@@ -422,12 +448,12 @@ function animate() {
         }
         particleSystem.geometry.attributes.position.needsUpdate = true;
     }
-    
+
     // Update mixer if animation is loaded
     if (mixer) {
         mixer.update(delta);
     }
-    
+
     // Render with post-processing
     composer.render();
 }
@@ -435,22 +461,77 @@ function animate() {
 function onWindowResize(container) {
     const width = container.clientWidth;
     const height = container.clientHeight;
-    
+
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    
+
     renderer.setSize(width, height);
     composer.setSize(width, height);
 }
 
-// Export the initialization function
-export default function initLogoAnimation(containerId) {
-    // Load Anime.js dynamically
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js';
-    script.onload = function() {
-        // Initialize once Anime.js is loaded
-        init(containerId);
-    };
-    document.head.appendChild(script);
+// Load Three.js and its modules dynamically
+function loadThreeJS() {
+    return new Promise((resolve) => {
+        // Load Three.js core
+        const threeScript = document.createElement('script');
+        threeScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
+        threeScript.onload = () => {
+            // Once Three.js is loaded, load the required modules
+            loadThreeJSModules().then(resolve);
+        };
+        document.head.appendChild(threeScript);
+    });
 }
+
+// Load Three.js modules
+function loadThreeJSModules() {
+    return new Promise((resolve) => {
+        // Create global THREE object if it doesn't exist
+        window.THREE = window.THREE || {};
+
+        // Load TextGeometry
+        const textGeometryScript = document.createElement('script');
+        textGeometryScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/geometries/TextGeometry.js';
+        document.head.appendChild(textGeometryScript);
+
+        // Load FontLoader
+        const fontLoaderScript = document.createElement('script');
+        fontLoaderScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FontLoader.js';
+        document.head.appendChild(fontLoaderScript);
+
+        // Load EffectComposer and related passes
+        const effectComposerScript = document.createElement('script');
+        effectComposerScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/EffectComposer.js';
+        document.head.appendChild(effectComposerScript);
+
+        const renderPassScript = document.createElement('script');
+        renderPassScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/RenderPass.js';
+        document.head.appendChild(renderPassScript);
+
+        const bloomPassScript = document.createElement('script');
+        bloomPassScript.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js';
+        bloomPassScript.onload = () => {
+            // All scripts loaded
+            resolve();
+        };
+        document.head.appendChild(bloomPassScript);
+    });
+}
+
+// Export the initialization function
+function initLogoAnimation(containerId) {
+    // First load Three.js and its modules
+    loadThreeJS().then(() => {
+        // Then load Anime.js
+        const animeScript = document.createElement('script');
+        animeScript.src = 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js';
+        animeScript.onload = function() {
+            // Initialize once all dependencies are loaded
+            init(containerId);
+        };
+        document.head.appendChild(animeScript);
+    });
+}
+
+// Make the function available globally
+window.initLogoAnimation = initLogoAnimation;
