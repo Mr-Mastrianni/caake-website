@@ -485,7 +485,7 @@ function loadThreeJS() {
     return new Promise((resolve) => {
         // Load Three.js core
         const threeScript = document.createElement('script');
-        threeScript.src = 'https://unpkg.com/three@0.132.2/build/three.min.js';
+        threeScript.src = 'assets/js/lib/three/three.min.js';
         threeScript.onload = () => {
             // Once Three.js is loaded, load the required modules
             loadThreeJSModules().then(resolve);
@@ -524,18 +524,18 @@ function loadThreeJSModules() {
         // Define all scripts in the order they need to be loaded
         const scripts = [
             // Core dependencies
-            'https://unpkg.com/three@0.132.2/examples/js/loaders/FontLoader.js',
-            'https://unpkg.com/three@0.132.2/examples/js/geometries/TextGeometry.js',
+            'assets/js/lib/three/FontLoader.js',
+            'assets/js/lib/three/TextGeometry.js',
 
             // Shaders needed for post-processing
-            'https://unpkg.com/three@0.132.2/examples/js/shaders/CopyShader.js',
-            'https://unpkg.com/three@0.132.2/examples/js/shaders/LuminosityHighPassShader.js',
+            'assets/js/lib/three/CopyShader.js',
+            'assets/js/lib/three/LuminosityHighPassShader.js',
 
             // Post-processing
-            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/EffectComposer.js',
-            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/ShaderPass.js',
-            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/RenderPass.js',
-            'https://unpkg.com/three@0.132.2/examples/js/postprocessing/UnrealBloomPass.js'
+            'assets/js/lib/three/EffectComposer.js',
+            'assets/js/lib/three/ShaderPass.js',
+            'assets/js/lib/three/RenderPass.js',
+            'assets/js/lib/three/UnrealBloomPass.js'
         ];
 
         // Start loading scripts sequentially

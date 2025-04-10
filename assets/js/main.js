@@ -882,6 +882,50 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
 
     // Image lazy loading (moved from HTML to main.js)
+    function initLazyLoading() {
+        // Check if IntersectionObserver is supported
+        if ('IntersectionObserver' in window) {
+            const lazyImages = document.querySelectorAll('img[data-src]');
+
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+
+                        // If there's a data-srcset attribute, set it too
+                        if (img.dataset.srcset) {
+                            img.srcset = img.dataset.srcset;
+                        }
+
+                        img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        } else {
+            // Fallback for browsers that don't support IntersectionObserver
+            const lazyImages = document.querySelectorAll('img[data-src]');
+
+            // Load all images immediately
+            lazyImages.forEach(img => {
+                img.src = img.dataset.src;
+                if (img.dataset.srcset) {
+                    img.srcset = img.dataset.srcset;
+                }
+                img.classList.add('loaded');
+            });
+        }
+    }
+
+    // Initialize lazy loading
     initLazyLoading();
 
     // Add any other initializations here...
