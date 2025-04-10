@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,238 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="../../assets/css/style-fixes.css">
+    <link rel="stylesheet" href="../../assets/css/dark-mode.css">
+
+    <style>
+        /* Custom styles for chatbot page */
+        .hero-section {
+            position: relative;
+            padding: 120px 0;
+            background: linear-gradient(135deg, #050f1e 0%, #0d1526 100%);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: url('../../assets/images/circuit-pattern.svg');
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #e6e6e6;
+        }
+
+        .chatbot-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .chatbot-feature {
+            background: rgba(13, 21, 38, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chatbot-feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .chat-demo {
+            background: rgba(13, 21, 38, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            margin: 50px auto;
+            max-width: 900px;
+        }
+
+        .chat-header {
+            background: linear-gradient(to right, var(--primary-color-dark), var(--primary-color));
+            padding: 20px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .chat-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .chat-body {
+            padding: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bot-message {
+            margin-right: auto;
+        }
+
+        .user-message {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .user-message .message-avatar {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+
+        .bot-avatar {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .message-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 20px;
+            max-width: 70%;
+        }
+
+        .bot-message .message-bubble {
+            border-top-left-radius: 0;
+            background: rgba(102, 179, 255, 0.1);
+        }
+
+        .user-message .message-bubble {
+            border-top-right-radius: 0;
+            background: rgba(78, 84, 200, 0.2);
+        }
+
+        .use-cases {
+            padding: 80px 0;
+            background: rgba(10, 15, 30, 0.3);
+        }
+
+        .use-case-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .use-case-tab {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .use-case-tab.active, .use-case-tab:hover {
+            background: var(--primary-color);
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .use-case-content {
+            display: none;
+        }
+
+        .use-case-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="container">
-                <a href="../../index.html" class="logo">CAAKE</a>
+                <a href="../../index.html" class="logo-link">
+                    <div class="logo">
+                        <img src="../../assets/images/logo.png" alt="CAAKE Logo">
+                        <span class="logo-text">CAAKE</span>
+                    </div>
+                </a>
                 <div class="nav-toggle">
                     <span></span>
                     <span></span>
@@ -40,260 +266,222 @@
                 </ul>
             </div>
         </nav>
-        <div class="page-header" data-fade data-fade-direction="up">
+
+        <div class="page-header">
             <div class="container">
-                <h1>Chatbots</h1>
-                <p>Intelligent conversational solutions that engage your customers 24/7</p>
+                <h1>AI-Powered Chatbot Solutions</h1>
+                <p>Advanced conversational agents that enhance customer experiences and streamline operations</p>
             </div>
         </div>
     </header>
 
     <main>
-        <section class="service-intro" data-fade data-fade-direction="up">
+        <section class="hero-section">
             <div class="container">
-                <div class="service-description">
-                    <h2>Enhance Customer Engagement with Intelligent Chatbots</h2>
-                    <p>Modern customers expect instant responses and 24/7 availability. Our AI-powered chatbots deliver personalized interactions at scale, handling everything from simple FAQ responses to complex, multi-step conversations that drive conversions and customer satisfaction.</p>
-                    <p>Unlike traditional rule-based chatbots, our solutions utilize advanced natural language understanding to comprehend customer intent, provide contextually relevant responses, and learn from each interaction to continuously improve performance.</p>
+                <div class="hero-content">
+                    <h2 class="hero-title">Intelligent Chatbot Solutions</h2>
+                    <p class="hero-subtitle">Engage your customers with AI-powered conversations that drive results</p>
+                    <p>Our chatbots use advanced natural language processing to deliver personalized experiences, answer questions, and solve problems - all while learning from each interaction.</p>
+                    <a href="../contact.html" class="btn btn-primary">Get Started Today</a>
                 </div>
-            </div>
-        </section>
 
-        <section class="chatbot-types" data-morph>
-            <div class="container">
-                <h2 class="section-title" data-split-text="words" data-split-animation="fade">Our Chatbot Solutions</h2>
-                <p class="section-description">We offer a range of chatbot solutions, each designed to address specific business needs.</p>
-                
-                <div class="chatbot-grid">
-                    <div class="chatbot-card" data-tilt data-fade data-fade-direction="up" data-fade-delay="100">
-                        <div class="chatbot-icon">💬</div>
-                        <h3>Customer Support Chatbot</h3>
-                        <p>Provide instant support for common customer inquiries, reducing response times and freeing up your human agents for complex issues.</p>
-                        <ul class="chatbot-features">
-                            <li>Answers FAQs and provides troubleshooting assistance</li>
-                            <li>Creates and updates support tickets</li>
-                            <li>Provides order status and tracking information</li>
-                            <li>Seamlessly hands off to human agents when needed</li>
-                            <li>Available 24/7 across multiple channels</li>
-                        </ul>
-                        <div class="chatbot-demo">
-                            <div class="chat-window">
-                                <div class="chat-header">
-                                    <span>Support Bot</span>
-                                </div>
-                                <div class="chat-messages">
-                                    <div class="bot-message">Hi there! I'm the CAAKE Support Assistant. How can I help you today?</div>
-                                    <div class="user-message">My order hasn't arrived yet. Order #12345</div>
-                                    <div class="bot-message">I'm checking your order status now... I can see that your order #12345 was shipped yesterday via Express Delivery. The tracking information shows it's currently in transit and estimated to arrive tomorrow by 5pm.</div>
-                                    <div class="user-message">Thanks! Can I change the delivery address?</div>
-                                    <div class="bot-message">Unfortunately, once an order has been shipped, we can't modify the delivery address. Would you like me to connect you with a customer service representative who might be able to help with special arrangements?</div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="chatbot-feature-grid">
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3 class="feature-title">Natural Conversations</h3>
+                        <p>Our chatbots communicate naturally with users, understanding context and providing helpful responses that feel human.</p>
                     </div>
-                    
-                    <div class="chatbot-card" data-tilt data-fade data-fade-direction="up" data-fade-delay="200">
-                        <div class="chatbot-icon">🛒</div>
-                        <h3>E-commerce Sales Chatbot</h3>
-                        <p>Guide customers through their shopping journey, providing product recommendations and answering questions to increase conversions.</p>
-                        <ul class="chatbot-features">
-                            <li>Personalizes product recommendations</li>
-                            <li>Answers questions about products and inventory</li>
-                            <li>Guides customers through checkout process</li>
-                            <li>Provides post-purchase support</li>
-                            <li>Delivers targeted promotions based on customer interests</li>
-                        </ul>
-                        <div class="chatbot-demo">
-                            <div class="chat-window">
-                                <div class="chat-header">
-                                    <span>Shopping Assistant</span>
-                                </div>
-                                <div class="chat-messages">
-                                    <div class="bot-message">Hello! Welcome to CAAKE Fashion. I can help you find exactly what you're looking for. What brings you to our store today?</div>
-                                    <div class="user-message">I'm looking for a dress for a summer wedding</div>
-                                    <div class="bot-message">Great! I'd be happy to help you find the perfect dress for a summer wedding. Would you prefer something formal, semi-formal, or casual?</div>
-                                    <div class="user-message">Semi-formal, preferably in blue</div>
-                                    <div class="bot-message">Excellent choice! I've found several blue semi-formal dresses that would be perfect for a summer wedding. Our bestseller is the Azure Breeze Maxi Dress, which features a flowing silhouette and breathable fabric ideal for summer events. Would you like to see this and other options?</div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="feature-title">AI-Powered</h3>
+                        <p>Leveraging the latest in machine learning and natural language processing to continually improve interactions.</p>
                     </div>
-                    
-                    <div class="chatbot-card" data-tilt data-fade data-fade-direction="up" data-fade-delay="300">
-                        <div class="chatbot-icon">📝</div>
-                        <h3>Lead Generation Chatbot</h3>
-                        <p>Engage website visitors, qualify leads, and gather contact information to feed your sales pipeline with high-quality prospects.</p>
-                        <ul class="chatbot-features">
-                            <li>Engages visitors with personalized messages</li>
-                            <li>Qualifies leads based on customizable criteria</li>
-                            <li>Schedules appointments and demos</li>
-                            <li>Integrates with your CRM system</li>
-                            <li>Provides detailed lead information to sales teams</li>
-                        </ul>
-                        <div class="chatbot-demo">
-                            <div class="chat-window">
-                                <div class="chat-header">
-                                    <span>Lead Qualifier</span>
-                                </div>
-                                <div class="chat-messages">
-                                    <div class="bot-message">Hi there! Thanks for visiting our AI solutions page. I noticed you've been reading about our enterprise offerings. Would you like to learn how we've helped businesses like yours implement AI solutions?</div>
-                                    <div class="user-message">Yes, I'm interested in AI for our customer service department</div>
-                                    <div class="bot-message">That's great! Many companies have significantly improved their customer service metrics with our AI solutions. May I ask how many customer service agents your company currently employs?</div>
-                                    <div class="user-message">We have about 50 agents</div>
-                                    <div class="bot-message">Thanks for sharing that. For a team of that size, our Enterprise AI Assistant would be an excellent fit. Would you like to schedule a quick 15-minute call with one of our solution specialists to discuss how we could specifically help your customer service department?</div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3 class="feature-title">Continuous Learning</h3>
+                        <p>Our chatbots learn from every interaction, enhancing their knowledge base and conversational abilities.</p>
                     </div>
-                    
-                    <div class="chatbot-card" data-tilt data-fade data-fade-direction="up" data-fade-delay="400">
-                        <div class="chatbot-icon">🏥</div>
-                        <h3>Healthcare Assistant Chatbot</h3>
-                        <p>Provide patients with information, appointment scheduling, and preliminary symptom assessment while ensuring compliance with healthcare regulations.</p>
-                        <ul class="chatbot-features">
-                            <li>Schedules and manages appointments</li>
-                            <li>Provides medication reminders</li>
-                            <li>Conducts preliminary symptom assessments</li>
-                            <li>Answers common healthcare questions</li>
-                            <li>HIPAA-compliant with secure data handling</li>
-                        </ul>
-                        <div class="chatbot-demo">
-                            <div class="chat-window">
-                                <div class="chat-header">
-                                    <span>Health Assistant</span>
-                                </div>
-                                <div class="chat-messages">
-                                    <div class="bot-message">Hello! I'm your Cedar Medical Center virtual assistant. How can I help you today?</div>
-                                    <div class="user-message">I need to schedule an appointment with Dr. Garcia</div>
-                                    <div class="bot-message">I'd be happy to help you schedule an appointment with Dr. Garcia. Dr. Garcia is available on Tuesday at 10:00 AM, Wednesday at 2:30 PM, and Friday at 9:15 AM next week. Would any of these times work for you?</div>
-                                    <div class="user-message">Friday at 9:15 works for me</div>
-                                    <div class="bot-message">Great! I've reserved Friday at 9:15 AM with Dr. Garcia. Can you please confirm your full name and date of birth so I can complete the booking?</div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="feature-title">Analytics Dashboard</h3>
+                        <p>Comprehensive analytics to track chatbot performance, user satisfaction, and conversion rates.</p>
                     </div>
-                    
-                    <div class="chatbot-card" data-tilt data-fade data-fade-direction="up" data-fade-delay="500">
-                        <div class="chatbot-icon">🏢</div>
-                        <h3>HR & Internal Support Chatbot</h3>
-                        <p>Streamline internal processes by providing employees with instant access to HR information, IT support, and company resources.</p>
-                        <ul class="chatbot-features">
-                            <li>Answers HR policy questions</li>
-                            <li>Assists with common IT issues</li>
-                            <li>Provides access to internal resources and documents</li>
-                            <li>Facilitates employee onboarding processes</li>
-                            <li>Collects employee feedback and surveys</li>
-                        </ul>
-                        <div class="chatbot-demo">
-                            <div class="chat-window">
-                                <div class="chat-header">
-                                    <span>WorkBuddy</span>
-                                </div>
-                                <div class="chat-messages">
-                                    <div class="bot-message">Hi there! I'm WorkBuddy, your company assistant. How can I help you today?</div>
-                                    <div class="user-message">How many vacation days do I have left this year?</div>
-                                    <div class="bot-message">Let me check that for you... According to our records, you have 12 vacation days remaining for this calendar year. You've used 8 out of your 20 annual days. Would you like me to show you how to submit a vacation request?</div>
-                                    <div class="user-message">Yes please</div>
-                                    <div class="bot-message">To submit a vacation request, please follow these steps: 1) Log into the Employee Portal, 2) Click on "Time Off" in the left menu, 3) Select "Request Time Off" and enter your desired dates. Your request will be sent to your manager for approval. Is there anything else you'd like to know about vacation policies?</div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-plug"></i></div>
+                        <h3 class="feature-title">Seamless Integration</h3>
+                        <p>Easily integrates with your existing systems, websites, and applications with minimal setup.</p>
                     </div>
-                    
-                    <div class="chatbot-card chatbot-custom" data-tilt data-fade data-fade-direction="up" data-fade-delay="600">
-                        <div class="chatbot-icon">⚙️</div>
-                        <h3>Custom Chatbot Solution</h3>
-                        <p>Need something specific for your business? We create custom chatbot solutions tailored to your unique requirements and brand voice.</p>
-                        <div class="chatbot-custom-cta">
-                            <a href="../contact.html" class="btn btn-accent">Discuss Your Needs</a>
-                        </div>
+
+                    <div class="chatbot-feature">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="feature-title">Enterprise Security</h3>
+                        <p>Built with security in mind, ensuring your data and customer interactions remain protected.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="chatbot-benefits" data-fade data-fade-direction="up">
+        <section class="chat-demo-section">
             <div class="container">
-                <h2 class="section-title">Benefits of Our Chatbot Solutions</h2>
-                <div class="benefits-grid">
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">⏰</span> 24/7 Availability</h3>
-                        <p>Provide instant responses to customer inquiries around the clock, improving satisfaction and reducing abandonment rates.</p>
+                <h2 class="section-title text-center">See Our Chatbot in Action</h2>
+                <p class="section-description text-center">Experience an example conversation with our AI-powered chatbot</p>
+
+                <div class="chat-demo">
+                    <div class="chat-header">
+                        <div class="chat-header-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="chat-title">CAAKE AI Chatbot</h3>
                     </div>
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">💰</span> Cost Reduction</h3>
-                        <p>Reduce support costs by automating responses to common queries, allowing your team to focus on high-value interactions.</p>
+
+                    <div class="chat-body">
+                        <div class="chat-message bot-message">
+                            <div class="message-avatar bot-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-bubble">
+                                Hello! I'm the CAAKE AI Chatbot. How can I assist you today?
+                            </div>
+                        </div>
+
+                        <div class="chat-message user-message">
+                            <div class="message-avatar user-avatar">
+                                <img src="../../assets/images/user-avatar.png" alt="User Avatar">
+                            </div>
+                            <div class="message-bubble">
+                                I'm interested in implementing a chatbot for my e-commerce store. Can you help?
+                            </div>
+                        </div>
+
+                        <div class="chat-message bot-message">
+                            <div class="message-avatar bot-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-bubble">
+                                Absolutely! Our e-commerce chatbots can help with product recommendations, order tracking, customer support, and increasing sales conversions. Would you like to know more about any specific capability?
+                            </div>
+                        </div>
+
+                        <div class="chat-message user-message">
+                            <div class="message-avatar user-avatar">
+                                <img src="../../assets/images/user-avatar.png" alt="User Avatar">
+                            </div>
+                            <div class="message-bubble">
+                                I'm particularly interested in how it can help with product recommendations.
+                            </div>
+                        </div>
+
+                        <div class="chat-message bot-message">
+                            <div class="message-avatar bot-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-bubble">
+                                Our chatbots use AI to analyze customer browsing patterns, purchase history, and preferences to suggest relevant products. This personalized approach has been shown to increase average order value by 25-35%. The chatbot can also ask customers about their preferences to further refine recommendations. Would you like to see a demo of this feature?
+                            </div>
+                        </div>
                     </div>
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">⚡</span> Improved Efficiency</h3>
-                        <p>Handle multiple conversations simultaneously, eliminating wait times and improving customer experience.</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">📊</span> Data Collection</h3>
-                        <p>Gather valuable customer insights and feedback to inform product development and marketing strategies.</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">🔄</span> Scalability</h3>
-                        <p>Easily scale your customer service operations to handle peak periods without additional staffing.</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h3><span class="benefit-icon">📱</span> Multi-Channel Presence</h3>
-                        <p>Deploy chatbots across your website, mobile app, social media, and messaging platforms for consistent customer engagement.</p>
-                    </div>
+                </div>
+
+                <div class="cta-box text-center">
+                    <p>Want to see what a real chatbot can do for your business?</p>
+                    <p>Try our live chatbot demo by clicking the chat icon in the bottom right corner.</p>
                 </div>
             </div>
         </section>
 
-        <section class="implementation-process" data-float>
+        <section class="use-cases">
             <div class="container">
-                <h2 class="section-title">Our Chatbot Development Process</h2>
-                <div class="process-steps">
-                    <div class="process-step" data-fade data-fade-direction="right" data-fade-delay="100">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>Discovery & Planning</h3>
-                            <p>We begin by understanding your business objectives, target audience, and use cases for your chatbot solution.</p>
+                <h2 class="section-title text-center">Chatbot Use Cases</h2>
+                <p class="section-description text-center">Explore how our chatbots can be customized for different industries and applications</p>
+
+                <div class="use-case-tabs">
+                    <div class="use-case-tab active" data-tab="customer-service">Customer Service</div>
+                    <div class="use-case-tab" data-tab="ecommerce">E-Commerce</div>
+                    <div class="use-case-tab" data-tab="lead-gen">Lead Generation</div>
+                    <div class="use-case-tab" data-tab="healthcare">Healthcare</div>
+                </div>
+
+                <div class="use-case-content active" id="customer-service">
+                    <div class="use-case-grid">
+                        <div class="use-case-info">
+                            <h3>24/7 Customer Support</h3>
+                            <p>Our customer service chatbots handle common inquiries round the clock, providing immediate assistance and escalating complex issues to human agents when necessary.</p>
+                            <ul class="use-case-benefits">
+                                <li>Reduce support ticket volume by up to 70%</li>
+                                <li>Lower operational costs while maintaining service quality</li>
+                                <li>Increase customer satisfaction with instant responses</li>
+                                <li>Seamlessly transfer to human agents when needed</li>
+                            </ul>
+                            <p class="use-case-result">"After implementing CAAKE's chatbot, our response time decreased from hours to seconds, and our customer satisfaction scores increased by 35%." - Global Technology Corporation</p>
+                        </div>
+                        <div class="use-case-image">
+                            <img src="../../assets/images/customer-service-bot.jpg" alt="Customer Service Chatbot" loading="lazy">
                         </div>
                     </div>
-                    <div class="process-step" data-fade data-fade-direction="right" data-fade-delay="200">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>Conversation Design</h3>
-                            <p>Our conversational designers map out dialog flows, define the chatbot's personality, and create a natural, engaging user experience.</p>
+                </div>
+
+                <div class="use-case-content" id="ecommerce">
+                    <div class="use-case-grid">
+                        <div class="use-case-info">
+                            <h3>Sales & Conversion Optimization</h3>
+                            <p>Our e-commerce chatbots guide customers through their shopping journey, providing product recommendations, answering questions, and facilitating purchases.</p>
+                            <ul class="use-case-benefits">
+                                <li>Increase conversion rates by up to 30%</li>
+                                <li>Reduce cart abandonment through proactive assistance</li>
+                                <li>Personalize recommendations based on browsing behavior</li>
+                                <li>Process orders and track shipments directly in chat</li>
+                            </ul>
+                            <p class="use-case-result">"The CAAKE chatbot has become our top sales associate, generating over $1.2M in additional revenue since implementation." - Modern Retailer Inc.</p>
+                        </div>
+                        <div class="use-case-image">
+                            <img src="../../assets/images/ecommerce-bot.jpg" alt="E-commerce Chatbot" loading="lazy">
                         </div>
                     </div>
-                    <div class="process-step" data-fade data-fade-direction="right" data-fade-delay="300">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>Development & Training</h3>
-                            <p>We develop and train your chatbot using your business data, ensuring it accurately understands and responds to user inquiries.</p>
+                </div>
+
+                <div class="use-case-content" id="lead-gen">
+                    <div class="use-case-grid">
+                        <div class="use-case-info">
+                            <h3>Intelligent Lead Qualification</h3>
+                            <p>Our lead generation chatbots engage website visitors, qualify prospects, and schedule meetings with your sales team at the optimal moment.</p>
+                            <ul class="use-case-benefits">
+                                <li>Capture and qualify leads 24/7</li>
+                                <li>Ask targeted questions to assess lead quality</li>
+                                <li>Book meetings directly into your sales team's calendar</li>
+                                <li>Integrate with your CRM for seamless lead management</li>
+                            </ul>
+                            <p class="use-case-result">"Our lead volume increased by 45% and our sales team now spends more time closing deals instead of qualifying prospects." - B2B Solutions Group</p>
+                        </div>
+                        <div class="use-case-image">
+                            <img src="../../assets/images/lead-gen-bot.jpg" alt="Lead Generation Chatbot" loading="lazy">
                         </div>
                     </div>
-                    <div class="process-step" data-fade data-fade-direction="right" data-fade-delay="400">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h3>Integration & Testing</h3>
-                            <p>Your chatbot is integrated with your existing systems and thoroughly tested to ensure optimal performance.</p>
+                </div>
+
+                <div class="use-case-content" id="healthcare">
+                    <div class="use-case-grid">
+                        <div class="use-case-info">
+                            <h3>Patient Engagement & Support</h3>
+                            <p>Our healthcare chatbots help patients schedule appointments, answer common medical questions, and provide medication reminders while maintaining HIPAA compliance.</p>
+                            <ul class="use-case-benefits">
+                                <li>Reduce administrative burden on medical staff</li>
+                                <li>Provide 24/7 access to basic healthcare information</li>
+                                <li>Decrease appointment no-shows with automated reminders</li>
+                                <li>Maintain strict compliance with healthcare regulations</li>
+                            </ul>
+                            <p class="use-case-result">"Our chatbot has become an invaluable extension of our care team, helping us serve patients more efficiently while maintaining the human touch." - Meridian Health Group</p>
                         </div>
-                    </div>
-                    <div class="process-step" data-fade data-fade-direction="right" data-fade-delay="500">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h3>Deployment & Optimization</h3>
-                            <p>After launch, we continuously monitor and optimize your chatbot based on user interactions and feedback.</p>
+                        <div class="use-case-image">
+                            <img src="../../assets/images/healthcare-bot.jpg" alt="Healthcare Chatbot" loading="lazy">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="cta-section" data-fade data-fade-direction="up">
+        <section class="cta-section">
             <div class="container">
-                <h2>Ready to revolutionize your customer engagement?</h2>
-                <p>Contact us today to discuss how our chatbot solutions can help improve customer satisfaction and operational efficiency.</p>
+                <h2>Ready to Transform Your Customer Experience?</h2>
+                <p>Let's discuss how a CAAKE chatbot can help your business automate conversations, improve customer satisfaction, and drive growth.</p>
                 <div class="cta-buttons">
-                    <a href="../contact.html" class="btn btn-primary">Contact Us</a>
-                    <a href="../assessment.html" class="btn btn-secondary">Take Our AI Assessment</a>
+                    <a href="../assessment.html" class="btn btn-primary">Get Free Assessment</a>
+                    <a href="../contact.html" class="btn btn-accent">Contact Us Today</a>
                 </div>
             </div>
         </section>
@@ -331,11 +519,11 @@
                 <div class="footer-contact">
                     <h4>Contact Us</h4>
                     <p>Phone: 480-364-1164</p>
-                    <p>Email: automationkingz11@gmail.com</p>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <p>Email: automationking11@caake.org</p>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/company/caake" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com/caake" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="https://facebook.com/caake" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </div>
@@ -345,7 +533,40 @@
         </div>
     </footer>
 
+    <!-- Working Chatbot Container -->
+    <div id="chatbot-container">
+        <!-- Chatbot will be dynamically inserted here by chatbot.js -->
+    </div>
+
+    <script>
+        // Use case tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.use-case-tab');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Hide all content
+                    document.querySelectorAll('.use-case-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    // Show content for selected tab
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    <!-- Include chatbot on all pages -->
+    <script src="../../assets/js/include-chatbot.js"></script>
+
     <script src="../../assets/js/main.js"></script>
-    <script src="../../assets/js/animations.js"></script>
 </body>
 </html>

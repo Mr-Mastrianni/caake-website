@@ -5,10 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI in Healthcare: Revolutionizing Patient Care - CAAKE</title>
     <meta name="description" content="Explore how artificial intelligence is transforming healthcare through enhanced diagnostics, personalized treatment plans, and improved patient outcomes.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://caake.org/pages/blog/ai-in-healthcare.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://caake.org/pages/blog/ai-in-healthcare.html">
+    <meta property="og:title" content="AI in Healthcare: Revolutionizing Patient Care">
+    <meta property="og:description" content="Explore how artificial intelligence is transforming healthcare through enhanced diagnostics, personalized treatment plans, and improved patient outcomes.">
+    <meta property="og:image" content="https://caake.org/assets/images/health.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://caake.org/pages/blog/ai-in-healthcare.html">
+    <meta property="twitter:title" content="AI in Healthcare: Revolutionizing Patient Care">
+    <meta property="twitter:description" content="Explore how artificial intelligence is transforming healthcare through enhanced diagnostics, personalized treatment plans, and improved patient outcomes.">
+    <meta property="twitter:image" content="https://caake.org/assets/images/health.png">
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AI in Healthcare: Revolutionizing Patient Care",
+        "description": "Explore how artificial intelligence is transforming healthcare through enhanced diagnostics, personalized treatment plans, and improved patient outcomes.",
+        "image": "https://caake.org/assets/images/health.png",
+        "datePublished": "2025-03-10",
+        "dateModified": "2025-03-10",
+        "author": {
+            "@type": "Person",
+            "name": "Dr. Emily Wang",
+            "jobTitle": "Healthcare AI Specialist at CAAKE"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "CAAKE",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://caake.org/assets/images/logo.png"
+            }
+        }
+    }
+    </script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
     <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/style-fixes.css">
+    <link rel="stylesheet" href="../../assets/css/dark-mode.css">
 </head>
 <body>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a192f 0%, #0d1526 100%);
+            min-height: 100vh;
+            color: #e5e7eb;
+        }
+
+        .blog-post-page {
+            padding: 2rem 0;
+        }
+
+        .blog-post-content {
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.3);
+            border: 1px solid rgba(102, 179, 255, 0.2);
+        }
+
+        .post-header h1 {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .post-meta {
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .post-body h2 {
+            color: #ffffff;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .post-body p, .post-body li {
+            color: #e5e7eb;
+            line-height: 1.7;
+        }
+
+        .blog-image {
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-caption {
+            background-color: rgba(31, 41, 55, 0.9);
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        blockquote {
+            border-left: 4px solid #66b3ff;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background-color: rgba(31, 41, 55, 0.7);
+            color: #e0e0e0;
+        }
+
+        .featured-image {
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+    </style>
     <header>
         <nav class="navbar">
             <div class="container">
@@ -59,9 +184,33 @@
                     </div>
                 </div>
 
-                <div class="featured-image">
-                    <img src="../../assets/images/blog-post1-full.jpg" alt="AI in Healthcare">
+                <div class="featured-animation" style="height: 400px; position: relative; margin: 2rem 0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);">
+                    <div id="healthcare-animation" class="animation-container" data-animation="healthcare-visualization" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+                        <!-- 3D animation will be rendered here -->
+                    </div>
+                    <div class="animation-controls" style="position: absolute; bottom: 15px; right: 15px; z-index: 10;">
+                        <button id="pause-healthcare" class="animation-control-btn" style="background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                    </div>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const pauseBtn = document.getElementById('pause-healthcare');
+                        let isPaused = false;
+
+                        pauseBtn.addEventListener('click', function() {
+                            if (isPaused) {
+                                window.threeAnimations.resume('healthcare-visualization');
+                                pauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                            } else {
+                                window.threeAnimations.pause('healthcare-visualization');
+                                pauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                            }
+                            isPaused = !isPaused;
+                        });
+                    });
+                </script>
 
                 <div class="post-body">
                     <h2>Introduction</h2>
@@ -411,5 +560,6 @@
     </footer>
 
     <script src="../../assets/js/main.js"></script>
+    <script type="module" src="../../assets/js/three-animations/main.js"></script>
 </body>
 </html>

@@ -5,14 +5,15 @@
   "scripts": {
     "optimize:images": "node optimize-images.js",
     "minify:css": "cleancss -o assets/css/styles.min.css assets/css/styles.css",
-    "minify:js": "terser assets/js/main.js -o assets/js/main.min.js && terser assets/js/animations.js -o assets/js/animations.min.js",
+    "minify:js": "terser assets/js/main.js -o assets/js/main.min.js && terser assets/js/animations.js -o assets/js/animations.min.js && terser assets/js/anime-examples.js -o assets/js/anime-examples.min.js",
     "build": "npm run optimize:images && npm run minify:css && npm run minify:js"
   },
   "dependencies": {
-    "sharp": "^0.32.6"
+    "sharp": "^0.32.6",
+    "animejs": "^4.0.0"
   },
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
     "terser": "^5.19.2"
   }
-} 
+}

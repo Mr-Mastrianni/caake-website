@@ -2,6 +2,14 @@ import NeuralNetworkAnimation from './neural-network.js';
 import WorkflowAutomationAnimation from './workflow-automation.js';
 import DigitalTwinAnimation from './digital-twin.js';
 import DataVisualizationAnimation from './data-visualization.js';
+import AIBrainAnimation from './ai-brain.js';
+import MachineLearningCubeAnimation from './machine-learning-cube.js';
+import AIVoiceWaveformAnimation from './ai-voice-waveform.js';
+import HealthcareVisualization from './healthcare-visualization.js';
+import BusinessAutomationAnimation from './business-automation.js';
+import DataFlowNetworkAnimation from './data-flow-network.js';
+import AIKnowledgeSpheresAnimation from './ai-knowledge-spheres.js';
+import ZedStyleAnimation from './zed-style-animation.js';
 
 // Initialize animations when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +34,14 @@ let neuralNetworkInstance = null;
 let workflowAutomationInstance = null;
 let digitalTwinInstance = null;
 let dataVisualizationInstance = null;
+let aiBrainInstance = null;
+let machineLearningCubeInstance = null;
+let aiVoiceWaveformInstance = null;
+let healthcareVisualizationInstance = null;
+let businessAutomationInstance = null;
+let dataFlowNetworkInstance = null;
+let aiKnowledgeSpheresInstance = null;
+let zedStyleInstance = null;
 
 // Initialization function
 function initAnimations() {
@@ -35,7 +51,15 @@ function initAnimations() {
         initAnimationByType('workflow-automation');
         initAnimationByType('digital-twin');
         initAnimationByType('data-visualization');
-        
+        initAnimationByType('ai-brain');
+        initAnimationByType('machine-learning-cube');
+        initAnimationByType('ai-voice-waveform');
+        initAnimationByType('healthcare-visualization');
+        initAnimationByType('business-automation');
+        initAnimationByType('data-flow-network');
+        initAnimationByType('ai-knowledge-spheres');
+        initAnimationByType('zed-style');
+
         // Set up scroll-based animation visibility
         setupScrollObserver();
     } catch (error) {
@@ -46,12 +70,12 @@ function initAnimations() {
 // Initialize specific animation type
 function initAnimationByType(type) {
     const elements = document.querySelectorAll(`[data-animation="${type}"]`);
-    
+
     elements.forEach(element => {
         try {
             // Get animation options from data attributes if any
             const options = getOptionsFromDataAttributes(element);
-            
+
             // Create animation container if it doesn't exist
             if (!element.querySelector('.animation-container')) {
                 const container = document.createElement('div');
@@ -65,14 +89,14 @@ function initAnimationByType(type) {
                 // Ensure animation container doesn't block interaction
                 container.style.pointerEvents = 'none';
                 container.id = `${type}-container-${Math.floor(Math.random() * 10000)}`;
-                
+
                 // Ensure container is the first child to not interfere with content
                 if (element.firstChild) {
                     element.insertBefore(container, element.firstChild);
                 } else {
                     element.appendChild(container);
                 }
-                
+
                 // Initialize animation based on type
                 switch (type) {
                     case 'neural-network':
@@ -87,8 +111,32 @@ function initAnimationByType(type) {
                     case 'data-visualization':
                         dataVisualizationInstance = new DataVisualizationAnimation(container.id, options);
                         break;
+                    case 'ai-brain':
+                        aiBrainInstance = new AIBrainAnimation(container.id, options);
+                        break;
+                    case 'machine-learning-cube':
+                        machineLearningCubeInstance = new MachineLearningCubeAnimation(container.id, options);
+                        break;
+                    case 'ai-voice-waveform':
+                        aiVoiceWaveformInstance = new AIVoiceWaveformAnimation(container.id, options);
+                        break;
+                    case 'healthcare-visualization':
+                        healthcareVisualizationInstance = new HealthcareVisualization(container.id, options);
+                        break;
+                    case 'business-automation':
+                        businessAutomationInstance = new BusinessAutomationAnimation(container.id, options);
+                        break;
+                    case 'data-flow-network':
+                        dataFlowNetworkInstance = new DataFlowNetworkAnimation(container.id, options);
+                        break;
+                    case 'ai-knowledge-spheres':
+                        aiKnowledgeSpheresInstance = new AIKnowledgeSpheresAnimation(container.id, options);
+                        break;
+                    case 'zed-style':
+                        zedStyleInstance = new ZedStyleAnimation(container.id, options);
+                        break;
                 }
-                
+
                 console.log(`Initialized ${type} animation`);
             }
         } catch (error) {
@@ -102,24 +150,24 @@ function initAnimationByType(type) {
 // Get options from data attributes
 function getOptionsFromDataAttributes(element) {
     const options = {};
-    
+
     // Parse data attributes
     Array.from(element.attributes)
         .filter(attr => attr.name.startsWith('data-option-'))
         .forEach(attr => {
             const optionName = attr.name.replace('data-option-', '');
             let optionValue = attr.value;
-            
+
             // Try to parse JSON values
             try {
                 optionValue = JSON.parse(optionValue);
             } catch (e) {
                 // If not valid JSON, keep as string
             }
-            
+
             options[optionName] = optionValue;
         });
-    
+
     return options;
 }
 
@@ -130,20 +178,20 @@ function setupScrollObserver() {
         console.log('IntersectionObserver not supported');
         return;
     }
-    
+
     const animationElements = document.querySelectorAll('[data-animation]');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const type = entry.target.getAttribute('data-animation');
             const container = entry.target.querySelector('.animation-container');
-            
+
             if (entry.isIntersecting) {
                 // Show animation when in viewport
                 if (container) {
                     container.style.opacity = '1';
                 }
-                
+
                 // Resume animation if it was paused
                 resumeAnimation(type);
             } else {
@@ -152,7 +200,7 @@ function setupScrollObserver() {
                 if (container) {
                     container.style.opacity = '0.3';
                 }
-                
+
                 // Pause animation to save resources
                 pauseAnimation(type);
             }
@@ -160,7 +208,7 @@ function setupScrollObserver() {
     }, {
         threshold: 0.1 // Trigger when at least 10% of the element is visible
     });
-    
+
     // Observe all animation elements
     animationElements.forEach(element => {
         observer.observe(element);
@@ -190,6 +238,46 @@ function pauseAnimation(type) {
                 dataVisualizationInstance.renderer.setAnimationLoop(null);
             }
             break;
+        case 'ai-brain':
+            if (aiBrainInstance && aiBrainInstance.renderer) {
+                aiBrainInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'machine-learning-cube':
+            if (machineLearningCubeInstance && machineLearningCubeInstance.renderer) {
+                machineLearningCubeInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'ai-voice-waveform':
+            if (aiVoiceWaveformInstance && aiVoiceWaveformInstance.renderer) {
+                aiVoiceWaveformInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'healthcare-visualization':
+            if (healthcareVisualizationInstance && healthcareVisualizationInstance.renderer) {
+                healthcareVisualizationInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'business-automation':
+            if (businessAutomationInstance && businessAutomationInstance.renderer) {
+                businessAutomationInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'data-flow-network':
+            if (dataFlowNetworkInstance && dataFlowNetworkInstance.renderer) {
+                dataFlowNetworkInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'ai-knowledge-spheres':
+            if (aiKnowledgeSpheresInstance && aiKnowledgeSpheresInstance.renderer) {
+                aiKnowledgeSpheresInstance.renderer.setAnimationLoop(null);
+            }
+            break;
+        case 'zed-style':
+            if (zedStyleInstance && zedStyleInstance.renderer) {
+                zedStyleInstance.renderer.setAnimationLoop(null);
+            }
+            break;
     }
 }
 
@@ -216,6 +304,46 @@ function resumeAnimation(type) {
                 dataVisualizationInstance.renderer.setAnimationLoop(dataVisualizationInstance.animate.bind(dataVisualizationInstance));
             }
             break;
+        case 'ai-brain':
+            if (aiBrainInstance && aiBrainInstance.renderer) {
+                aiBrainInstance.renderer.setAnimationLoop(aiBrainInstance.animate.bind(aiBrainInstance));
+            }
+            break;
+        case 'machine-learning-cube':
+            if (machineLearningCubeInstance && machineLearningCubeInstance.renderer) {
+                machineLearningCubeInstance.renderer.setAnimationLoop(machineLearningCubeInstance.animate.bind(machineLearningCubeInstance));
+            }
+            break;
+        case 'ai-voice-waveform':
+            if (aiVoiceWaveformInstance && aiVoiceWaveformInstance.renderer) {
+                aiVoiceWaveformInstance.renderer.setAnimationLoop(aiVoiceWaveformInstance.animate.bind(aiVoiceWaveformInstance));
+            }
+            break;
+        case 'healthcare-visualization':
+            if (healthcareVisualizationInstance && healthcareVisualizationInstance.renderer) {
+                healthcareVisualizationInstance.renderer.setAnimationLoop(healthcareVisualizationInstance.animate.bind(healthcareVisualizationInstance));
+            }
+            break;
+        case 'business-automation':
+            if (businessAutomationInstance && businessAutomationInstance.renderer) {
+                businessAutomationInstance.renderer.setAnimationLoop(businessAutomationInstance.animate.bind(businessAutomationInstance));
+            }
+            break;
+        case 'data-flow-network':
+            if (dataFlowNetworkInstance && dataFlowNetworkInstance.renderer) {
+                dataFlowNetworkInstance.renderer.setAnimationLoop(dataFlowNetworkInstance.animate.bind(dataFlowNetworkInstance));
+            }
+            break;
+        case 'ai-knowledge-spheres':
+            if (aiKnowledgeSpheresInstance && aiKnowledgeSpheresInstance.renderer) {
+                aiKnowledgeSpheresInstance.renderer.setAnimationLoop(aiKnowledgeSpheresInstance.animate.bind(aiKnowledgeSpheresInstance));
+            }
+            break;
+        case 'zed-style':
+            if (zedStyleInstance && zedStyleInstance.renderer) {
+                zedStyleInstance.renderer.setAnimationLoop(zedStyleInstance.animate.bind(zedStyleInstance));
+            }
+            break;
     }
 }
 
@@ -225,6 +353,12 @@ window.threeAnimations = {
     workflowAutomation: () => workflowAutomationInstance,
     digitalTwin: () => digitalTwinInstance,
     dataVisualization: () => dataVisualizationInstance,
+    aiBrain: () => aiBrainInstance,
+    machineLearningCube: () => machineLearningCubeInstance,
+    aiVoiceWaveform: () => aiVoiceWaveformInstance,
+    healthcareVisualization: () => healthcareVisualizationInstance,
+    businessAutomation: () => businessAutomationInstance,
+    zedStyle: () => zedStyleInstance,
     init: initAnimations,
     pause: pauseAnimation,
     resume: resumeAnimation
@@ -236,4 +370,9 @@ window.addEventListener('resize', () => {
     if (workflowAutomationInstance) workflowAutomationInstance.onWindowResize();
     if (digitalTwinInstance) digitalTwinInstance.onWindowResize();
     if (dataVisualizationInstance) dataVisualizationInstance.onWindowResize();
-}); 
+    if (aiBrainInstance) aiBrainInstance.onWindowResize();
+    if (machineLearningCubeInstance) machineLearningCubeInstance.onWindowResize();
+    if (aiVoiceWaveformInstance) aiVoiceWaveformInstance.onWindowResize();
+    if (healthcareVisualizationInstance) healthcareVisualizationInstance.onWindowResize();
+    if (businessAutomationInstance) businessAutomationInstance.onWindowResize();
+});

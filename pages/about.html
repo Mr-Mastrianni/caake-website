@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/style-fixes.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/chatbot-fix.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="container">
-                <a href="../index.html" class="logo">CAAKE</a>
+                <a href="../index.html" class="logo-link">
+                    <div class="logo">
+                        <img src="../assets/images/logo.png" alt="CAAKE Logo">
+                        <span class="logo-text">CAAKE</span>
+                    </div>
+                </a>
                 <div class="nav-toggle">
                     <span></span>
                     <span></span>
@@ -35,7 +42,6 @@
                     </li>
                     <li><a href="about.html" class="active">About Us</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="assessment.html">Assessment</a></li>
                 </ul>
             </div>
@@ -118,32 +124,6 @@
             </div>
         </section>
 
-        <section class="testimonials">
-            <div class="container">
-                <h2>What Our Clients Say</h2>
-                <div class="testimonials-grid">
-                    <div class="testimonial">
-                        <blockquote>
-                            <p>"CAAKE helped us streamline our operations with their AI automation solutions. We've seen a 30% increase in efficiency and significant cost savings. Highly recommended!"</p>
-                            <cite>- John Williams, CEO of XYZ Corp</cite>
-                        </blockquote>
-                    </div>
-                    <div class="testimonial">
-                        <blockquote>
-                            <p>"The AI chatbot CAAKE developed for our customer service has transformed how we interact with our customers. Response times are down by 60%, and customer satisfaction has never been higher."</p>
-                            <cite>- Sarah Thompson, Customer Service Director at ABC Retail</cite>
-                        </blockquote>
-                    </div>
-                    <div class="testimonial">
-                        <blockquote>
-                            <p>"Working with CAAKE on our AI strategy was a game-changer for our business. Their consultants provided clear, actionable insights that have guided our digital transformation journey."</p>
-                            <cite>- Michael Brown, CTO of Global Financial Services</cite>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="cta-section">
             <div class="container">
                 <h2>Ready to transform your business with AI?</h2>
@@ -167,7 +147,6 @@
                         <li><a href="services.html">Services</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="assessment.html">Assessment</a></li>
                     </ul>
                 </div>
@@ -185,7 +164,7 @@
                 <div class="footer-contact">
                     <h4>Contact Us</h4>
                     <p>Phone: 480-364-1164</p>
-                    <p>Email: automationkingz11@gmail.com</p>
+                    <p>Email: automationking11@caake.org</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
@@ -198,6 +177,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Include chatbot on all pages -->
+    <script src="../assets/js/include-chatbot.js"></script>
 
     <script src="../assets/js/main.js"></script>
 </body>

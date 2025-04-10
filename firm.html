@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Firmware Agent - v1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/lucide@latest"></script>
+    <script nomodule src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Tailwind gray-100 */
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Active sidebar link style */
+        .sidebar-link-active {
+            background-color: #e5e7eb; /* Tailwind gray-200 */
+            color: #1f2937; /* Tailwind gray-800 */
+            font-weight: 600;
+        }
+        /* Hide content sections by default */
+        .content-section {
+            display: none;
+        }
+        /* Show active content section */
+        .content-section.active {
+            display: block;
+        }
+        /* Simple transition */
+        .content-section {
+            transition: opacity 0.3s ease-in-out;
+        }
+         /* Style for modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 0.5rem; /* Rounded corners */
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Table styles */
+        th, td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid #e5e7eb; /* Tailwind gray-200 */
+        }
+        th {
+          background-color: #f9fafb; /* Tailwind gray-50 */
+          font-weight: 600;
+          color: #374151; /* Tailwind gray-700 */
+        }
+        tr:hover {
+            background-color: #f9fafb; /* Tailwind gray-50 */
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-ok { background-color: #10b981; } /* Tailwind green-500 */
+        .status-warning { background-color: #f59e0b; } /* Tailwind amber-500 */
+        .status-critical { background-color: #ef4444; } /* Tailwind red-500 */
+        .status-info { background-color: #3b82f6; } /* Tailwind blue-500 */
+        .status-unknown { background-color: #6b7280; } /* Tailwind gray-500 */
+
+        /* Button styles */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; /* Tailwind space-x-2 */
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Tailwind blue-500 */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Tailwind blue-600 */
+        }
+         .btn-secondary {
+            background-color: #e5e7eb; /* Tailwind gray-200 */
+            color: #374151; /* Tailwind gray-700 */
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db; /* Tailwind gray-300 */
+        }
+        .btn-danger {
+            background-color: #ef4444; /* Tailwind red-500 */
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626; /* Tailwind red-600 */
+        }
+        .btn-success {
+            background-color: #10b981; /* Tailwind green-500 */
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #059669; /* Tailwind green-600 */
+        }
+
+        /* Card styles */
+        .card {
+            background-color: white;
+            border-radius: 0.5rem; /* Tailwind rounded-lg */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Tailwind shadow-sm */
+            padding: 1.5rem; /* Tailwind p-6 */
+        }
+    </style>
+</head>
+<body>
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white shadow-md flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-gray-800 flex items-center">
+                    <i data-lucide="shield-check" class="mr-2 text-blue-500"></i> AI Firmware Agent
+                </h1>
+                <span class="text-xs text-gray-500 ml-8">v1.0 Mockup</span>
+            </div>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <a href="#dashboard" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md sidebar-link-active" data-target="dashboard">
+                    <i data-lucide="layout-dashboard" class="mr-3 h-5 w-5"></i> Dashboard
+                </a>
+                <a href="#inventory" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="inventory">
+                    <i data-lucide="hard-drive" class="mr-3 h-5 w-5"></i> Asset Inventory
+                </a>
+                <a href="#vulnerabilities" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="vulnerabilities">
+                    <i data-lucide="shield-alert" class="mr-3 h-5 w-5"></i> Vulnerabilities
+                </a>
+                 <a href="#configuration" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="configuration">
+                    <i data-lucide="sliders-horizontal" class="mr-3 h-5 w-5"></i> Configuration Audit
+                </a>
+                 <a href="#integrity" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="integrity">
+                    <i data-lucide="fingerprint" class="mr-3 h-5 w-5"></i> Integrity Monitoring
+                </a>
+                <a href="#patching" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="patching">
+                    <i data-lucide="wrench" class="mr-3 h-5 w-5"></i> Patch Management
+                </a>
+                <a href="#compliance" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="compliance">
+                    <i data-lucide="clipboard-check" class="mr-3 h-5 w-5"></i> Compliance
+                </a>
+                 <a href="#settings" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" data-target="settings">
+                    <i data-lucide="settings" class="mr-3 h-5 w-5"></i> Settings
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-200 text-center text-xs text-gray-500">
+                &copy; 2025 AI Firmware Solutions
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 overflow-y-auto">
+            <section id="dashboard" class="content-section active">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="card">
+                        <h3 class="text-lg font-medium text-gray-600 mb-2 flex items-center"><i data-lucide="hard-drive" class="mr-2 text-blue-500"></i> Managed Assets</h3>
+                        <p class="text-3xl font-bold text-gray-800">1,258</p>
+                        <p class="text-sm text-green-600 flex items-center mt-1"><i data-lucide="trending-up" class="mr-1 h-4 w-4"></i> +15 discovered this week</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-lg font-medium text-gray-600 mb-2 flex items-center"><i data-lucide="shield-alert" class="mr-2 text-red-500"></i> Critical Vulnerabilities</h3>
+                        <p class="text-3xl font-bold text-red-600">27</p>
+                         <p class="text-sm text-gray-500 mt-1">Requiring immediate attention</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-lg font-medium text-gray-600 mb-2 flex items-center"><i data-lucide="package-check" class="mr-2 text-yellow-500"></i> Pending Patches</h3>
+                        <p class="text-3xl font-bold text-yellow-600">84</p>
+                        <p class="text-sm text-gray-500 mt-1">Across 112 devices</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-lg font-medium text-gray-600 mb-2 flex items-center"><i data-lucide="clipboard-check" class="mr-2 text-green-500"></i> Compliance Status</h3>
+                        <p class="text-3xl font-bold text-green-600">98.5%</p>
+                        <p class="text-sm text-gray-500 mt-1">PCI DSS Req 2 & 6</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Vulnerability Trends (Last 30 Days)</h3>
+                        <canvas id="vulnerabilityChart"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Patch Deployment Status</h3>
+                        <canvas id="patchChart"></canvas>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Recent AI Agent Activity & Alerts</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start p-3 bg-red-50 border border-red-200 rounded-md">
+                            <i data-lucide="alert-triangle" class="text-red-600 mr-3 mt-1 h-5 w-5 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-medium text-red-800">Critical Vulnerability Detected (CVE-2025-XXXX)</p>
+                                <p class="text-sm text-red-700">AI analysis indicates high exploitability on 5 internet-facing servers (SRV-WEB-01 to 05). Patch recommended immediately.</p>
+                                <p class="text-xs text-gray-500">2 hours ago</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                            <i data-lucide="fingerprint" class="text-yellow-600 mr-3 mt-1 h-5 w-5 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-medium text-yellow-800">Firmware Integrity Anomaly</p>
+                                <p class="text-sm text-yellow-700">AI detected unexpected change in BIOS hash for ATM-BRANCH-12 after maintenance window. Manual verification suggested.</p>
+                                <p class="text-xs text-gray-500">8 hours ago</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start p-3 bg-blue-50 border border-blue-200 rounded-md">
+                            <i data-lucide="info" class="text-blue-600 mr-3 mt-1 h-5 w-5 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-medium text-blue-800">New Asset Discovery</p>
+                                <p class="text-sm text-blue-700">Discovered 3 new Cisco routers (RTR-CORE-03, RTR-EDGE-05, RTR-EDGE-06). Initial scan scheduled.</p>
+                                <p class="text-xs text-gray-500">1 day ago</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start p-3 bg-green-50 border border-green-200 rounded-md">
+                            <i data-lucide="check-circle" class="text-green-600 mr-3 mt-1 h-5 w-5 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-medium text-green-800">Patch Campaign Completed</p>
+                                <p class="text-sm text-green-700">Scheduled patch for POS terminals (POS-GROUP-A) completed successfully on 48/50 devices. 2 devices require manual follow-up.</p>
+                                <p class="text-xs text-gray-500">2 days ago</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="inventory" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Asset Inventory</h2>
+                <div class="mb-4 flex justify-between items-center">
+                    <input type="text" placeholder="Search assets (Name, IP, Type, Firmware...)" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/2">
+                    <button class="btn btn-primary"><i data-lucide="scan-line" class="mr-1 h-4 w-4"></i> Initiate Discovery Scan</button>
+                </div>
+                <div class="card overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Asset Name</th>
+                                <th>IP Address</th>
+                                <th>Type</th>
+                                <th>Manufacturer</th>
+                                <th>Model</th>
+                                <th>Firmware Version</th>
+                                <th>Last Seen</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SRV-DC-01</td>
+                                <td>10.0.1.10</td>
+                                <td>Server</td>
+                                <td>Dell</td>
+                                <td>PowerEdge R740</td>
+                                <td>BIOS 2.10.1</td>
+                                <td><span class="text-sm text-gray-600">2 min ago</span></td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">OK</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SRV-DC-01')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>ATM-BRANCH-12</td>
+                                <td>192.168.5.22</td>
+                                <td>ATM</td>
+                                <td>Diebold Nixdorf</td>
+                                <td>DN Series 200</td>
+                                <td>BIOS A05 / App 4.2.1</td>
+                                <td><span class="text-sm text-gray-600">8 hours ago</span></td>
+                                <td><span class="status-indicator status-warning"></span><span class="text-sm font-medium text-yellow-700">Integrity Alert</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('ATM-BRANCH-12')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                             <tr>
+                                <td>POS-TERM-105</td>
+                                <td>10.1.2.55</td>
+                                <td>POS Terminal</td>
+                                <td>Verifone</td>
+                                <td>VX 520</td>
+                                <td>FW 1.1.8</td>
+                                <td><span class="text-sm text-gray-600">5 min ago</span></td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">OK</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('POS-TERM-105')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                             <tr>
+                                <td>RTR-CORE-01</td>
+                                <td>10.0.0.1</td>
+                                <td>Router</td>
+                                <td>Cisco</td>
+                                <td>ASR 9000</td>
+                                <td>IOS XR 7.3.2</td>
+                                <td><span class="text-sm text-gray-600">1 min ago</span></td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">OK</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('RTR-CORE-01')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                             <tr>
+                                <td>SEC-CAM-LOBBY</td>
+                                <td>10.2.1.100</td>
+                                <td>IP Camera</td>
+                                <td>Axis</td>
+                                <td>P1375</td>
+                                <td>FW 10.8.1</td>
+                                <td><span class="text-sm text-gray-600">10 min ago</span></td>
+                                <td><span class="status-indicator status-critical"></span><span class="text-sm font-medium text-red-700">Vulnerable</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SEC-CAM-LOBBY')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                             <tr>
+                                <td>SRV-WEB-01</td>
+                                <td>172.16.10.5</td>
+                                <td>Server</td>
+                                <td>HPE</td>
+                                <td>ProLiant DL380</td>
+                                <td>iLO 2.80</td>
+                                <td><span class="text-sm text-gray-600">3 min ago</span></td>
+                                <td><span class="status-indicator status-critical"></span><span class="text-sm font-medium text-red-700">Vulnerable</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SRV-WEB-01')"><i data-lucide="info" class="h-4 w-4"></i></button></td>
+                            </tr>
+                            </tbody>
+                    </table>
+                     <div class="mt-4 flex justify-end">
+                       <span class="text-sm text-gray-700">Showing 1 to 6 of 1,258 entries</span>
+                       </div>
+                </div>
+            </section>
+
+            <section id="vulnerabilities" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Vulnerability Management</h2>
+                 <div class="mb-4 flex justify-between items-center">
+                    <input type="text" placeholder="Search vulnerabilities (CVE, Device, Severity...)" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/2">
+                     <div>
+                        <span class="text-sm font-medium mr-2">Filter by AI Priority:</span>
+                        <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                            <option>All</option>
+                            <option>Critical (AI)</option>
+                            <option>High (AI)</option>
+                            <option>Medium (AI)</option>
+                            <option>Low (AI)</option>
+                        </select>
+                    </div>
+                </div>
+                 <div class="card overflow-x-auto">
+                     <table class="w-full">
+                         <thead>
+                            <tr>
+                                <th>CVE ID</th>
+                                <th>Severity (CVSS)</th>
+                                <th>AI Priority</th>
+                                <th>Description</th>
+                                <th>Affected Devices</th>
+                                <th>Recommended Action</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                             <tr>
+                                <td>CVE-2025-XXXX</td>
+                                <td><span class="font-bold text-red-600">9.8 CRITICAL</span></td>
+                                <td><span class="status-indicator status-critical"></span><span class="font-bold text-red-700">CRITICAL</span></td>
+                                <td class="text-sm">Remote code execution in web server firmware component...</td>
+                                <td>5 (SRV-WEB-01...)</td>
+                                <td class="text-sm">Patch Immediately</td>
+                                <td><span class="text-sm font-medium text-red-600">Not Patched</span></td>
+                                <td><button class="btn btn-primary btn-sm" onclick="createPatchJob('CVE-2025-XXXX')"><i data-lucide="wrench" class="h-4 w-4"></i> Patch</button></td>
+                            </tr>
+                            <tr>
+                                <td>CVE-2024-YYYY</td>
+                                <td><span class="font-bold text-orange-600">7.5 HIGH</span></td>
+                                <td><span class="status-indicator status-warning"></span><span class="font-bold text-orange-700">HIGH</span></td>
+                                <td class="text-sm">Privilege escalation vulnerability in Axis camera firmware...</td>
+                                <td>12 (SEC-CAM...)</td>
+                                <td class="text-sm">Patch within 7 days</td>
+                                <td><span class="text-sm font-medium text-red-600">Not Patched</span></td>
+                                <td><button class="btn btn-primary btn-sm" onclick="createPatchJob('CVE-2024-YYYY')"><i data-lucide="wrench" class="h-4 w-4"></i> Patch</button></td>
+                            </tr>
+                             <tr>
+                                <td>CVE-2025-ZZZZ</td>
+                                <td><span class="font-bold text-yellow-600">5.3 MEDIUM</span></td>
+                                <td><span class="status-indicator status-info"></span><span class="font-bold text-yellow-700">MEDIUM</span></td>
+                                <td class="text-sm">Denial of service vulnerability in router management interface...</td>
+                                <td>35 (RTR-EDGE...)</td>
+                                <td class="text-sm">Patch next cycle</td>
+                                <td><span class="text-sm font-medium text-green-600">Patch Scheduled</span></td>
+                                <td><button class="btn btn-secondary btn-sm" disabled><i data-lucide="clock" class="h-4 w-4"></i> Scheduled</button></td>
+                            </tr>
+                            <tr>
+                                <td>CVE-2024-AAAA</td>
+                                <td><span class="font-bold text-green-600">3.1 LOW</span></td>
+                                <td><span class="status-indicator status-unknown"></span><span class="font-bold text-gray-700">LOW</span></td>
+                                <td class="text-sm">Information disclosure via SNMP default community string...</td>
+                                <td>8 (Various)</td>
+                                <td class="text-sm">Review Configuration</td>
+                                <td><span class="text-sm font-medium text-green-600">Mitigated (Config)</span></td>
+                                <td><button class="btn btn-secondary btn-sm" disabled><i data-lucide="check" class="h-4 w-4"></i> Mitigated</button></td>
+                            </tr>
+                            </tbody>
+                     </table>
+                      <div class="mt-4 flex justify-end">
+                       <span class="text-sm text-gray-700">Showing 1 to 4 of 115 vulnerabilities</span>
+                       </div>
+                 </div>
+            </section>
+
+             <section id="configuration" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Configuration Audit</h2>
+                 <div class="mb-4 flex justify-between items-center">
+                    <input type="text" placeholder="Search configurations (Device, Policy, Status...)" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/2">
+                    <div>
+                        <span class="text-sm font-medium mr-2">Filter by Status:</span>
+                        <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                            <option>All</option>
+                            <option>Non-Compliant</option>
+                            <option>Compliant</option>
+                            <option>Needs Review</option>
+                        </select>
+                    </div>
+                </div>
+                 <div class="card overflow-x-auto">
+                     <table class="w-full">
+                         <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Policy Checked</th>
+                                <th>Check Detail</th>
+                                <th>Status</th>
+                                <th>Last Checked</th>
+                                <th>Recommendation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                             <tr>
+                                <td>RTR-EDGE-05</td>
+                                <td>PCI DSS Req 2.1</td>
+                                <td class="text-sm">Default SNMP Community String ('public')</td>
+                                <td><span class="status-indicator status-critical"></span><span class="text-sm font-medium text-red-700">Non-Compliant</span></td>
+                                <td><span class="text-sm text-gray-600">1 hour ago</span></td>
+                                <td class="text-sm">Change SNMP string or disable SNMPv1/v2c</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('RTR-EDGE-05')"><i data-lucide="eye" class="h-4 w-4"></i> View</button></td>
+                            </tr>
+                             <tr>
+                                <td>SRV-DB-02</td>
+                                <td>NIST CM-6 Baseline</td>
+                                <td class="text-sm">Unnecessary service enabled (Telnet)</td>
+                                <td><span class="status-indicator status-critical"></span><span class="text-sm font-medium text-red-700">Non-Compliant</span></td>
+                                <td><span class="text-sm text-gray-600">2 hours ago</span></td>
+                                <td class="text-sm">Disable Telnet service</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SRV-DB-02')"><i data-lucide="eye" class="h-4 w-4"></i> View</button></td>
+                            </tr>
+                            <tr>
+                                <td>FW-PERIMETER-01</td>
+                                <td>Bank Policy FW-01</td>
+                                <td class="text-sm">Admin password complexity</td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">Compliant</span></td>
+                                <td><span class="text-sm text-gray-600">30 min ago</span></td>
+                                <td class="text-sm">-</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('FW-PERIMETER-01')"><i data-lucide="eye" class="h-4 w-4"></i> View</button></td>
+                            </tr>
+                             <tr>
+                                <td>SWITCH-ACCESS-15</td>
+                                <td>CIS Benchmark L2</td>
+                                <td class="text-sm">Firmware version check</td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">Compliant</span></td>
+                                <td><span class="text-sm text-gray-600">1 day ago</span></td>
+                                <td class="text-sm">-</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SWITCH-ACCESS-15')"><i data-lucide="eye" class="h-4 w-4"></i> View</button></td>
+                            </tr>
+                            </tbody>
+                     </table>
+                      <div class="mt-4 flex justify-end">
+                       <span class="text-sm text-gray-700">Showing 1 to 4 of 87 configuration issues</span>
+                       </div>
+                 </div>
+            </section>
+
+            <section id="integrity" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Integrity Monitoring</h2>
+                 <div class="mb-4 flex justify-between items-center">
+                    <input type="text" placeholder="Search integrity events (Device, Component, Status...)" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/2">
+                     <div>
+                        <span class="text-sm font-medium mr-2">Filter by Status:</span>
+                        <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                            <option>All</option>
+                            <option>Alert</option>
+                            <option>Verified</option>
+                            <option>Baseline Pending</option>
+                        </select>
+                    </div>
+                </div>
+                 <div class="card overflow-x-auto">
+                     <table class="w-full">
+                         <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Component</th>
+                                <th>Status</th>
+                                <th>Detection Method</th>
+                                <th>Last Check</th>
+                                <th>Details</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                             <tr>
+                                <td>ATM-BRANCH-12</td>
+                                <td>BIOS</td>
+                                <td><span class="status-indicator status-warning"></span><span class="text-sm font-medium text-yellow-700">Alert - Mismatch</span></td>
+                                <td class="text-sm">Hash Comparison</td>
+                                <td><span class="text-sm text-gray-600">8 hours ago</span></td>
+                                <td class="text-sm">Current hash differs from baseline</td>
+                                <td><button class="btn btn-danger btn-sm" onclick="investigateIntegrity('ATM-BRANCH-12')"><i data-lucide="search" class="h-4 w-4"></i> Investigate</button></td>
+                            </tr>
+                             <tr>
+                                <td>SRV-DC-01</td>
+                                <td>BIOS</td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">Verified</span></td>
+                                <td class="text-sm">Secure Boot Log</td>
+                                <td><span class="text-sm text-gray-600">2 min ago</span></td>
+                                <td class="text-sm">Matches baseline</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SRV-DC-01')"><i data-lucide="history" class="h-4 w-4"></i> History</button></td>
+                            </tr>
+                            <tr>
+                                <td>SRV-DC-01</td>
+                                <td>BMC Firmware</td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">Verified</span></td>
+                                <td class="text-sm">Signed Manifest</td>
+                                <td><span class="text-sm text-gray-600">2 min ago</span></td>
+                                <td class="text-sm">Matches baseline</td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('SRV-DC-01')"><i data-lucide="history" class="h-4 w-4"></i> History</button></td>
+                            </tr>
+                             <tr>
+                                <td>RTR-CORE-02</td>
+                                <td>Bootloader</td>
+                                <td><span class="status-indicator status-info"></span><span class="text-sm font-medium text-blue-700">Baseline Pending</span></td>
+                                <td class="text-sm">-</td>
+                                <td><span class="text-sm text-gray-600">1 day ago</span></td>
+                                <td class="text-sm">New device, awaiting baseline</td>
+                                <td><button class="btn btn-primary btn-sm" onclick="baselineDevice('RTR-CORE-02')"><i data-lucide="scan" class="h-4 w-4"></i> Baseline</button></td>
+                            </tr>
+                            </tbody>
+                     </table>
+                      <div class="mt-4 flex justify-end">
+                       <span class="text-sm text-gray-700">Showing 1 to 4 of 1,258 integrity checks</span>
+                       </div>
+                 </div>
+            </section>
+
+            <section id="patching" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Patch Management</h2>
+                 <div class="mb-4 flex justify-between items-center">
+                    <input type="text" placeholder="Search patches (CVE, Device Group, Status...)" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/2">
+                    <button class="btn btn-primary" onclick="createPatchJob('New Campaign')"><i data-lucide="plus-circle" class="mr-1 h-4 w-4"></i> Create Patch Job</button>
+                </div>
+                 <div class="card overflow-x-auto">
+                     <table class="w-full">
+                         <thead>
+                            <tr>
+                                <th>Job Name</th>
+                                <th>Target</th>
+                                <th>Patch/CVE</th>
+                                <th>AI Recommendation</th>
+                                <th>Status</th>
+                                <th>Scheduled Time</th>
+                                <th>Completion</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                             <tr>
+                                <td>Patch Web Servers (Critical)</td>
+                                <td>Group: Web Servers (5)</td>
+                                <td class="text-sm">CVE-2025-XXXX</td>
+                                <td><span class="text-sm font-medium text-red-600">Immediate</span></td>
+                                <td><span class="status-indicator status-info"></span><span class="text-sm font-medium text-blue-700">In Progress</span></td>
+                                <td><span class="text-sm text-gray-600">ASAP (Manual Trigger)</span></td>
+                                <td><span class="text-sm text-gray-600">60% (3/5)</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('Patch Web Servers')"><i data-lucide="bar-chart-2" class="h-4 w-4"></i> View Progress</button></td>
+                            </tr>
+                            <tr>
+                                <td>Update Axis Cameras Q2</td>
+                                <td>Type: IP Camera (Axis) (12)</td>
+                                <td class="text-sm">CVE-2024-YYYY</td>
+                                <td><span class="text-sm font-medium text-orange-600">Within 7 Days</span></td>
+                                <td><span class="status-indicator status-info"></span><span class="text-sm font-medium text-blue-700">Scheduled</span></td>
+                                <td><span class="text-sm text-gray-600">Apr 11, 2:00 AM</span></td>
+                                <td><span class="text-sm text-gray-600">0%</span></td>
+                                <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('Update Axis Cameras')"><i data-lucide="edit" class="h-4 w-4"></i> Edit</button></td>
+                            </tr>
+                             <tr>
+                                <td>POS Terminals Cycle 2025-Q1</td>
+                                <td>Group: POS-GROUP-A (50)</td>
+                                <td class="text-sm">Vendor FW Update</td>
+                                <td><span class="text-sm font-medium text-yellow-600">Routine</span></td>
+                                <td><span class="status-indicator status-ok"></span><span class="text-sm font-medium text-green-700">Completed</span></td>
+                                <td><span class="text-sm text-gray-600">Apr 7, 3:00 AM</span></td>
+                                <td><span class="text-sm text-gray-600">96% (48/50)</span></td>
+                                 <td><button class="btn btn-secondary btn-sm" onclick="showDetailsModal('POS Terminals Cycle')"><i data-lucide="bar-chart-2" class="h-4 w-4"></i> View Report</button></td>
+                            </tr>
+                             <tr>
+                                <td>Core Router Maintenance</td>
+                                <td>Device: RTR-CORE-01</td>
+                                <td class="text-sm">IOS XR 7.3.3</td>
+                                <td><span class="text-sm font-medium text-yellow-600">Scheduled Maint.</span></td>
+                                <td><span class="status-indicator status-unknown"></span><span class="text-sm font-medium text-gray-700">Pending Approval</span></td>
+                                <td><span class="text-sm text-gray-600">Apr 15, 1:00 AM</span></td>
+                                <td><span class="text-sm text-gray-600">0%</span></td>
+                                <td><button class="btn btn-success btn-sm" onclick="approvePatchJob('Core Router Maint')"><i data-lucide="check" class="h-4 w-4"></i> Approve</button></td>
+                            </tr>
+                            </tbody>
+                     </table>
+                      <div class="mt-4 flex justify-end">
+                       <span class="text-sm text-gray-700">Showing 1 to 4 of 25 patch jobs</span>
+                       </div>
+                 </div>
+            </section>
+
+            <section id="compliance" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Compliance Center</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">PCI DSS v4.0.1 Status</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Req 2: Secure Configurations</span>
+                                    <span class="text-sm font-medium text-green-700">97% Compliant</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-green-500 h-2.5 rounded-full" style="width: 97%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">3 non-compliant configurations identified.</p>
+                            </div>
+                             <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Req 6: Secure Systems (Patching)</span>
+                                    <span class="text-sm font-medium text-yellow-700">92% Compliant</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 92%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">15 devices overdue for critical patches.</p>
+                            </div>
+                             </div>
+                        <button class="btn btn-primary mt-4 w-full"><i data-lucide="download" class="mr-1 h-4 w-4"></i> Download PCI DSS Report</button>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">NIST SP 800-53 Rev 5 Status</h3>
+                         <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">SI-7: Integrity Monitoring</span>
+                                    <span class="text-sm font-medium text-yellow-700">99% Coverage</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 99%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">12 devices pending baseline. 1 active alert.</p>
+                            </div>
+                             <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">CM Controls: Configuration Mgmt</span>
+                                    <span class="text-sm font-medium text-green-700">95% Compliant</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-green-500 h-2.5 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Configuration standards applied.</p>
+                            </div>
+                             </div>
+                         <button class="btn btn-primary mt-4 w-full"><i data-lucide="download" class="mr-1 h-4 w-4"></i> Download NIST Report</button>
+                    </div>
+                </div>
+                 <div class="card">
+                     <h3 class="text-xl font-semibold text-gray-700 mb-4">Compliance Audit Log</h3>
+                     <textarea class="w-full h-48 p-2 border border-gray-300 rounded-md text-xs font-mono bg-gray-50" readonly>
+[2025-04-09 21:10:05] INFO: PCI DSS Req 2 Scan Completed. Found 3 non-compliant items.
+[2025-04-09 13:05:15] ALERT: Integrity mismatch detected on ATM-BRANCH-12 BIOS. Hash: abc...def != Baseline: 123...456
+[2025-04-09 10:00:00] INFO: NIST SI-7 Integrity Scan started for all assets.
+[2025-04-08 15:30:10] INFO: Patch job 'Update Axis Cameras Q2' scheduled by admin@bank.com.
+[2025-04-07 03:15:00] INFO: Patch job 'POS Terminals Cycle 2025-Q1' completed. Success: 48, Failed: 2.
+[2025-04-07 00:05:00] INFO: Vulnerability scan completed. Found 5 new medium vulnerabilities.
+...
+                     </textarea>
+                 </div>
+            </section>
+
+             <section id="settings" class="content-section">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Settings</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Discovery Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Network Scan Ranges (CIDR)</label>
+                                <input type="text" value="10.0.0.0/8, 192.168.0.0/16, 172.16.0.0/12" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Scan Frequency</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                    <option selected>Daily</option>
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary">Save Discovery Settings</button>
+                        </div>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Alerting & Notifications</h3>
+                        <div class="space-y-4">
+                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Send Critical Alerts To (Email)</label>
+                                <input type="email" value="soc@bank.com, it-ops@bank.com" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">SIEM Integration (Webhook URL)</label>
+                                <input type="url" placeholder="https://siem.bank.com/webhook/..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                             <button class="btn btn-primary">Save Alert Settings</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Patching Policies</h3>
+                         <div class="space-y-4">
+                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Default Action for Critical Vulns</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                    <option>Manual Approval Required</option>
+                                    <option selected>Auto-Schedule Patch (Notify Admins)</option>
+                                    <option>Auto-Deploy Patch Immediately (High Risk)</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Standard Maintenance Window</label>
+                                <input type="text" value="Sat/Sun 1:00 AM - 4:00 AM" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <button class="btn btn-primary">Save Patch Policies</button>
+                         </div>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">User Management</h3>
+                         <p class="text-sm text-gray-600 mb-4">Configure Roles and Permissions (Placeholder)</p>
+                         <button class="btn btn-secondary">Manage Users & Roles</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+     <div id="assetDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('assetDetailsModal')">&times;</span>
+            <h3 class="text-xl font-semibold text-gray-700 mb-4" id="modalTitle">Asset Details</h3>
+            <div id="modalBody" class="text-sm">
+                Loading details...
+            </div>
+             <div class="mt-6 flex justify-end space-x-3">
+                 <button class="btn btn-secondary" onclick="closeModal('assetDetailsModal')">Close</button>
+                 <button class="btn btn-primary"><i data-lucide="scan" class="h-4 w-4"></i> Rescan Asset</button>
+             </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Sidebar Navigation ---
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+
+                // Update active link style
+                sidebarLinks.forEach(l => l.classList.remove('sidebar-link-active'));
+                link.classList.add('sidebar-link-active');
+
+                // Show target section, hide others
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.style.opacity = 0; // Start fade
+                        section.classList.add('active');
+                        // Trigger reflow before changing opacity for transition
+                        void section.offsetWidth;
+                        section.style.opacity = 1; // Fade in
+                    } else {
+                        section.classList.remove('active');
+                        section.style.opacity = 0; // Ensure hidden sections are faded out
+                    }
+                });
+
+                // Update URL hash
+                window.location.hash = targetId;
+            });
+        });
+
+         // --- Handle initial page load based on hash ---
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1);
+            const targetLink = document.querySelector(`.sidebar-link[data-target="${hash}"]`);
+
+            if (targetLink) {
+                 // Simulate click to activate the correct section and link style
+                targetLink.click();
+            } else {
+                // Default to dashboard if hash is invalid or missing
+                document.querySelector('.sidebar-link[data-target="dashboard"]').click();
+            }
+        }
+
+        // Call on initial load and on hash change
+        window.addEventListener('load', handleHashChange);
+        window.addEventListener('hashchange', handleHashChange);
+
+
+        // --- Chart.js Setup ---
+        // Mock data for charts
+        const vulnerabilityData = {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+                label: 'Critical Vulns Found',
+                data: [15, 25, 20, 27],
+                borderColor: '#ef4444', // red-500
+                tension: 0.1,
+                fill: false
+            }, {
+                label: 'High Vulns Found',
+                data: [30, 40, 35, 45],
+                borderColor: '#f59e0b', // amber-500
+                tension: 0.1,
+                fill: false
+            }]
+        };
+
+        const patchData = {
+            labels: ['Successful', 'Scheduled', 'Failed', 'Pending Approval'],
+            datasets: [{
+                label: 'Patch Status',
+                data: [550, 84, 15, 5],
+                backgroundColor: [
+                    '#10b981', // green-500
+                    '#3b82f6', // blue-500
+                    '#ef4444', // red-500
+                    '#f59e0b'  // amber-500
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        // Render charts
+        const ctxVuln = document.getElementById('vulnerabilityChart').getContext('2d');
+        new Chart(ctxVuln, {
+            type: 'line',
+            data: vulnerabilityData,
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        const ctxPatch = document.getElementById('patchChart').getContext('2d');
+        new Chart(ctxPatch, {
+            type: 'doughnut',
+            data: patchData,
+             options: { responsive: true, maintainAspectRatio: false }
+        });
+
+         // --- Modal Logic ---
+        function showDetailsModal(assetName) {
+            const modal = document.getElementById('assetDetailsModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            title.textContent = `Details for ${assetName}`;
+            // --- MOCK DATA LOADING ---
+            // In a real app, you'd fetch data based on assetName
+            let detailsHtml = `<p class="mb-2"><strong class="font-medium text-gray-700">Name:</strong> ${assetName}</p>`;
+            if (assetName === 'SRV-DC-01') {
+                 detailsHtml += `
+                    <p class="mb-2"><strong class="font-medium text-gray-700">IP Address:</strong> 10.0.1.10</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Type:</strong> Server</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">OS:</strong> Windows Server 2022</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Firmware (BIOS):</strong> Dell 2.10.1 (Verified OK)</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Firmware (BMC/iDRAC):</strong> 5.10.00.00 (Verified OK)</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Compliance:</strong> PCI DSS Compliant, NIST Baseline OK</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Recent Activity:</strong> Last seen 2 min ago. Integrity check passed.</p>
+                `;
+            } else if (assetName === 'ATM-BRANCH-12') {
+                 detailsHtml += `
+                    <p class="mb-2"><strong class="font-medium text-gray-700">IP Address:</strong> 192.168.5.22</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Type:</strong> ATM</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Manufacturer:</strong> Diebold Nixdorf</p>
+                     <p class="mb-2"><strong class="font-medium text-gray-700">Firmware (BIOS):</strong> A05 (<span class="text-red-600 font-bold">Integrity Mismatch!</span>)</p>
+                     <p class="mb-2"><strong class="font-medium text-gray-700">Firmware (Application):</strong> 4.2.1 (Verified OK)</p>
+                     <p class="mb-2"><strong class="font-medium text-gray-700">Compliance:</strong> PCI DSS Pending Review</p>
+                     <p class="mb-2"><strong class="font-medium text-gray-700">Recent Activity:</strong> Integrity alert triggered 8 hours ago during check.</p>
+                 `;
+            } else if (assetName === 'SEC-CAM-LOBBY') {
+                 detailsHtml += `
+                    <p class="mb-2"><strong class="font-medium text-gray-700">IP Address:</strong> 10.2.1.100</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Type:</strong> IP Camera</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Manufacturer:</strong> Axis</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Firmware:</strong> 10.8.1 (<span class="text-red-600 font-bold">Vulnerable: CVE-2024-YYYY</span>)</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Compliance:</strong> NIST IoT Baseline Check Failed</p>
+                    <p class="mb-2"><strong class="font-medium text-gray-700">Recent Activity:</strong> Vulnerability scan detected issue 1 day ago. Patch scheduled.</p>
+                 `;
+            } else {
+                 detailsHtml = `<p>Details for ${assetName} would be loaded here.</p>`;
+            }
+             // --- END MOCK DATA ---
+
+            body.innerHTML = detailsHtml;
+            modal.style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('assetDetailsModal');
+            if (event.target == modal) {
+                closeModal('assetDetailsModal');
+            }
+        }
+
+        // --- Placeholder actions for buttons ---
+        function createPatchJob(cveOrCampaign) {
+            alert(`Placeholder: Initiate patch job creation workflow for '${cveOrCampaign}'.`);
+        }
+         function investigateIntegrity(assetName) {
+            alert(`Placeholder: Initiate investigation workflow for integrity alert on '${assetName}'.`);
+        }
+         function baselineDevice(assetName) {
+            alert(`Placeholder: Initiate baseline capture process for '${assetName}'.`);
+        }
+        function approvePatchJob(jobName) {
+             alert(`Placeholder: Approve patch job '${jobName}'. Status would change.`);
+        }
+
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+    </script>
+</body>
+</html>

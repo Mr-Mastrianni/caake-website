@@ -1,5 +1,5 @@
 import ThreeJSSetup from './setup.js';
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+import * as THREE from 'three';
 
 class NeuralNetworkAnimation extends ThreeJSSetup {
     constructor(containerId, options = {}) {

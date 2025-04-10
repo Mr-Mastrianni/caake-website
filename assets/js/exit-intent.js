@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let popupShown = false;
     const cookieName = 'caake_exit_popup_shown';
 
+    // Ensure popup is fully hidden initially
+    popupContainer.style.display = 'none';
+    popupContainer.style.opacity = '0';
+    popupContainer.style.visibility = 'hidden';
+
     // Check if popup was shown recently (using session storage for simplicity, use cookies for persistence)
     if (sessionStorage.getItem(cookieName)) {
         return;
@@ -41,12 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
+        // Display popup with animation
         popupContainer.style.display = 'flex';
         
+        // Trigger reflow for animation
+        void popupContainer.offsetWidth;
+        
         // Add animation
-        setTimeout(() => {
-            popupContainer.classList.add('visible');
-        }, 10);
+        popupContainer.classList.add('visible');
+        popupContainer.style.opacity = '1';
+        popupContainer.style.visibility = 'visible';
 
         // Handle close button
         const closeButton = popupContainer.querySelector('.popup-close');
@@ -60,9 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to hide the popup
     function hidePopup() {
         popupContainer.classList.remove('visible');
+        popupContainer.style.opacity = '0';
         
         setTimeout(() => {
             popupContainer.style.display = 'none';
+            popupContainer.style.visibility = 'hidden';
         }, 300); // Wait for animation
     }
 
