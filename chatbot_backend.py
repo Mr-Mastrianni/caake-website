@@ -1,3 +1,7 @@
+# This script sets up a FastAPI backend for a chatbot.
+# It includes OpenAI API integration for generating responses and images,
+# handles various HTTP requests, and uses CORS middleware for cross-origin communication.
+
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +17,7 @@ import socket
 
 # --- Configuration ---
 load_dotenv()  # Load environment variables from .env file
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # API key for accessing OpenAI services
 if not OPENAI_API_KEY:
     print("Warning: OPENAI_API_KEY environment variable not set.")
 
@@ -22,20 +26,25 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # --- Rate Limiting Configuration ---
-MAX_RETRIES = 5
-INITIAL_RETRY_DELAY = 1  # seconds
-MAX_RETRY_DELAY = 16  # seconds
+MAX_RETRIES = 5  # Maximum number of retries for API requests
+INITIAL_RETRY_DELAY = 1  # Initial delay between retries in seconds
+MAX_RETRY_DELAY = 16  # Maximum delay between retries in seconds
 
 # --- FastAPI App Initialization ---
+# Initialize the FastAPI application. This 'app' instance will be used to define routes and middleware.
 app = FastAPI()
 
 # --- CORS Middleware ---
+# Add CORS (Cross-Origin Resource Sharing) middleware to the application.
+# This allows web pages from any origin to make requests to this FastAPI backend.
+# In a production environment, it's crucial to restrict `allow_origins` to specific domains
+# for security reasons.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your actual domain
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Specifies which origins are allowed to make requests. "*" means all origins.
+    allow_credentials=True,  # Indicates that cookies should be supported for cross-origin requests.
+    allow_methods=["*"],  # Specifies which HTTP methods are allowed (e.g., GET, POST). "*" means all methods.
+    allow_headers=["*"],  # Specifies which HTTP headers can be used during the actual request. "*" means all headers.
 )
 
 SYSTEM_PROMPT = """You are CAAKE AI, the official AI assistant for CAAKE (Cost Avoidance Automation Kingz Enterprise). You are an expert in AI automation solutions and business transformation.
@@ -124,7 +133,22 @@ Remember to:
 If you're unsure about specific pricing or technical details, acknowledge the question and offer to connect the user with a CAAKE specialist."""
 
 async def make_openai_request(client, url, headers, data, timeout=30.0):
-    """Make OpenAI API request with exponential backoff retry logic."""
+    """
+    Makes an HTTP POST request to the OpenAI API with exponential backoff retry logic.
+
+    Args:
+        client (httpx.AsyncClient): An httpx.AsyncClient instance.
+        url (str): The OpenAI API endpoint URL.
+        headers (dict): Request headers, including authorization.
+        data (dict): Request payload.
+        timeout (float, optional): Request timeout in seconds. Defaults to 30.0.
+
+    Returns:
+        dict: The JSON response from the OpenAI API.
+
+    Raises:
+        HTTPException: If the request fails after multiple retries or encounters an unrecoverable error.
+    """
     retry_count = 0
     retry_delay = INITIAL_RETRY_DELAY
 
@@ -167,7 +191,16 @@ async def make_openai_request(client, url, headers, data, timeout=30.0):
             raise HTTPException(status_code=500, detail=str(e))
 
 async def get_gpt4o_response(text: str):
-    """Get response from OpenAI's GPT model."""
+    """
+    Retrieves a response from OpenAI's GPT-4 model based on the input text.
+
+    Args:
+        text (str): The user's input message/query.
+
+    Returns:
+        str: The GPT-4 model's response.
+             Returns a placeholder if the OpenAI API key is not set or if the input is 'ping'.
+    """
     logger.info(f"Received text for GPT: {text}")
     
     if not OPENAI_API_KEY:
@@ -199,7 +232,20 @@ async def get_gpt4o_response(text: str):
         return result["choices"][0]["message"]["content"]
 
 async def generate_dalle_image(prompt: str):
-    """Generate image using DALL-E."""
+    """
+    Generates an image using OpenAI's DALL-E model based on the input prompt.
+    The prompt is first improved by GPT-4 to enhance image quality and relevance.
+
+    Args:
+        prompt (str): The user's input prompt for image generation.
+
+    Returns:
+        str: The URL of the generated image.
+             Returns a placeholder image URL if the OpenAI API key is not set.
+
+    Raises:
+        HTTPException: If the image generation request fails or encounters an error.
+    """
     logger.info(f"Received prompt for DALL-E: {prompt}")
     
     if not OPENAI_API_KEY:
@@ -245,7 +291,16 @@ async def generate_dalle_image(prompt: str):
 # --- Routes ---
 @app.get("/api/config")
 async def get_config():
-    """Serve API configuration securely."""
+    """
+    Endpoint to serve public API configuration securely.
+    Provides the OpenAI API key and rate limiting parameters.
+
+    Raises:
+        HTTPException: If the OPENAI_API_KEY is not configured on the server.
+
+    Returns:
+        JSONResponse: A JSON object containing the API configuration.
+    """
     if not OPENAI_API_KEY:
         raise HTTPException(status_code=500, detail="API key not configured on server")
     return JSONResponse({
@@ -257,7 +312,20 @@ async def get_config():
 
 @app.post("/chat")
 async def http_chat(request: dict):
-    """Handles HTTP POST requests for text chat."""
+    """
+    Handles incoming HTTP POST requests for the text chat functionality.
+    It takes a user's message, gets a response from the GPT model, and returns it.
+
+    Args:
+        request (dict): A dictionary containing the user's message under the key "message".
+
+    Returns:
+        JSONResponse: A JSON response containing the bot's text response.
+                      Handles 'ping' messages directly and provides error responses for issues.
+
+    Raises:
+        HTTPException: If the "message" is missing in the request or if an internal server error occurs.
+    """
     user_message = request.get("message")
     if not user_message:
         raise HTTPException(status_code=400, detail="Missing 'message' in request body")
@@ -271,7 +339,8 @@ async def http_chat(request: dict):
         return JSONResponse(content={"type": "text", "content": bot_response})
     except Exception as e:
         logger.error(f"Error in /chat endpoint: {str(e)}")
-        if "429" in str(e):
+        # Specifically handle 429 (Too Many Requests) errors from the API
+        if "429" in str(e): 
             return JSONResponse(
                 status_code=429,
                 content={
@@ -283,7 +352,20 @@ async def http_chat(request: dict):
 
 @app.post("/generate-image")
 async def http_generate_image(request: dict):
-    """Handles HTTP POST requests for image generation."""
+    """
+    Handles incoming HTTP POST requests for the image generation functionality.
+    It takes a user's prompt, generates an image using DALL-E, and returns the image URL.
+
+    Args:
+        request (dict): A dictionary containing the user's prompt under the key "prompt".
+
+    Returns:
+        JSONResponse: A JSON response containing the URL of the generated image.
+                      Provides error responses for issues.
+
+    Raises:
+        HTTPException: If the "prompt" is missing in the request or if an internal server error occurs during image generation.
+    """
     prompt = request.get("prompt")
     if not prompt:
         raise HTTPException(status_code=400, detail="Missing 'prompt' in request body")
@@ -291,7 +373,7 @@ async def http_generate_image(request: dict):
     try:
         image_url = await generate_dalle_image(prompt)
         return JSONResponse(content={"type": "image", "content": image_url})
-    except HTTPException as e:
+    except HTTPException as e: # Re-raise known HTTPExceptions to be handled by FastAPI's default error handling
         raise e
     except Exception as e:
         logger.error(f"Unexpected error in /generate-image endpoint: {e}")
@@ -299,10 +381,28 @@ async def http_generate_image(request: dict):
 
 @app.get("/")
 async def read_root():
+    """
+    Root endpoint to check the status of the chatbot backend.
+
+    Returns:
+        dict: A dictionary indicating that the chatbot backend is running.
+    """
     return {"status": "Chatbot backend is running"}
 
 def find_available_port(start_port=8000, max_port=8020):
-    """Find an available port in the given range."""
+    """
+    Finds an available network port within a specified range.
+
+    Args:
+        start_port (int, optional): The beginning of the port range to check. Defaults to 8000.
+        max_port (int, optional): The end of the port range to check. Defaults to 8020.
+
+    Returns:
+        int: The first available port found in the range.
+
+    Raises:
+        RuntimeError: If no available port is found within the specified range.
+    """
     for port in range(start_port, max_port + 1):
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -313,12 +413,25 @@ def find_available_port(start_port=8000, max_port=8020):
     raise RuntimeError(f"No available ports in range {start_port}-{max_port}")
 
 if __name__ == "__main__":
-    import uvicorn
+    # This block executes when the script is run directly (not imported as a module).
+    # It's responsible for starting the Uvicorn ASGI server to serve the FastAPI application.
+
+    import uvicorn  # Import the Uvicorn ASGI server
 
     try:
+        # Find an available port to run the server on.
+        # This helps avoid conflicts if the default port (e.g., 8000) is already in use.
         port = find_available_port()
+        
         logger.info(f"Starting chatbot backend server on port {port}...")
+        
+        # Start the Uvicorn server:
+        # - 'app': The FastAPI application instance to run.
+        # - host="0.0.0.0": Makes the server accessible from any network interface.
+        # - port=port: The port number determined by find_available_port().
         uvicorn.run(app, host="0.0.0.0", port=port)
+        
     except Exception as e:
+        # Log any errors that occur during server startup and exit the script.
         logger.error(f"Failed to start server: {e}")
-        exit(1)
+        exit(1)  # Exit with a non-zero status code to indicate failure.
