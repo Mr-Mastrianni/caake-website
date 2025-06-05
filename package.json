@@ -9,8 +9,9 @@
     "build": "npm run optimize:images && npm run minify:css && npm run minify:js"
   },
   "dependencies": {
-    "sharp": "^0.32.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
     "animejs": "^4.0.0",
+    "sharp": "^0.32.6",
     "three": "^0.132.2"
   },
   "devDependencies": {

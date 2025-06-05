@@ -704,6 +704,85 @@
         .faq-item:nth-child(5) {
             transition-delay: 0.2s;
         }
+        
+        .ai-commercials {
+            margin-top: 80px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .ai-commercials h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+        
+        .ai-commercials > .container > p {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .ai-commercials .pricing-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #1e293b;
+        }
+        
+        .ai-commercials .pricing-card.featured {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .ai-commercials .pricing-card h3 {
+            color: #1e293b;
+        }
+        
+        .ai-commercials .pricing-card p {
+            color: #64748b;
+        }
+        
+        .ai-commercials .features li {
+            color: #334155;
+        }
+        
+        .monthly-retainer-section h3 {
+            color: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .ai-commercials .pricing-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .ai-commercials .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+        
+        /* Special styling for commercial package icons */
+        .ai-commercials .pricing-card h3 i {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.2em;
+        }
+
+        .pricing-intro h2 {
+            color: #1e293b; /* Dark blue-grey, consistent with other headings */
+        }
+
+        .pricing-intro p {
+            color: #334155; /* Dark grey for good contrast */
+        }
     </style>
 </head>
 <body>
@@ -727,6 +806,7 @@
                             <li><a href="services/agents.html">AI Agents</a></li>
                             <li><a href="services/assistants.html">AI Assistants</a></li>
                             <li><a href="services/chatbots.html">Chatbots</a></li>
+                            <li><a href="services/commercials.html">AI Commercials</a></li>
                         </ul>
                     </li>
                     <li><a href="about.html">About Us</a></li>
@@ -879,6 +959,106 @@
             </div>
         </section>
 
+        <section class="ai-commercials">
+            <div class="container">
+                <h2>🎬 AI Commercial Packages</h2>
+                <p>Professional AI-generated commercials to elevate your brand and drive results.</p>
+                
+                <div class="pricing-table">
+                    <div class="pricing-card">
+                        <h3><i class="fas fa-play-circle"></i> 🎬 Starter Package</h3>
+                        <div class="price">$297</div>
+                        <p>Perfect for businesses getting started with AI commercials</p>
+                        <ul class="features">
+                            <li>Single 30-60 second AI commercial</li>
+                            <li>Basic customization options</li>
+                            <li>1-2 revision rounds</li>
+                            <li>Standard delivery (5-7 business days)</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/7sY7sLbBPauM8CW1dOd3i00" class="btn btn-primary" target="_blank">Buy Now</a>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <div class="featured-tag">Most Popular</div>
+                        <h3><i class="fas fa-rocket"></i> 🚀 Professional Package</h3>
+                        <div class="price">$797</div>
+                        <p>Ideal for businesses wanting comprehensive commercial content</p>
+                        <ul class="features">
+                            <li>2-3 AI commercials (different lengths/formats)</li>
+                            <li>Advanced customization & branding</li>
+                            <li>Up to 3 revision rounds</li>
+                            <li>Priority delivery (3-5 business days)</li>
+                            <li>Social media optimization versions</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/5kQeVd0Xb1Yg5qK9Kkd3i01" class="btn btn-accent" target="_blank">Buy Now</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3><i class="fas fa-gem"></i> 💎 Enterprise Package</h3>
+                        <div class="price">$1497</div>
+                        <p>Complete commercial campaign for maximum impact</p>
+                        <ul class="features">
+                            <li>Complete commercial campaign (5-8 videos)</li>
+                            <li>Full brand integration & consultation</li>
+                            <li>Unlimited revisions within scope</li>
+                            <li>Rush delivery (1-2 business days)</li>
+                            <li>Multiple format outputs</li>
+                            <li>Performance analytics setup</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/7sY9AT21feL2g5o09Kd3i02" class="btn btn-primary" target="_blank">Buy Now</a>
+                    </div>
+                </div>
+                
+                <div class="monthly-retainer-section" style="margin-top: 60px;">
+                    <h3 style="text-align: center; color: #1e293b; margin-bottom: 40px; font-size: 1.8rem;">Monthly Retainer Options</h3>
+                    <div class="pricing-table">
+                        <div class="pricing-card">
+                            <h3><i class="fas fa-chart-line"></i> Growth Partner</h3>
+                            <div class="price">$847 <span>/ month</span></div>
+                            <p>Consistent commercial content for growing businesses</p>
+                            <ul class="features">
+                                <li>2 commercials monthly</li>
+                                <li>Standard customization</li>
+                                <li>Regular delivery schedule</li>
+                                <li>Email support</li>
+                            </ul>
+                            <a href="https://buy.stripe.com/00w3cv8pDdGY06q2hSd3i03" class="btn btn-primary" target="_blank">Subscribe Now</a>
+                        </div>
+                        
+                        <div class="pricing-card featured">
+                            <div class="featured-tag">Best Value</div>
+                            <h3><i class="fas fa-expand-arrows-alt"></i> Scale Partner</h3>
+                            <div class="price">$1497 <span>/ month</span></div>
+                            <p>Comprehensive commercial strategy with expert guidance</p>
+                            <ul class="features">
+                                <li>4 commercials monthly</li>
+                                <li>Strategy consultation calls</li>
+                                <li>Advanced customization</li>
+                                <li>Priority support</li>
+                                <li>Performance tracking</li>
+                            </ul>
+                            <a href="https://buy.stripe.com/28EfZh21fauM2ey1dOd3i04" class="btn btn-accent" target="_blank">Subscribe Now</a>
+                        </div>
+                        
+                        <div class="pricing-card">
+                            <h3><i class="fas fa-crown"></i> Domination Partner</h3>
+                            <div class="price">$2497 <span>/ month</span></div>
+                            <p>Complete marketing automation and unlimited commercials</p>
+                            <ul class="features">
+                                <li>Unlimited commercials</li>
+                                <li>Full marketing automation</li>
+                                <li>Dedicated account manager</li>
+                                <li>Advanced analytics & reporting</li>
+                                <li>Custom integrations</li>
+                                <li>24/7 priority support</li>
+                            </ul>
+                            <a href="https://buy.stripe.com/14A7sLdJX46o5qKaOod3i05" class="btn btn-primary" target="_blank">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="projects">
             <div class="container">
                 <h2>Project-Based Pricing</h2>
@@ -976,6 +1156,7 @@
                         <li><a href="services/agents.html">AI Agents</a></li>
                         <li><a href="services/assistants.html">AI Assistants</a></li>
                         <li><a href="services/chatbots.html">Chatbots</a></li>
+                        <li><a href="services/commercials.html">AI Commercials</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -996,6 +1177,7 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/include-chatbot.js"></script>
     <script>
         // Pricing toggle functionality
         const toggleInput = document.getElementById('pricing-toggle-input');
@@ -1115,4 +1297,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
