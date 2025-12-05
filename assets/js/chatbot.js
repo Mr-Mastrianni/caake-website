@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     Contact Information:
     - Phone: 480-364-1164
-    - Email: automationking11@caake.org
+    - Email: mastrianni@caake.org
 
     Calendar Commands:
     - "Schedule a meeting" or "Book an appointment": Create a new calendar event
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             removeLoadingIndicator();
             addMessage('CAAKE AI', {
                 type: 'text',
-                content: 'I apologize, but I encountered an error. Please try again or contact our support team at automationking11@caake.org.'
+                content: 'I apologize, but I encountered an error. Please try again or contact our support team at mastrianni@caake.org.'
             }, true);
         } finally {
             isProcessing = false;
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (userMessage.toLowerCase().includes('service')) {
             return "CAAKE offers a variety of AI services including consulting, automation solutions, AI agents, assistants, and chatbots. Would you like to speak with a representative to learn more?";
         } else if (userMessage.toLowerCase().includes('contact')) {
-            return "You can reach CAAKE at 480-364-1164 or email automationking11@caake.org for more information about our services.";
+            return "You can reach CAAKE at 480-364-1164 or email mastrianni@caake.org for more information about our services.";
         } else {
             return "Thank you for your interest in CAAKE. We specialize in AI automation solutions for businesses. Would you like to learn more about our services or speak with a representative?";
         }
