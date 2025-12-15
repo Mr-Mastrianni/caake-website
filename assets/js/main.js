@@ -14,7 +14,7 @@ function setCookie(name, value, days) {
 function getCookie(name) {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
@@ -27,7 +27,7 @@ function getCookie(name) {
 // These functions are defined in anime-examples.js but we'll use them directly
 // without import to avoid CORS issues when opening files locally
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Set dark mode as default with no toggle option
     setDarkModeDefault();
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
 
     if (navToggle) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', function () {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
 
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dropdownLinks.forEach(link => {
         // Create mobile dropdown toggle
         if (window.innerWidth <= 768) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const dropdown = this.nextElementSibling;
                 dropdown.classList.toggle('active');
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form') || document.querySelector('.contact-form');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             // Simple validation
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const subscribeForm = document.querySelector('.newsletter-form') || document.querySelector('.subscribe-form');
 
     if (subscribeForm) {
-        subscribeForm.addEventListener('submit', function(e) {
+        subscribeForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             const emailInput = this.querySelector('input[type="email"]');
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.style.right = '0';
             toggleIcon.style.transition = 'transform 0.3s ease';
 
-            heading.addEventListener('click', function() {
+            heading.addEventListener('click', function () {
                 item.classList.toggle('active');
 
                 if (item.classList.contains('active')) {
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
 
     anchorLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
 
             if (targetId === '#') return;
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhanced fixed header on scroll with animations
     const navbar = document.querySelector('.navbar');
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) { // Changed to 50 to match initNavbarScrollEffect threshold
             if (!navbar.classList.contains('navbar-scrolled')) { // Changed 'scrolled' to 'navbar-scrolled'
                 navbar.classList.add('navbar-scrolled'); // Changed 'scrolled' to 'navbar-scrolled'
@@ -382,14 +382,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover effects to service cards
     const serviceCards = document.querySelectorAll('.service-card');
     serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
+        card.addEventListener('mouseenter', function () {
             const icon = this.querySelector('.icon');
             if (icon) {
                 icon.classList.add('animate-float');
             }
         });
 
-        card.addEventListener('mouseleave', function() {
+        card.addEventListener('mouseleave', function () {
             const icon = this.querySelector('.icon');
             if (icon) {
                 icon.classList.remove('animate-float');
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Shake animation for input
         input.style.animation = 'shake 0.5s ease';
-        input.addEventListener('animationend', function() {
+        input.addEventListener('animationend', function () {
             this.style.animation = '';
         });
     }
@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenuMobile = document.querySelector('.nav-menu');
 
     if (navToggleMobile && navMenuMobile) {
-        navToggleMobile.addEventListener('click', function() {
+        navToggleMobile.addEventListener('click', function () {
             navToggleMobile.classList.toggle('active');
             navMenuMobile.classList.toggle('active');
 
@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const link = dropdown.querySelector('a');
 
         if (link) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 if (window.innerWidth < 992) {
                     e.preventDefault();
                     dropdown.classList.toggle('open');
@@ -831,11 +831,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize A/B Testing Framework
     initABTesting();
 
-    // Assessment Section Enhancements
-    enhanceAssessmentSection();
+
 
     // Add resize listener to adjust icon sizes properly
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         const benefitIcons = document.querySelectorAll('.benefit-icon');
         benefitIcons.forEach(icon => {
             if (window.innerWidth <= 768) {
@@ -858,7 +857,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for internal links
     function initSmoothScrolling() {
         document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
 
                 const targetId = this.getAttribute('href');
@@ -1135,7 +1134,7 @@ function throttle(func, limit) {
             lastRan = Date.now();
         } else {
             clearTimeout(lastFunc);
-            lastFunc = setTimeout(function() {
+            lastFunc = setTimeout(function () {
                 if ((Date.now() - lastRan) >= limit) {
                     func(...args);
                     lastRan = Date.now();
@@ -1161,8 +1160,8 @@ function optimizeCalculations() {
                         const element = entry.target;
                         const target = parseInt(element.getAttribute('data-counter-target'), 10);
                         const duration = element.hasAttribute('data-counter-duration') ?
-                                       parseInt(element.getAttribute('data-counter-duration'), 10) :
-                                       2000;
+                            parseInt(element.getAttribute('data-counter-duration'), 10) :
+                            2000;
 
                         animateCounter(element, target, duration);
                         counterObserver.unobserve(element);
@@ -1222,7 +1221,7 @@ function reportCoreWebVitals() {
                 }
             });
 
-            lcpObserver.observe({type: 'largest-contentful-paint', buffered: true});
+            lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
             // FID (First Input Delay)
             const fidObserver = new PerformanceObserver((list) => {
@@ -1236,7 +1235,7 @@ function reportCoreWebVitals() {
                 }
             });
 
-            fidObserver.observe({type: 'first-input', buffered: true});
+            fidObserver.observe({ type: 'first-input', buffered: true });
 
             // CLS (Cumulative Layout Shift)
             const clsObserver = new PerformanceObserver((list) => {
@@ -1257,7 +1256,7 @@ function reportCoreWebVitals() {
                 }
             });
 
-            clsObserver.observe({type: 'layout-shift', buffered: true});
+            clsObserver.observe({ type: 'layout-shift', buffered: true });
 
         } catch (e) {
             console.log('Performance monitoring not supported', e);
@@ -1399,39 +1398,39 @@ function initAnimeAttributeAnimations() {
 function initMicrointeractions() {
     // Add hover state microinteractions to cards
     document.querySelectorAll('.service-card, .story-card, .team-member, .value-card, .benefit-card, .agent-card, .chatbot-card, .solution-card')
-    .forEach(card => {
-        // Add subtle floating animation on hover
-        card.addEventListener('mouseenter', function() {
-            this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            this.style.transform = 'translateY(-10px)';
-            this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+        .forEach(card => {
+            // Add subtle floating animation on hover
+            card.addEventListener('mouseenter', function () {
+                this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
 
-            // Add glassmorphism effect on hover
-            if (!this.classList.contains('glass')) {
-                this.style.backgroundColor = 'var(--card-bg)';
-                this.style.backdropFilter = 'blur(var(--blur-amount))';
-                this.style.webkitBackdropFilter = 'blur(var(--blur-amount))';
-                this.style.border = '1px solid var(--card-border)';
-            }
+                // Add glassmorphism effect on hover
+                if (!this.classList.contains('glass')) {
+                    this.style.backgroundColor = 'var(--card-bg)';
+                    this.style.backdropFilter = 'blur(var(--blur-amount))';
+                    this.style.webkitBackdropFilter = 'blur(var(--blur-amount))';
+                    this.style.border = '1px solid var(--card-border)';
+                }
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+
+                // Remove glassmorphism if not already glass
+                if (!this.classList.contains('glass')) {
+                    this.style.backgroundColor = '';
+                    this.style.backdropFilter = '';
+                    this.style.webkitBackdropFilter = '';
+                    this.style.border = '';
+                }
+            });
         });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-            this.style.boxShadow = '';
-
-            // Remove glassmorphism if not already glass
-            if (!this.classList.contains('glass')) {
-                this.style.backgroundColor = '';
-                this.style.backdropFilter = '';
-                this.style.webkitBackdropFilter = '';
-                this.style.border = '';
-            }
-        });
-    });
 
     // Add ripple effect to buttons
     document.querySelectorAll('.btn').forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             // Create ripple element
             const ripple = document.createElement('span');
             ripple.classList.add('ripple');
@@ -1495,7 +1494,7 @@ function initAccessibility() {
         const dropdown = toggle.nextElementSibling;
         const dropdownItems = dropdown.querySelectorAll('a');
 
-        toggle.addEventListener('keydown', function(e) {
+        toggle.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 openDropdown(toggle, dropdown);
@@ -1503,7 +1502,7 @@ function initAccessibility() {
             }
         });
 
-        dropdown.addEventListener('keydown', function(e) {
+        dropdown.addEventListener('keydown', function (e) {
             const currentFocusIndex = Array.from(dropdownItems).indexOf(document.activeElement);
 
             if (e.key === 'ArrowDown') {
@@ -1530,7 +1529,7 @@ function initAccessibility() {
         });
 
         // Close dropdown if clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!toggle.contains(e.target) && !dropdown.contains(e.target) && toggle.getAttribute('aria-expanded') === 'true') {
                 closeDropdown(toggle, dropdown);
             }
@@ -1559,7 +1558,7 @@ function initAccessibility() {
         if (prevButton && nextButton && slides.length > 0) {
             carousel.setAttribute('tabindex', '0'); // Make carousel focusable
 
-            carousel.addEventListener('keydown', function(e) {
+            carousel.addEventListener('keydown', function (e) {
                 if (e.key === 'ArrowLeft') {
                     e.preventDefault();
                     prevButton.click(); // Simulate click on prev
@@ -1574,7 +1573,7 @@ function initAccessibility() {
     // Keyboard navigation for FAQ toggles
     const faqButtons = document.querySelectorAll('.faq-toggle-button');
     faqButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const expanded = this.getAttribute('aria-expanded') === 'true';
             this.setAttribute('aria-expanded', !expanded);
             const answer = document.getElementById(this.getAttribute('aria-controls'));
@@ -1592,7 +1591,7 @@ function initAccessibility() {
     modals.forEach(modal => {
         // Requires a more complex focus trapping library or implementation
         // For now, just ensure close button works with Escape
-        modal.addEventListener('keydown', function(e) {
+        modal.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const closeButton = modal.querySelector('.popup-close, .search-close, .chatbot-close');
                 closeButton?.click();
@@ -1660,11 +1659,11 @@ function applyVariations(variation) {
             }
             document.body.classList.add('ab-test-variation-b'); // Add class for potential CSS changes
         } else {
-             // Variation A (or control) - Ensure original content is shown
+            // Variation A (or control) - Ensure original content is shown
             console.log('Applying Variation A (Control) to Hero Section');
             heroContent.querySelector('.hero-title').textContent = originalTitle;
             heroContent.querySelector('.hero-subtitle').textContent = originalSubtitle;
-             const buttons = heroContent.querySelectorAll('.hero-button');
+            const buttons = heroContent.querySelectorAll('.hero-button');
             if (buttons.length >= 2) {
                 buttons[0].textContent = originalButton1Text;
                 buttons[1].textContent = originalButton2Text;
@@ -1676,52 +1675,7 @@ function applyVariations(variation) {
     // Add more A/B test variations here for other elements/pages
 }
 
-// Assessment Section Enhancements
-function enhanceAssessmentSection() {
-    const assessmentIntro = document.querySelector('.assessment-intro');
-    const benefitItems = document.querySelectorAll('.benefit-item');
 
-    if (assessmentIntro) {
-        // Add subtle animation to assessment section
-        assessmentIntro.classList.add('animate-fade-in');
-
-        // Add staggered animations to benefit items
-        benefitItems.forEach((item, index) => {
-            item.classList.add('animate-fade-in');
-            item.style.animationDelay = `${(index + 1) * 200}ms`;
-
-            // Add hover feedback
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-                this.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
-            });
-
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-            });
-        });
-
-        // Ensure icons are properly sized and centered
-        const benefitIcons = document.querySelectorAll('.benefit-icon');
-        benefitIcons.forEach(icon => {
-            icon.style.display = 'flex';
-            icon.style.alignItems = 'center';
-            icon.style.justifyContent = 'center';
-
-            // Ensure all icons have the proper sizing
-            if (window.innerWidth <= 768) {
-                icon.style.width = '40px';
-                icon.style.height = '40px';
-                icon.style.fontSize = '1.4rem';
-            } else {
-                icon.style.width = '50px';
-                icon.style.height = '50px';
-                icon.style.fontSize = '1.8rem';
-            }
-        });
-    }
-}
 
 // NEW FUNCTION: Navbar Scroll Effect
 function initNavbarScrollEffect() {
@@ -1749,27 +1703,27 @@ function initNavbarScrollEffect() {
 function loadAnimeAnimations() {
     const script = document.createElement('script');
     script.src = 'assets/js/anime-animations/init.js';
-    script.onload = function() {
+    script.onload = function () {
         // Initialize Anime.js animations when the script is loaded
         if (window.initAnimeAnimations && document.querySelector('[data-anime-animation]')) {
             console.log('Found anime.js animation elements, initializing...');
 
             // Check if Anime.js is loaded
             if (typeof anime === 'undefined') {
-            // Load Anime.js dynamically if not already loaded
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
-            script.onload = () => {
-                console.log('Anime.js loaded dynamically');
-                initAnimeAnimations();
-            };
-            document.head.appendChild(script);
-        } else {
-            // Initialize directly if Anime.js is already loaded
-            window.initAnimeAnimations();
+                // Load Anime.js dynamically if not already loaded
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
+                script.onload = () => {
+                    console.log('Anime.js loaded dynamically');
+                    initAnimeAnimations();
+                };
+                document.head.appendChild(script);
+            } else {
+                // Initialize directly if Anime.js is already loaded
+                window.initAnimeAnimations();
+            }
         }
-    }
-};
+    };
     document.head.appendChild(script);
 }
 

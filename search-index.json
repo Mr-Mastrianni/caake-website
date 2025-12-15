@@ -4,95 +4,154 @@
         "url": "/",
         "description": "CAAKE provides cutting-edge AI automation solutions to streamline operations, increase efficiency, and drive growth for businesses of all sizes.",
         "content": "AI automation solutions for business growth. Transform your business with cutting-edge AI automation solutions. Our services include AI consulting, automations, AI solutions, AI agents, AI assistants, and chatbots. Founded in 2020, CAAKE has been at the forefront of AI technology. Our mission is to make AI accessible and beneficial for all businesses regardless of their size or technical expertise.",
-        "categories": ["Home"],
-        "tags": ["AI", "Automation", "Business"]
+        "categories": [
+            "Home"
+        ],
+        "tags": [
+            "AI",
+            "Automation",
+            "Business"
+        ]
     },
     {
         "title": "AI Consulting Services - CAAKE",
         "url": "/pages/services/consulting.html",
         "description": "Expert AI consulting services to help your business implement intelligent automation solutions.",
         "content": "Our AI consulting services help businesses understand and implement artificial intelligence solutions. We assess your needs, develop AI strategies, and guide implementation. Our experienced consultants work with businesses of all sizes. We provide recommendations for AI tools, technologies, and methodologies that align with your specific business goals and challenges.",
-        "categories": ["Services"],
-        "tags": ["AI Consulting", "Strategy", "Implementation"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "AI Consulting",
+            "Strategy",
+            "Implementation"
+        ]
     },
     {
         "title": "Automations - CAAKE",
         "url": "/pages/services/automations.html",
         "description": "Streamline your business processes with intelligent automation solutions.",
         "content": "Automate repetitive tasks and workflows with our intelligent automation solutions. Reduce errors, save time, and improve efficiency. Our automation services integrate with your existing systems and can be customized to your specific business needs. Automation can transform data entry, reporting, customer onboarding, invoice processing, and many other business processes.",
-        "categories": ["Services"],
-        "tags": ["Automation", "Workflow", "Efficiency"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "Automation",
+            "Workflow",
+            "Efficiency"
+        ]
     },
     {
         "title": "AI Solutions - CAAKE",
         "url": "/pages/services/solutions.html",
         "description": "Custom AI solutions tailored to your business challenges and goals.",
         "content": "We develop custom AI solutions that address your specific business challenges. Our solutions include predictive analytics, computer vision, natural language processing, and recommendation systems. All solutions are built with scalability and ROI in mind. Our AI solutions can help you make better decisions, improve customer experiences, and gain competitive advantages.",
-        "categories": ["Services"],
-        "tags": ["AI Solutions", "Custom Development", "Machine Learning"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "AI Solutions",
+            "Custom Development",
+            "Machine Learning"
+        ]
     },
     {
         "title": "AI Agents - CAAKE",
         "url": "/pages/services/agents.html",
         "description": "Intelligent AI agents that automate tasks and make decisions.",
         "content": "AI agents are intelligent software entities that can perform tasks autonomously. Our AI agents can handle customer inquiries, process data, make recommendations, and even make decisions based on predefined rules and learning algorithms. AI agents can operate continuously, providing 24/7 service without breaks or vacations.",
-        "categories": ["Services"],
-        "tags": ["AI Agents", "Autonomous", "Decision Making"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "AI Agents",
+            "Autonomous",
+            "Decision Making"
+        ]
     },
     {
         "title": "AI Assistants - CAAKE",
         "url": "/pages/services/assistants.html",
         "description": "AI assistants that help your team be more productive and efficient.",
         "content": "AI assistants augment human capabilities by handling routine tasks, providing information, and offering suggestions. Our AI assistants integrate with popular tools and platforms, allowing your team to focus on high-value activities. AI assistants can schedule meetings, summarize documents, draft emails, and provide relevant information when needed.",
-        "categories": ["Services"],
-        "tags": ["AI Assistants", "Productivity", "Integration"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "AI Assistants",
+            "Productivity",
+            "Integration"
+        ]
     },
     {
         "title": "Chatbots - CAAKE",
         "url": "/pages/services/chatbots.html",
         "description": "Intelligent chatbots that improve customer service and engagement.",
         "content": "Our AI-powered chatbots provide instant responses to customer inquiries, 24/7. They can handle common questions, troubleshoot issues, process orders, and escalate complex problems to human agents. Chatbots improve customer satisfaction while reducing support costs. Our chatbots learn from interactions and continuously improve their responses over time.",
-        "categories": ["Services"],
-        "tags": ["Chatbots", "Customer Service", "Support"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "Chatbots",
+            "Customer Service",
+            "Support"
+        ]
     },
     {
         "title": "About Us - CAAKE",
         "url": "/pages/about.html",
         "description": "Learn about CAAKE and our mission to make AI accessible for all businesses.",
         "content": "Founded in 2020, CAAKE (Cost Avoidance Automation Kingz Enterprise) has been at the forefront of AI technology. Our mission is to make AI accessible and beneficial for all businesses regardless of their size or technical expertise. With a team of expert AI consultants and developers, we've helped numerous businesses across various industries leverage the power of artificial intelligence. Our expertise spans machine learning, natural language processing, robotics, and intelligent automation.",
-        "categories": ["Company"],
-        "tags": ["About", "Mission", "Team"]
+        "categories": [
+            "Company"
+        ],
+        "tags": [
+            "About",
+            "Mission",
+            "Team"
+        ]
     },
     {
         "title": "Contact Us - CAAKE",
         "url": "/pages/contact.html",
         "description": "Get in touch with CAAKE for all your AI automation needs.",
         "content": "Contact us to discuss your AI automation needs. Our team is ready to help you transform your business with cutting-edge AI solutions. You can reach us by phone, email, or by filling out the contact form on this page. We're available to answer your questions, provide consultations, and discuss how AI can help your business grow and become more efficient.",
-        "categories": ["Company"],
-        "tags": ["Contact", "Support", "Inquiries"]
-    },
-    {
-        "title": "AI Strategy Assessment - CAAKE",
-        "url": "/pages/assessment.html",
-        "description": "Evaluate your company's AI readiness with our comprehensive assessment.",
-        "content": "Our AI strategy assessment helps you evaluate your organization's readiness for AI implementation. The assessment covers technical infrastructure, data readiness, organizational culture, and business processes. Upon completion, you'll receive a detailed readiness score and tailored recommendations. This assessment will help you identify opportunities for AI in your business and understand what steps to take for successful implementation.",
-        "categories": ["Services"],
-        "tags": ["Assessment", "Strategy", "Readiness"]
+        "categories": [
+            "Company"
+        ],
+        "tags": [
+            "Contact",
+            "Support",
+            "Inquiries"
+        ]
     },
     {
         "title": "AI Automation Pricing Calculator - CAAKE",
         "url": "/pages/pricing-calculator.html",
         "description": "Use our interactive calculator to estimate the cost of implementing AI automation solutions for your business.",
         "content": "Our interactive pricing calculator helps you estimate the cost of implementing AI solutions tailored to your specific business needs. Adjust the parameters to see how different choices impact your investment. The calculator considers factors like business size, industry, solution types, integration complexity, and scale of automation. Get a customized estimate before contacting our team for a detailed quote.",
-        "categories": ["Services"],
-        "tags": ["Pricing", "Calculator", "Cost"]
+        "categories": [
+            "Services"
+        ],
+        "tags": [
+            "Pricing",
+            "Calculator",
+            "Cost"
+        ]
     },
     {
         "title": "10 Ways AI Automation Can Transform Your Business in 2024 - CAAKE",
         "url": "/pages/blog/ai-business-automation.html",
         "description": "Discover how AI automation can streamline operations, reduce costs, and drive growth. Learn 10 practical ways to implement AI in your business today.",
         "content": "In today's rapidly evolving business landscape, AI automation has emerged as a game-changing technology that's redefining how companies operate. From small businesses to large enterprises, organizations across all industries are leveraging AI to streamline operations, reduce costs, and gain a competitive edge. This article explores ten powerful ways AI automation can transform your business in 2024 and beyond, including customer service, data analysis, sales and marketing, HR and recruitment, financial operations, supply chain management, product development, cybersecurity, business intelligence, and implementation strategies.",
-        "categories": ["Blog"],
-        "tags": ["AI Automation", "Business Transformation", "Efficiency", "Innovation"]
+        "categories": [
+            "Blog"
+        ],
+        "tags": [
+            "AI Automation",
+            "Business Transformation",
+            "Efficiency",
+            "Innovation"
+        ]
     }
-] 
+]

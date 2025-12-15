@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - CAAKE</title>
     <meta name="description" content="The page you were looking for could not be found.">
     <meta name="robots" content="noindex, follow">
-    
+
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/style-fixes.css">
     <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <style>
         .error-container {
             padding: 100px 0;
@@ -22,7 +23,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .error-code {
             font-size: 8rem;
             font-weight: bold;
@@ -32,7 +33,7 @@
             position: relative;
             display: inline-block;
         }
-        
+
         .error-code:after {
             content: '';
             position: absolute;
@@ -44,42 +45,44 @@
             border-radius: 3px;
             opacity: 0.5;
         }
-        
+
         .error-title {
             font-size: 2.5rem;
             color: #1e293b;
             margin-bottom: 20px;
         }
-        
+
         .error-message {
             font-size: 1.1rem;
             color: #64748b;
             max-width: 600px;
             margin: 0 auto 30px;
         }
-        
+
         .error-icon {
             font-size: 3rem;
             color: #4a90e2;
             margin-bottom: 20px;
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% {
                 transform: scale(1);
                 opacity: 1;
             }
+
             50% {
                 transform: scale(1.1);
                 opacity: 0.8;
             }
+
             100% {
                 transform: scale(1);
                 opacity: 1;
             }
         }
-        
+
         .error-actions {
             display: flex;
             flex-wrap: wrap;
@@ -87,17 +90,17 @@
             gap: 15px;
             margin-top: 30px;
         }
-        
+
         .suggestions {
             margin-top: 50px;
             text-align: center;
         }
-        
+
         .suggestions h3 {
             color: #1e293b;
             margin-bottom: 20px;
         }
-        
+
         .suggestion-links {
             display: flex;
             flex-wrap: wrap;
@@ -106,7 +109,7 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         .suggestion-link {
             background: #f8fafc;
             padding: 15px 20px;
@@ -114,23 +117,23 @@
             color: #1e293b;
             text-decoration: none;
             font-weight: 500;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             min-width: 200px;
             text-align: center;
         }
-        
+
         .suggestion-link:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             color: #4a90e2;
         }
-        
+
         .suggestion-link i {
             margin-right: 10px;
             color: #4a90e2;
         }
-        
+
         .btn {
             display: inline-block;
             padding: 12px 25px;
@@ -139,49 +142,49 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: #4a90e2;
             color: white;
             border: 2px solid #4a90e2;
         }
-        
+
         .btn-primary:hover {
             background-color: #3a7bc8;
             border-color: #3a7bc8;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
-        
+
         .btn-outline {
             background-color: transparent;
             color: #4a90e2;
             border: 2px solid #4a90e2;
         }
-        
+
         .btn-outline:hover {
             background-color: rgba(74, 144, 226, 0.1);
             transform: translateY(-3px);
         }
-        
+
         @media (max-width: 768px) {
             .error-code {
                 font-size: 6rem;
             }
-            
+
             .error-title {
                 font-size: 2rem;
             }
-            
+
             .error-container {
                 padding: 60px 20px;
             }
-            
+
             .suggestion-links {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .suggestion-link {
                 width: 100%;
                 max-width: 300px;
@@ -189,6 +192,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -221,7 +225,7 @@
                     <li role="none"><a href="/pages/pricing.html" role="menuitem">Pricing</a></li>
                     <li role="none"><a href="/pages/contact.html" role="menuitem">Contact</a></li>
                     <li role="none"><a href="/pages/blog.html" role="menuitem">Blog</a></li>
-                    <li role="none"><a href="/pages/assessment.html" role="menuitem">Assessment</a></li>
+
                 </ul>
             </div>
         </nav>
@@ -232,19 +236,21 @@
             <i class="fas fa-robot error-icon"></i>
             <h1 class="error-code">404</h1>
             <h2 class="error-title">Page Not Found</h2>
-            <p class="error-message">The page you're looking for doesn't exist or has been moved. Don't worry, even our AI sometimes gets lost in the digital world.</p>
-            
+            <p class="error-message">The page you're looking for doesn't exist or has been moved. Don't worry, even our
+                AI sometimes gets lost in the digital world.</p>
+
             <div class="error-actions">
                 <a href="/index.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
                 <a href="/pages/contact.html" class="btn btn-outline"><i class="fas fa-envelope"></i> Contact Us</a>
             </div>
-            
+
             <div class="suggestions">
                 <h3>You might be looking for:</h3>
                 <div class="suggestion-links">
                     <a href="/pages/services.html" class="suggestion-link"><i class="fas fa-cogs"></i> Our Services</a>
-                    <a href="/pages/case-studies.html" class="suggestion-link"><i class="fas fa-chart-line"></i> Case Studies</a>
-                    <a href="/pages/assessment.html" class="suggestion-link"><i class="fas fa-clipboard-check"></i> AI Assessment</a>
+                    <a href="/pages/case-studies.html" class="suggestion-link"><i class="fas fa-chart-line"></i> Case
+                        Studies</a>
+
                     <a href="/pages/blog.html" class="suggestion-link"><i class="fas fa-rss"></i> Blog Articles</a>
                 </div>
             </div>
@@ -266,7 +272,7 @@
                         <li><a href="/pages/about.html">About Us</a></li>
                         <li><a href="/pages/contact.html">Contact</a></li>
                         <li><a href="/pages/blog.html">Blog</a></li>
-                        <li><a href="/pages/assessment.html">Assessment</a></li>
+
                         <li><a href="/pages/pricing.html">Pricing</a></li>
                     </ul>
                 </div>
@@ -301,18 +307,18 @@
     <script>
         // Update copyright year
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        
+
         // Navigation menu toggle
         const navToggle = document.querySelector('.nav-toggle');
         const navMenu = document.querySelector('.nav-menu');
-        
+
         if (navToggle && navMenu) {
-            navToggle.addEventListener('click', function() {
+            navToggle.addEventListener('click', function () {
                 navToggle.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
         }
-        
+
         // Track 404 error in analytics (if implemented)
         if (typeof gtag === 'function') {
             gtag('event', 'page_view', {
@@ -327,4 +333,5 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/include-chatbot.js"></script>
 </body>
+
 </html>

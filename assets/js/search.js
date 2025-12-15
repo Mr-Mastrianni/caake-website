@@ -572,14 +572,7 @@ class SearchIndexBuilder {
                 categories: ['Company'],
                 tags: ['Contact', 'Support', 'Inquiries']
             },
-            {
-                title: 'AI Strategy Assessment - CAAKE',
-                url: '/pages/assessment.html',
-                description: 'Evaluate your company\'s AI readiness with our comprehensive assessment.',
-                content: 'Our AI strategy assessment helps you evaluate your organization\'s readiness for AI implementation. The assessment covers technical infrastructure, data readiness, organizational culture, and business processes. Upon completion, you\'ll receive a detailed readiness score and tailored recommendations.',
-                categories: ['Services'],
-                tags: ['Assessment', 'Strategy', 'Readiness']
-            }
+
         ];
         
         // In a real implementation, we would save this to a file
