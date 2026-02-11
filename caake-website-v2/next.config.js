@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  distDir: 'dist',
+  // Only use export output and distDir for production builds
+  ...(process.env.NODE_ENV === 'production' ? {
+    output: 'export',
+    distDir: 'dist',
+  } : {}),
   
   images: {
     formats: ['image/avif', 'image/webp'],
