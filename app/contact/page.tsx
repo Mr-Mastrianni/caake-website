@@ -5,10 +5,36 @@ import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitted(true)
+    setError('')
+    setIsSending(true)
+    const f = new FormData(e.currentTarget)
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'contact',
+          name: `${f.get('first') ?? ''} ${f.get('last') ?? ''}`.trim(),
+          email: f.get('email'),
+          message: `[${f.get('subject')}] ${f.get('message') ?? ''}`,
+          website: f.get('website') ?? '',
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Something went wrong')
+      }
+      setIsSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please email us directly.')
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
@@ -94,10 +120,12 @@ export default function ContactPage() {
                 <div className="card p-8">
                   <h3 className="font-display text-xl font-bold mb-6">Send a Message</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-2">First Name</label>
                         <input
+                          name="first"
                           type="text"
                           required
                           className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
@@ -106,6 +134,7 @@ export default function ContactPage() {
                       <div>
                         <label className="block text-sm font-medium mb-2">Last Name</label>
                         <input
+                          name="last"
                           type="text"
                           required
                           className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
@@ -116,6 +145,7 @@ export default function ContactPage() {
                     <div>
                       <label className="block text-sm font-medium mb-2">Email</label>
                       <input
+                        name="email"
                         type="email"
                         required
                         className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
@@ -124,7 +154,7 @@ export default function ContactPage() {
 
                     <div>
                       <label className="block text-sm font-medium mb-2">Subject</label>
-                      <select className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-gold focus:outline-none transition-colors">
+                      <select name="subject" className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-gold focus:outline-none transition-colors">
                         <option className="bg-midnight text-white">General Inquiry</option>
                         <option className="bg-midnight text-white">Sales</option>
                         <option className="bg-midnight text-white">Support</option>
@@ -136,14 +166,16 @@ export default function ContactPage() {
                     <div>
                       <label className="block text-sm font-medium mb-2">Message</label>
                       <textarea
+                        name="message"
                         rows={5}
                         required
                         className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors resize-none"
                       />
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-full justify-center">
-                      Send Message
+                    {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+                    <button type="submit" disabled={isSending} className="btn btn-primary w-full justify-center disabled:opacity-60">
+                      {isSending ? 'Sending...' : 'Send Message'}
                       <Send className="ml-2" size={16} />
                     </button>
                   </form>

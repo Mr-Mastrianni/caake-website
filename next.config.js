@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Only use export output and distDir for production builds
-  ...(process.env.NODE_ENV === 'production' ? {
-    output: 'export',
-    distDir: 'dist',
-  } : {}),
-  
+  // NOTE: the static export (output: 'export') was removed so the admin Business OS
+  // can use server-side auth and API routes. Deploy on Vercel (or any Node host).
+
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

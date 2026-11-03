@@ -65,6 +65,9 @@ export default function BookCallPage() {
     challenge: '',
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [error, setError] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -374,8 +377,34 @@ export default function BookCallPage() {
     })
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError('')
+    setIsSending(true)
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'booking',
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          role: formData.role,
+          message: formData.challenge,
+          website: honeypot,
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Something went wrong')
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please email us directly.')
+      setIsSending(false)
+      return
+    }
+    setIsSending(false)
     // Animate form out before showing success
     if (!prefersReducedMotion()) {
       anime({
@@ -555,11 +584,14 @@ export default function BookCallPage() {
                         </div>
                       </div>
 
+                      <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+                      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
                       <button 
                         type="submit" 
-                        className="submit-btn btn btn-primary w-full justify-center text-lg relative overflow-hidden"
+                        disabled={isSending}
+                        className="submit-btn btn btn-primary w-full justify-center text-lg relative overflow-hidden disabled:opacity-60"
                       >
-                        Schedule Your Call
+                        {isSending ? 'Sending...' : 'Schedule Your Call'}
                         <ArrowRight className="ml-2" size={18} />
                       </button>
 
