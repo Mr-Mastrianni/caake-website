@@ -1,6 +1,7 @@
 import { requireAdminPage } from '@/lib/admin-auth'
 import { getMemory } from '@/lib/db'
 import { MemoryEditor } from '@/components/admin/memory-editor'
+import { SeedButton } from '@/components/admin/seed-button'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,8 +26,9 @@ export default async function MemoryPage() {
           Every agent reads this before it works. The more real detail you add, the better the output. Fill it in first.
         </p>
       </div>
+      <SeedButton />
       {FIELDS.map(([key, label, hint]) => (
-        <MemoryEditor key={key} field={key} label={label} hint={hint} initial={mem[key] ?? ''} />
+        <MemoryEditor key={`${key}-${(mem[key] ?? '').length}`} field={key} label={label} hint={hint} initial={mem[key] ?? ''} />
       ))}
     </div>
   )
