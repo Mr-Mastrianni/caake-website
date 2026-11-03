@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import { Navigation } from '@/components/navigation'
-import { Footer } from '@/components/footer'
+import { SiteChrome } from '@/components/site-chrome'
 import { OrganizationSchema, WebsiteSchema } from '@/components/metadata'
 
 const inter = Inter({
@@ -56,11 +55,7 @@ export default function RootLayout({
         <WebsiteSchema />
       </head>
       <body className="antialiased bg-midnight text-white min-h-screen">
-        <Navigation />
-        <main className="pt-16 md:pt-20">
-          {children}
-        </main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )
