@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
 
 export default function ContactPage() {
@@ -48,7 +49,7 @@ export default function ContactPage() {
               Get in <span className="text-gold-gradient">Touch</span>
             </h1>
             <p className="text-xl text-white/60">
-              Have a question or want to learn more? We&apos;d love to hear from you.
+              Questions, quotes or a project you&apos;re not sure we can build. Send it over and a person will reply within one business day.
             </p>
           </div>
         </div>
@@ -104,13 +105,13 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-12 p-6 rounded-xl bg-cosmic/50 border border-white/10">
-                <h3 className="font-display text-xl font-bold mb-2">Ready to get started?</h3>
+                <h3 className="font-display text-xl font-bold mb-2">Want the free audit instead?</h3>
                 <p className="text-white/60 mb-4">
-                  Book a strategy call and get your personalized automation roadmap.
+                  A 15-minute call and a written teardown of where your website, booking and follow-up lose customers.
                 </p>
-                <a href="mailto:mastrianni@caake.org" className="btn btn-primary w-full justify-center">
-                  Book Strategy Call
-                </a>
+                <Link href="/book-call" className="btn btn-primary w-full justify-center">
+                  Book a free Lead Leak Audit
+                </Link>
               </div>
             </div>
 
@@ -123,18 +124,18 @@ export default function ContactPage() {
                     <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2">First Name</label>
+                        <label htmlFor="contact-first" className="block text-sm font-medium mb-2">First Name</label>
                         <input
-                          name="first"
+                          id="contact-first" name="first"
                           type="text"
                           required
                           className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Last Name</label>
+                        <label htmlFor="contact-last" className="block text-sm font-medium mb-2">Last Name</label>
                         <input
-                          name="last"
+                          id="contact-last" name="last"
                           type="text"
                           required
                           className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
@@ -143,9 +144,9 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Email</label>
+                      <label htmlFor="contact-email" className="block text-sm font-medium mb-2">Email</label>
                       <input
-                        name="email"
+                        id="contact-email" name="email"
                         type="email"
                         required
                         className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors"
@@ -153,20 +154,22 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Subject</label>
-                      <select name="subject" className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-gold focus:outline-none transition-colors">
-                        <option className="bg-midnight text-white">General Inquiry</option>
-                        <option className="bg-midnight text-white">Sales</option>
-                        <option className="bg-midnight text-white">Support</option>
-                        <option className="bg-midnight text-white">Partnerships</option>
-                        <option className="bg-midnight text-white">Careers</option>
+                      <label htmlFor="contact-subject" className="block text-sm font-medium mb-2">Subject</label>
+                      <select id="contact-subject" name="subject" className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-gold focus:outline-none transition-colors">
+                        <option className="bg-midnight text-white">New project or quote</option>
+                        <option className="bg-midnight text-white">Website</option>
+                        <option className="bg-midnight text-white">Booking &amp; follow-up</option>
+                        <option className="bg-midnight text-white">Custom app or AI</option>
+                        <option className="bg-midnight text-white">AI training for my team</option>
+                        <option className="bg-midnight text-white">Existing client support</option>
+                        <option className="bg-midnight text-white">Something else</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Message</label>
+                      <label htmlFor="contact-message" className="block text-sm font-medium mb-2">Message</label>
                       <textarea
-                        name="message"
+                        id="contact-message" name="message"
                         rows={5}
                         required
                         className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none transition-colors resize-none"
@@ -187,7 +190,7 @@ export default function ContactPage() {
                   </div>
                   <h3 className="font-display text-2xl font-bold mb-4">Message Sent!</h3>
                   <p className="text-white/60">
-                    Thanks for reaching out. We&apos;ll get back to you within 24 hours.
+                    Thanks for reaching out. We&apos;ll reply by email within one business day.
                   </p>
                 </div>
               )}

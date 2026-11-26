@@ -4,7 +4,7 @@ export function emailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_FROM)
 }
 
-/** Sends via Resend. Only ever called after an admin approves a specific message. */
+/** Sends via Resend. Used for admin-approved messages and internal new-lead alerts to the owner. */
 export async function sendEmail(to: string, subject: string, body: string): Promise<void> {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

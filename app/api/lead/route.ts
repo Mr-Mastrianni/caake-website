@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { createLead } from '@/lib/db'
 import { draftInboundReply } from '@/lib/agents'
 import { rateLimit } from '@/lib/rate-limit'
+import { emailConfigured, sendEmail } from '@/lib/email'
 
 export const maxDuration = 60
 
@@ -43,6 +44,32 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error('lead create failed', e)
     return NextResponse.json({ error: 'Could not save your message. Please email us directly.' }, { status: 500 })
+  }
+
+  // Tell the owner a lead arrived (internal notification only; never emails the visitor).
+  // Needs RESEND_API_KEY + EMAIL_FROM, and LEAD_NOTIFY_EMAIL (defaults to EMAIL_REPLY_TO).
+  const notifyTo = process.env.LEAD_NOTIFY_EMAIL || process.env.EMAIL_REPLY_TO
+  if (emailConfigured() && notifyTo) {
+    try {
+      await sendEmail(
+        notifyTo,
+        `New ${d.source === 'booking' ? 'Lead Leak Audit request' : 'contact message'}: ${d.name}`,
+        [
+          `Name: ${d.name}`,
+          `Email: ${d.email}`,
+          d.company && `Business: ${d.company}`,
+          d.role && `Role: ${d.role}`,
+          '',
+          d.message || '(no message)',
+          '',
+          'A drafted reply is waiting in /admin/approvals.',
+        ]
+          .filter((l): l is string => typeof l === 'string')
+          .join('\n'),
+      )
+    } catch (e) {
+      console.error('lead notify failed', e)
+    }
   }
 
   // The lead is safely stored. Drafting the reply is best-effort and never blocks the visitor.

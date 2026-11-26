@@ -508,11 +508,11 @@ export default function ROICalculator() {
                   Want a detailed analysis of your specific automation opportunity?
                 </p>
                 <a 
-                  href="mailto:mastrianni@caake.org?subject=ROI Calculator Results&body=I ran the ROI calculator and would like to discuss the results." 
+                  href="/book-call"
                   className="btn btn-primary w-full justify-center mb-3"
                 >
                   <Mail className="w-4 h-4 mr-2" />
-                  Discuss Results
+                  Book a free Lead Leak Audit
                 </a>
                 <button 
                   onClick={() => window.print()}

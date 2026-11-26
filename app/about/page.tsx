@@ -1,180 +1,118 @@
-'use client'
-
 import Link from 'next/link'
-import { ArrowRight, Target, Lightbulb, Shield, Award } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { SITE } from '@/lib/site'
+import { CtaBand, PageHero } from '@/components/marketing'
+import { pageMetadata } from '@/components/metadata'
 
-const values = [
-  {
-    icon: Target,
-    title: 'Outcome Obsessed',
-    description: 'We measure success by your results, not our activity. Every project has clear KPIs.'
-  },
-  {
-    icon: Lightbulb,
-    title: 'Pragmatic Innovation',
-    description: 'We use the right tool for the job, not the flashiest. Practical AI that works.'
-  },
-  {
-    icon: Shield,
-    title: 'Trust First',
-    description: 'Security and governance arent afterthoughts. Theyre built into everything we do.'
-  },
-  {
-    icon: Award,
-    title: 'Kingz Mentality',
-    description: 'We take ownership. We deliver excellence. We treat your business like our own.'
-  }
+export const metadata = pageMetadata({
+  title: 'About',
+  description:
+    'C.A.A.K.E. is a Fishers, Indiana team, founded in 2025, building websites, apps and AI for small businesses and healthcare organizations. Approved vendor to Indiana University.',
+  path: '/about',
+})
+
+const timeline = [
+  { year: '2025', text: 'Founded in Fishers, Indiana to make AI and modern software practical for small businesses.' },
+  { year: '2025', text: 'First automation and software projects for healthcare and finance clients.' },
+  { year: '2025', text: 'Launched the C.A.A.K.E. Homecare EVV caregiver platform.' },
+  { year: '2026', text: 'Transitioned from LLC to C.A.A.K.E. Corporation. CareFlow, our next home-care product, is in development.' },
 ]
 
-const milestones = [
-  { year: '2025', title: 'The Beginning', description: 'C.A.A.K.E. founded with a mission to make AI accessible to small business owners.' },
-  { year: '2025', title: 'First Clients', description: 'Delivered first automation solutions for finance and healthcare clients.' },
-  { year: '2025', title: 'C.A.A.K.E. Homecare', description: 'Launched the C.A.A.K.E. Homecare platform.' },
-  { year: '2026', title: 'Corporation', description: 'Transitioned from LLC to C.A.A.K.E. Corporation to serve enterprise clients.' },
+const principles = [
+  {
+    title: 'Plain language, fixed prices',
+    body: 'You’ll always know what we’re building, why, and what it costs before we start.',
+  },
+  {
+    title: 'Honest proof',
+    body: 'We label work as live, private or in progress, and we don’t publish numbers we can’t back up.',
+  },
+  {
+    title: 'A person stays in charge',
+    body: 'Our AI tools draft and sort. People approve anything that goes to your customers.',
+  },
+  {
+    title: 'Built to be handed over',
+    body: 'You own your site and your data, with documentation your next hire can follow.',
+  },
 ]
 
 export default function AboutPage() {
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
-      <section className="section-padding pt-32">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">About Us</span>
-            <h1 className="font-display text-5xl md:text-7xl font-bold mt-4 mb-6">
-              The Kingz of{' '}
-              <span className="text-gold-gradient">Automation</span>
-            </h1>
-            <p className="text-xl text-white/60">
-              We&apos;re a team of AI strategists, engineers, and operators dedicated to making
-              enterprise automation feel easy as C.A.A.K.E.
-            </p>
-          </div>
+      <PageHero
+        eyebrow="About"
+        title={
+          <>
+            A build team that <span className="text-gold-gradient">ships</span>
+          </>
+        }
+        lede={`C.A.A.K.E. is a small team in ${SITE.city}, ${SITE.regionName}. We design and build websites, booking and follow-up systems, custom apps and AI tools, and we teach teams to use AI well.`}
+      />
+
+      <section className="section-padding pt-0">
+        <div className="container-custom max-w-3xl space-y-6 text-white/75 leading-relaxed text-lg">
+          <p>
+            Most agencies do one thing: a website, or ads, or “AI consulting.” Small businesses end up juggling three
+            vendors who don’t talk to each other. We built C.A.A.K.E. so one team could handle the whole path a
+            customer takes, from the first search to the booked visit to the follow-up.
+          </p>
+          <p>
+            Our work spans owner-run businesses and regulated healthcare: brand and booking sites for local
+            businesses, an offline-first EVV caregiver app for home care agencies, a patient education platform for
+            brain tumor patients, and AI training as an approved vendor to Indiana University. That range is the point.
+            The habits that make healthcare software dependable make a small-business website dependable too.
+          </p>
+          <p>
+            The team is led by founder <span className="text-white">Corey Mastrianni</span>, a software engineer who
+            builds healthcare platforms and AI automation.{' '}
+            <a href={SITE.portfolioUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+              His engineering portfolio
+            </a>{' '}
+            shows the wider range of what we can build, from 3D worlds to language-learning apps.
+          </p>
+          <p className="text-base text-white/55">
+            C.A.A.K.E. stands for Cost Avoidance Automation Kingz Enterprise. In plain terms: we help you stop losing
+            money to work a system should be doing.
+          </p>
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="section-padding bg-cosmic/30">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-gold text-sm font-medium uppercase tracking-wider">Our Story</span>
-              <h2 className="font-display text-4xl font-bold mt-2 mb-6">
-                Why We Exist
-              </h2>
-              <div className="space-y-4 text-white/70">
-                <p>
-                  C.A.A.K.E. was founded on a simple belief: AI should make business easier, not more complicated.
-                  Too many organizations struggle with vendor lock-in, technical debt, and solutions that
-                  promise the world but deliver little.
-                </p>
-                <p>
-                  We take a different approach. We start with your business outcomes, then build the
-                  technology to achieve them. No fluff. No unnecessary complexity. Just practical
-                  automation that works.
-                </p>
-                <p>
-                  Our name reflects our promise. C.A.A.K.E. stands for Cost Avoidance Automation Kingz
-                  Enterprise—not just because it spells something memorable, but because we believe in
-                  royalty-level service for every client.
-                </p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-gold/20 to-purple/20 p-8 flex items-center justify-center">
-                <div className="text-center w-full h-full flex items-center justify-center">
-                  <img
-                    src="/logocaake.png"
-                    alt="C.A.A.K.E. Logo"
-                    className="max-w-[80%] max-h-[80%] object-contain drop-shadow-2xl"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">Values</span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mt-2 mb-4">
-              How We <span className="text-gold">Work</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {values.map((value) => (
-              <div
-                key={value.title}
-                className="card p-8 hover:border-gold/30 transition-colors"
-              >
-                <value.icon className="w-12 h-12 text-gold mb-6" />
-                <h3 className="font-display text-2xl font-bold mb-3">{value.title}</h3>
-                <p className="text-white/60">{value.description}</p>
+      <section className="section-padding bg-cosmic/30 border-y border-white/5">
+        <div className="container-custom max-w-5xl">
+          <h2 className="font-display text-3xl font-bold mb-8">How we work</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {principles.map((p) => (
+              <div key={p.title} className="card p-6">
+                <h3 className="font-display text-xl font-bold mb-2">{p.title}</h3>
+                <p className="text-white/65 text-sm leading-relaxed">{p.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="section-padding bg-cosmic/30">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">Journey</span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mt-2 mb-4">
-              Our <span className="text-gold">Story</span>
-            </h2>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            {milestones.map((milestone, index) => (
-              <div key={milestone.year} className="flex gap-8 mb-12 last:mb-0">
-                <div className="flex-shrink-0 w-20 text-right">
-                  <span className="font-display text-2xl font-bold text-gold">{milestone.year}</span>
-                </div>
-                <div className="flex-shrink-0 relative">
-                  <div className="w-4 h-4 rounded-full bg-gold" />
-                  {index < milestones.length - 1 && (
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-0.5 h-24 bg-gold/30" />
-                  )}
-                </div>
-                <div className="flex-1 pb-8">
-                  <h3 className="font-display text-xl font-bold mb-2">{milestone.title}</h3>
-                  <p className="text-white/60">{milestone.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Want to Join the Kingdom?
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto mb-8">
-              We&apos;re always looking for exceptional talent. If you&apos;re passionate about
-              AI and automation, we&apos;d love to hear from you.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="mailto:mastrianni@caake.org" className="btn btn-primary">
-                Email Us
-                <ArrowRight className="ml-2" size={16} />
-              </a>
-              <Link href="/contact" className="btn btn-ghost">
-                Contact Us
-              </Link>
-            </div>
-          </div>
+        <div className="container-custom max-w-3xl">
+          <h2 className="font-display text-3xl font-bold mb-8">Timeline</h2>
+          <ol className="border-l border-gold/30 space-y-8 pl-6">
+            {timeline.map((t, i) => (
+              <li key={i} className="relative">
+                <span className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-gold" aria-hidden="true" />
+                <p className="text-gold font-display font-bold">{t.year}</p>
+                <p className="text-white/75">{t.text}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-10">
+            <Link href="/work" className="text-gold inline-flex items-center gap-1 font-medium">
+              See the work <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </p>
         </div>
       </section>
+
+      <CtaBand />
     </div>
   )
 }

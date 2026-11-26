@@ -1,80 +1,68 @@
 import type { Metadata } from 'next'
+import { SITE } from '@/lib/site'
 
 interface PageMetadataProps {
   title: string
   description: string
   path?: string
-  ogImage?: string
 }
 
-export function generatePageMetadata({
-  title,
-  description,
-  path = '',
-  ogImage = '/og/default.jpg'
-}: PageMetadataProps): Metadata {
-  const url = `https://caake.org${path}`
-  
+// Per-page metadata. The root layout adds the "| C.A.A.K.E." suffix via its title template.
+export function pageMetadata({ title, description, path = '' }: PageMetadataProps): Metadata {
+  const url = `${SITE.url}${path}`
   return {
     title,
     description,
-    metadataBase: new URL('https://caake.org'),
-    alternates: {
-      canonical: url,
-    },
+    alternates: { canonical: url },
     openGraph: {
-      title,
+      title: `${title} | C.A.A.K.E.`,
       description,
       url,
-      siteName: 'C.A.A.K.E. Corporation',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-        }
-      ],
+      siteName: SITE.legalName,
+      images: [{ url: '/logocaake.png' }],
       locale: 'en_US',
       type: 'website',
     },
     twitter: {
-      card: 'summary_large_image',
-      title,
+      card: 'summary',
+      title: `${title} | C.A.A.K.E.`,
       description,
-      images: [ogImage],
-      creator: '@caake_ai',
+      images: ['/logocaake.png'],
     },
   }
 }
 
-// JSON-LD Schema Components
+// Kept for any older imports.
+export const generatePageMetadata = pageMetadata
+
 export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Corporation',
-    name: 'C.A.A.K.E. Corporation',
+    '@type': 'ProfessionalService',
+    name: SITE.legalName,
     alternateName: 'Cost Avoidance Automation Kingz Enterprise',
-    url: 'https://caake.org',
-    logo: 'https://caake.org/logo.png',
-    description: 'Premium AI automation solutions for enterprise. The royal recipe for business automation.',
-    foundingDate: '2023',
+    url: SITE.url,
+    logo: `${SITE.url}/logocaake.png`,
+    image: `${SITE.url}/logocaake.png`,
+    description:
+      'Websites, booking and lead follow-up systems, custom apps, AI assistants and AI training for small businesses and healthcare organizations.',
+    foundingDate: SITE.founded,
+    telephone: '+1-480-364-1164',
+    email: SITE.email,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Phoenix',
-      addressRegion: 'AZ',
-      addressCountry: 'US'
+      addressLocality: SITE.city,
+      addressRegion: SITE.region,
+      addressCountry: 'US',
     },
+    areaServed: 'US',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+1-480-364-1164',
       contactType: 'sales',
-      email: 'mastrianni@caake.org',
-      availableLanguage: ['English']
+      email: SITE.email,
+      availableLanguage: ['English'],
     },
-    sameAs: [
-      'https://www.linkedin.com/company/caake',
-      'https://twitter.com/caake_ai'
-    ]
   }
 
   return (
@@ -89,13 +77,8 @@ export function WebsiteSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'C.A.A.K.E. Corporation',
-    url: 'https://caake.org',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://caake.org/search?q={search_term_string}',
-      'query-input': 'required name=search_term_string'
-    }
+    name: SITE.legalName,
+    url: SITE.url,
   }
 
   return (
@@ -114,8 +97,8 @@ export function BreadcrumbSchema(items: { name: string; url: string }[]) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url
-    }))
+      item: item.url,
+    })),
   }
 
   return (
