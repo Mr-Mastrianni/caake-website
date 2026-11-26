@@ -20,6 +20,8 @@ import {
   MessageSquare
 } from 'lucide-react'
 
+import { SITE } from '@/lib/site'
+
 gsap.registerPlugin(ScrollTrigger)
 
 const prefersReducedMotion = (): boolean => {
@@ -30,23 +32,23 @@ const prefersReducedMotion = (): boolean => {
 const benefits = [
   {
     icon: Target,
-    title: 'Opportunity Assessment',
-    description: 'We identify the highest-impact automation opportunities in your business.'
+    title: 'A 15-minute call',
+    description: 'How customers find you, how they book, and what happens after hours. That’s it.'
   },
   {
     icon: Sparkles,
-    title: 'Solution Blueprint',
-    description: 'You get a clear roadmap of what to build, in what order, and why.'
+    title: 'A written teardown within 2 business days',
+    description: 'We check your site on a phone, your booking path and your follow-up, then send a short write-up or Loom video.'
   },
   {
     icon: Zap,
-    title: 'Implementation Plan',
-    description: 'Understand timelines, resources needed, and expected ROI.'
+    title: 'One fixed price to fix the biggest leak',
+    description: 'If you want us to build it, you’ll know the exact cost first. Most first projects start at $1,500–$2,500.'
   },
   {
     icon: CheckCircle,
-    title: 'No Pressure',
-    description: 'This is a genuine strategy session. No hard sell, ever.'
+    title: 'Yours to keep',
+    description: 'Use the teardown with us, with someone else, or on your own. No hard sell.'
   },
 ]
 
@@ -62,6 +64,8 @@ export default function BookCallPage() {
     email: '',
     company: '',
     role: '',
+    site: '',
+    phone: '',
     challenge: '',
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -391,7 +395,13 @@ export default function BookCallPage() {
           email: formData.email,
           company: formData.company,
           role: formData.role,
-          message: formData.challenge,
+          message: [
+            formData.site && `Website: ${formData.site}`,
+            formData.phone && `Phone: ${formData.phone}`,
+            formData.challenge,
+          ]
+            .filter(Boolean)
+            .join('\n'),
           website: honeypot,
         }),
       })
@@ -426,13 +436,13 @@ export default function BookCallPage() {
       <section ref={heroRef} className="section-padding pt-32">
         <div className="container-custom">
           <div className="booking-hero max-w-3xl mx-auto text-center">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">Book a Call</span>
-            <h1 className="font-display text-5xl md:text-6xl font-bold mt-4 mb-6">
-              Let&apos;s Build Your{' '}
-              <span className="text-gold-gradient">Recipe</span>
+            <span className="text-gold text-sm font-medium uppercase tracking-wider">Free Lead Leak Audit</span>
+            <h1 className="font-display text-4xl md:text-6xl font-bold mt-4 mb-6">
+              Find out where you&apos;re{' '}
+              <span className="text-gold-gradient">losing customers</span>
             </h1>
-            <p className="text-xl text-white/60">
-              Book a 30-minute strategy call. Walk away with a 90-day automation roadmap—
+            <p className="text-lg md:text-xl text-white/60">
+              A free 15-minute call and a written teardown of your website, booking and follow-up,
               whether you work with us or not.
             </p>
           </div>
@@ -476,13 +486,13 @@ export default function BookCallPage() {
                         <Calendar className="w-6 h-6 text-gold" />
                       </div>
                       <div>
-                        <h3 className="font-display text-xl font-bold">Strategy Call</h3>
+                        <h2 className="font-display text-xl font-bold">Lead Leak Audit</h2>
                         <div className="flex items-center gap-4 text-white/60 text-sm mt-1">
                           <span className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" /> 30 min
+                            <Clock className="w-4 h-4" /> 15 min
                           </span>
                           <span className="flex items-center gap-1">
-                            <Video className="w-4 h-4" /> Video
+                            <Video className="w-4 h-4" /> Phone or video
                           </span>
                         </div>
                       </div>
@@ -491,14 +501,15 @@ export default function BookCallPage() {
                     <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                       {/* Name Field */}
                       <div className="form-field form-input-wrapper">
-                        <label className="field-label block text-sm font-medium mb-2 text-white/80">
-                          Full Name
+                        <label htmlFor="book-name" className="field-label block text-sm font-medium mb-2 text-white/80">
+                          Your name
                         </label>
                         <div className="field-border relative rounded-lg bg-white/5 border border-white/10 transition-all">
                           <User className="field-icon absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                           <input
                             type="text"
                             required
+                            id="book-name"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="w-full pl-10 pr-4 py-3 bg-transparent focus:outline-none text-white"
@@ -509,14 +520,15 @@ export default function BookCallPage() {
 
                       {/* Email Field */}
                       <div className="form-field form-input-wrapper">
-                        <label className="field-label block text-sm font-medium mb-2 text-white/80">
-                          Work Email
+                        <label htmlFor="book-email" className="field-label block text-sm font-medium mb-2 text-white/80">
+                          Email
                         </label>
                         <div className="field-border relative rounded-lg bg-white/5 border border-white/10 transition-all">
                           <Mail className="field-icon absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                           <input
                             type="email"
                             required
+                            id="book-email"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="w-full pl-10 pr-4 py-3 bg-transparent focus:outline-none text-white"
@@ -528,58 +540,92 @@ export default function BookCallPage() {
                       {/* Company & Role Row */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="form-field form-input-wrapper">
-                          <label className="field-label block text-sm font-medium mb-2 text-white/80">
-                            Company
+                          <label htmlFor="book-company" className="field-label block text-sm font-medium mb-2 text-white/80">
+                            Business name
                           </label>
                           <div className="field-border relative rounded-lg bg-white/5 border border-white/10 transition-all">
                             <Building2 className="field-icon absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                             <input
                               type="text"
                               required
-                              value={formData.company}
+                              id="book-company"
+                            value={formData.company}
                               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                               className="w-full pl-10 pr-4 py-3 bg-transparent focus:outline-none text-white"
-                              placeholder="Acme Inc"
+                              placeholder="Your business"
                             />
                           </div>
                         </div>
 
                         <div className="form-field form-input-wrapper">
-                          <label className="field-label block text-sm font-medium mb-2 text-white/80">
+                          <label htmlFor="book-role" className="field-label block text-sm font-medium mb-2 text-white/80">
                             Role
                           </label>
                           <div className="field-border relative rounded-lg bg-white/5 border border-white/10 transition-all">
                             <Briefcase className="field-icon absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                             <select
                               required
-                              value={formData.role}
+                              id="book-role"
+                            value={formData.role}
                               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                               className="w-full pl-10 pr-4 py-3 bg-transparent focus:outline-none text-white appearance-none cursor-pointer"
                             >
                               <option value="" className="bg-midnight">Select...</option>
-                              <option value="ceo" className="bg-midnight">CEO / Founder</option>
-                              <option value="cto" className="bg-midnight">CTO / VP Engineering</option>
-                              <option value="coo" className="bg-midnight">COO / VP Operations</option>
-                              <option value="cmo" className="bg-midnight">CMO / VP Marketing</option>
+                              <option value="owner" className="bg-midnight">Owner / Founder</option>
+                              <option value="manager" className="bg-midnight">Office or practice manager</option>
+                              <option value="clinical" className="bg-midnight">Clinical or operations lead</option>
+                              <option value="marketing" className="bg-midnight">Marketing</option>
                               <option value="other" className="bg-midnight">Other</option>
                             </select>
                           </div>
                         </div>
                       </div>
 
+                      {/* Website & Phone Row */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="form-field">
+                          <label htmlFor="book-site" className="block text-sm font-medium mb-2 text-white/80">
+                            Website (if you have one)
+                          </label>
+                          <input
+                            id="book-site"
+                            type="text"
+                            inputMode="url"
+                            value={formData.site}
+                            onChange={(e) => setFormData({ ...formData, site: e.target.value })}
+                            className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none text-white"
+                            placeholder="yourbusiness.com"
+                          />
+                        </div>
+                        <div className="form-field">
+                          <label htmlFor="book-phone" className="block text-sm font-medium mb-2 text-white/80">
+                            Phone (optional)
+                          </label>
+                          <input
+                            id="book-phone"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-gold focus:outline-none text-white"
+                            placeholder="(317) 555-0100"
+                          />
+                        </div>
+                      </div>
+
                       {/* Challenge Field */}
                       <div className="form-field form-input-wrapper">
-                        <label className="field-label block text-sm font-medium mb-2 text-white/80">
-                          What&apos;s your biggest automation challenge?
+                        <label htmlFor="book-challenge" className="field-label block text-sm font-medium mb-2 text-white/80">
+                          Where do you think you&apos;re losing customers? (optional)
                         </label>
                         <div className="field-border relative rounded-lg bg-white/5 border border-white/10 transition-all">
                           <MessageSquare className="field-icon absolute left-3 top-3 w-5 h-5 text-white/40" />
                           <textarea
                             rows={4}
+                            id="book-challenge"
                             value={formData.challenge}
                             onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
                             className="w-full pl-10 pr-4 py-3 bg-transparent focus:outline-none text-white resize-none"
-                            placeholder="Tell us about your current pain points..."
+                            placeholder="e.g. calls after hours go to voicemail, the site is slow on phones, no-shows..."
                           />
                         </div>
                       </div>
@@ -591,12 +637,12 @@ export default function BookCallPage() {
                         disabled={isSending}
                         className="submit-btn btn btn-primary w-full justify-center text-lg relative overflow-hidden disabled:opacity-60"
                       >
-                        {isSending ? 'Sending...' : 'Schedule Your Call'}
+                        {isSending ? 'Sending...' : 'Request my free audit'}
                         <ArrowRight className="ml-2" size={18} />
                       </button>
 
                       <p className="text-white/40 text-xs text-center">
-                        We respect your privacy. No spam, ever.
+                        We&apos;ll email you within one business day to pick a time. No spam, ever.
                       </p>
                     </form>
                   </div>
@@ -622,15 +668,20 @@ export default function BookCallPage() {
                     </div>
 
                     <div className="success-text">
-                      <h3 className="font-display text-2xl font-bold mb-4">You&apos;re All Set!</h3>
+                      <h3 className="font-display text-2xl font-bold mb-4">Got it, thank you!</h3>
                       <p className="text-white/60 mb-6">
-                        Thanks for booking. We&apos;ve sent a confirmation email with your meeting details.
-                        Looking forward to strategizing with you!
+                        A person on our team will email you within one business day to pick a time for your
+                        15-minute call.
                       </p>
+                      {SITE.calendarUrl && (
+                        <a href={SITE.calendarUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mb-6">
+                          Or pick a time now
+                        </a>
+                      )}
                       <div className="text-white/40 text-sm">
-                        Didn&apos;t receive it? Check your spam folder or{' '}
-                        <a href="mailto:mastrianni@caake.org" className="text-gold hover:underline">
-                          contact us
+                        Need us sooner? Call{' '}
+                        <a href={SITE.phoneHref} className="text-gold hover:underline">
+                          {SITE.phone}
                         </a>
                       </div>
                     </div>

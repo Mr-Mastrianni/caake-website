@@ -3,16 +3,16 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Crown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 import anime from 'animejs'
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'Solutions', href: '/solutions' },
-  { name: 'Case Studies', href: '/case-studies' },
+  { name: 'Services', href: '/services' },
+  { name: 'Work', href: '/work' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'About', href: '/about' },
-  { name: 'Resources', href: '/resources' },
   { name: 'Contact', href: '/contact' },
 ]
 
@@ -204,7 +204,7 @@ export function Navigation() {
             <div className="logo-icon relative w-12 h-12 flex items-center justify-center">
               <img
                 src="/logocaake.png"
-                alt="CAAKE Logo"
+                alt=""
                 className="w-full h-full object-contain transition-transform group-hover:scale-110"
               />
             </div>
@@ -239,12 +239,9 @@ export function Navigation() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a
-              href="mailto:mastrianni@caake.org"
-              className="nav-cta btn btn-primary text-sm"
-            >
-              Work With Us
-            </a>
+            <Link href={CTA.href} className="nav-cta btn btn-primary text-sm">
+              {CTA.short}
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -252,6 +249,7 @@ export function Navigation() {
             className="hamburger-btn md:hidden p-2 text-white"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -279,22 +277,13 @@ export function Navigation() {
                   {item.name}
                 </Link>
               ))}
-              <a
-                href="mailto:mastrianni@caake.org"
+              <Link
+                href={CTA.href}
                 className="btn btn-primary text-center mt-4"
                 onClick={() => setIsOpen(false)}
               >
-                Work With Us
-              </a>
-              <div className="pt-4 border-t border-white/10">
-                <Link
-                  href="/security-governance"
-                  className="text-sm text-white/60 hover:text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Security & Governance
-                </Link>
-              </div>
+                {CTA.label}
+              </Link>
             </div>
           </div>
         )}

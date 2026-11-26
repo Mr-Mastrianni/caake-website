@@ -38,7 +38,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: '/pages/services.html',
-      destination: '/solutions',
+      destination: '/services',
       permanent: true,
     },
     {
@@ -53,9 +53,14 @@ const nextConfig = {
     },
     {
       source: '/pages/pricing.html',
-      destination: '/book-call',
+      destination: '/pricing',
       permanent: true,
     },
+    { source: '/solutions', destination: '/services', permanent: true },
+    { source: '/platform', destination: '/services', permanent: true },
+    { source: '/case-studies', destination: '/work', permanent: true },
+    { source: '/resources/ai-agents-webinar', destination: '/resources', permanent: true },
+    { source: '/audit', destination: '/book-call', permanent: true },
   ],
 }
 

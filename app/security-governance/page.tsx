@@ -1,202 +1,85 @@
-'use client'
-
 import Link from 'next/link'
-import { Shield, Lock, Eye, FileCheck, Server, Users, Clock, CheckCircle, ArrowRight } from 'lucide-react'
+import { Lock, Eye, Users, FileCheck, ArrowRight } from 'lucide-react'
+import { SITE } from '@/lib/site'
+import { CtaBand, PageHero } from '@/components/marketing'
+import { pageMetadata } from '@/components/metadata'
 
-const securityPillars = [
-  {
-    icon: Server,
-    title: 'Infrastructure Security',
-    description: 'SOC 2 Type II certified cloud infrastructure with 99.99% uptime SLA. Multi-region redundancy and automated failover.',
-    features: ['End-to-end encryption', 'Multi-region backup', 'DDoS protection', 'Network isolation']
-  },
+export const metadata = pageMetadata({
+  title: 'How We Handle Your Data',
+  description:
+    'How C.A.A.K.E. handles client and customer data: encryption, limited access, privacy-conscious design for healthcare work, and human review of AI output.',
+  path: '/security-governance',
+})
+
+const practices = [
   {
     icon: Lock,
-    title: 'Data Protection',
-    description: 'Your data is encrypted at rest and in transit. We never use client data to train models without explicit consent.',
-    features: ['AES-256 encryption', 'TLS 1.3 in transit', 'PII detection & masking', 'Data residency options']
+    title: 'Encryption and reputable hosting',
+    body: 'We build on established cloud providers, use HTTPS everywhere, and encrypt sensitive data at rest where the project stores it.',
   },
   {
     icon: Users,
-    title: 'Access Control',
-    description: 'Role-based access control with SSO integration. Complete audit trail of every action.',
-    features: ['SSO/SAML integration', 'Role-based permissions', 'MFA enforcement', 'Session management']
+    title: 'Least access',
+    body: 'Only the people working on your project get access to your systems, and you can see and remove that access at any time.',
   },
   {
     icon: Eye,
-    title: 'AI Governance',
-    description: 'Human oversight built into every critical decision. Model versioning, testing, and approval workflows.',
-    features: ['Human-in-the-loop', 'Model versioning', 'Output validation', 'Bias monitoring']
-  }
-]
-
-const complianceItems = [
-  { name: 'SOC 2 Type II', status: 'Certified', description: 'Annual audit for security, availability, and confidentiality' },
-  { name: 'GDPR', status: 'Compliant', description: 'Full data protection and privacy compliance' },
-  { name: 'CCPA', status: 'Compliant', description: 'California Consumer Privacy Act compliance' },
-  { name: 'HIPAA', status: 'Available', description: 'Business Associate Agreements for healthcare' },
-  { name: 'ISO 27001', status: 'In Progress', description: 'Information security management certification' },
+    title: 'People review AI output',
+    body: 'Our AI tools draft, sort and summarize. A person approves anything sent to your customers or used to make a decision about them.',
+  },
+  {
+    icon: FileCheck,
+    title: 'Privacy-conscious healthcare work',
+    body: 'For projects involving patient or client health information, we map what data is collected, where it lives and who can see it before we build, and design to the obligations you tell us apply (for example HIPAA).',
+  },
 ]
 
 export default function SecurityGovernancePage() {
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
-      <section className="section-padding pt-32">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">Security & Governance</span>
-            <h1 className="font-display text-5xl md:text-7xl font-bold mt-4 mb-6">
-              Enterprise Security{' '}
-              <span className="text-gold-gradient">by Design</span>
-            </h1>
-            <p className="text-xl text-white/60">
-              Move fast with AI, safely. Our platform is built with enterprise-grade security 
-              and governance from the ground up.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Data & security"
+        title={
+          <>
+            How we handle <span className="text-gold-gradient">your data</span>
+          </>
+        }
+        lede="Plain answers about what we do. We don’t claim certifications we don’t hold, so ask us anything specific your organization needs."
+      />
 
-      {/* Security Pillars */}
-      <section className="section-padding bg-cosmic/30">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {securityPillars.map((pillar) => (
-              <div key={pillar.title} className="card p-8">
-                <pillar.icon className="w-12 h-12 text-gold mb-6" />
-                <h2 className="font-display text-2xl font-bold mb-3">{pillar.title}</h2>
-                <p className="text-white/60 mb-6">{pillar.description}</p>
-                <ul className="space-y-2">
-                  {pillar.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-white/70 text-sm">
-                      <CheckCircle className="w-4 h-4 text-gold flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Compliance Section */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-gold text-sm font-medium uppercase tracking-wider">Compliance</span>
-              <h2 className="font-display text-4xl font-bold mt-2 mb-6">
-                Certifications & <span className="text-gold">Standards</span>
-              </h2>
-              <p className="text-white/60 mb-8">
-                We maintain rigorous compliance standards and undergo regular third-party audits. 
-                Our commitment to security is not just a feature—it&apos;s our foundation.
-              </p>
-              <Link href="/ai-use-policy" className="btn btn-secondary">
-                Read Our AI Use Policy
-                <ArrowRight className="ml-2" size={16} />
-              </Link>
+      <section className="section-padding pt-0">
+        <div className="container-custom max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6">
+          {practices.map((p) => (
+            <div key={p.title} className="card p-8">
+              <p.icon className="w-10 h-10 text-gold mb-4" aria-hidden="true" />
+              <h2 className="font-display text-2xl font-bold mb-3">{p.title}</h2>
+              <p className="text-white/70 leading-relaxed">{p.body}</p>
             </div>
-
-            <div className="space-y-4">
-              {complianceItems.map((item) => (
-                <div 
-                  key={item.name}
-                  className="flex items-center justify-between p-4 rounded-xl bg-cosmic border border-white/10"
-                >
-                  <div>
-                    <div className="font-semibold">{item.name}</div>
-                    <div className="text-white/50 text-sm">{item.description}</div>
-                  </div>
-                  <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    item.status === 'Certified' || item.status === 'Compliant'
-                      ? 'bg-green-500/20 text-green-400'
-                      : item.status === 'In Progress'
-                      ? 'bg-yellow-500/20 text-yellow-400'
-                      : 'bg-blue-500/20 text-blue-400'
-                  }`}>
-                    {item.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* AI Governance */}
-      <section className="section-padding bg-cosmic/30">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold text-sm font-medium uppercase tracking-wider">AI Ethics</span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mt-2 mb-4">
-              Responsible <span className="text-gold">AI</span>
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto">
-              We believe AI should augment human capabilities, not replace human judgment. 
-              Our governance framework ensures ethical, transparent AI deployment.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Users,
-                title: 'Human Oversight',
-                description: 'Critical decisions always include human review. AI assists, humans decide.'
-              },
-              {
-                icon: FileCheck,
-                title: 'Transparency',
-                description: 'Clear explanations of how AI makes decisions. No black boxes in critical systems.'
-              },
-              {
-                icon: Clock,
-                title: 'Continuous Monitoring',
-                description: '24/7 monitoring for model drift, bias, and performance degradation.'
-              }
-            ].map((item) => (
-              <div key={item.title} className="text-center p-6">
-                <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-6">
-                  <item.icon className="w-8 h-8 text-gold" />
-                </div>
-                <h3 className="font-display text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-white/60">{item.description}</p>
-              </div>
-            ))}
-          </div>
+      <section className="section-padding bg-cosmic/30 border-y border-white/5">
+        <div className="container-custom max-w-3xl">
+          <h2 className="font-display text-3xl font-bold mb-4">Certifications</h2>
+          <p className="text-white/70 leading-relaxed mb-4">
+            C.A.A.K.E. does not currently hold SOC 2, ISO 27001 or similar third-party certifications. The hosting
+            providers we build on maintain their own certifications, and we can point you to their reports.
+          </p>
+          <p className="text-white/70 leading-relaxed mb-8">
+            If your organization has a security questionnaire or vendor review, send it to{' '}
+            <a href={`mailto:${SITE.email}`} className="text-gold hover:underline">
+              {SITE.email}
+            </a>{' '}
+            and we’ll answer it in writing.
+          </p>
+          <Link href="/ai-use-policy" className="btn btn-secondary gap-2">
+            Read our AI Use Policy <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
-      {/* Security CTA */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="card p-12 text-center bg-gradient-to-br from-gold/10 to-purple/10">
-            <Shield className="w-16 h-16 text-gold mx-auto mb-6" />
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Have Security Questions?
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto mb-8">
-              Our security team is happy to discuss your specific requirements, 
-              review our security documentation, or complete vendor assessments.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact" className="btn btn-primary">
-                Contact Security Team
-                <ArrowRight className="ml-2" size={16} />
-              </Link>
-              <a 
-                href="mailto:security@caake.org" 
-                className="btn btn-ghost"
-              >
-                security@caake.org
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaBand />
     </div>
   )
 }

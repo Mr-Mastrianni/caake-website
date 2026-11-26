@@ -45,7 +45,7 @@ export default function TermsPage() {
             <h2 className="font-display text-2xl font-bold mt-8 mb-4">Governing Law</h2>
             <p className="text-white/70">
               These Terms shall be governed by and construed in accordance with the laws of 
-              the State of Arizona, without regard to its conflict of law provisions.
+              the State of Indiana, without regard to its conflict of law provisions.
             </p>
 
             <h2 className="font-display text-2xl font-bold mt-8 mb-4">Changes to Terms</h2>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, FileText, Video, BookOpen, Calculator, Download, ExternalLink } from 'lucide-react'
 
-const categories = ['All', 'Guides', 'Tools', 'Webinars', 'Whitepapers']
+const categories = ['All', 'Guides', 'Tools', 'Whitepapers']
 
 const resources = [
   {
@@ -32,15 +32,6 @@ const resources = [
     icon: FileText,
     category: 'Whitepapers',
     href: '/resources/security-best-practices',
-    isExternal: false
-  },
-  {
-    title: 'The Future of Work: AI Agents',
-    type: 'Webinar',
-    description: 'Recorded webinar on how AI agents are transforming business operations and what it means for your organization.',
-    icon: Video,
-    category: 'Webinars',
-    href: '/resources/ai-agents-webinar',
     isExternal: false
   },
 ]
